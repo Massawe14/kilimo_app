@@ -10,7 +10,7 @@
 .history
 .svn/
 migrate_working_dir/
-resnet_model_beans.tflite
+/assets/model/resnet_model_beans.tflite
 
 # IntelliJ related
 *.iml
