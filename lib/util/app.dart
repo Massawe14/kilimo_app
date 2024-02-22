@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../features/personalization/screens/splash_screen.dart';
+import '../features/authentication/screens/onboarding/onboarding.dart';
 import 'theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -8,12 +9,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: const OnBoardingScreen(),
     );
   }
 }

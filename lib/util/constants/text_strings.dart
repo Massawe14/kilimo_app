@@ -4,7 +4,7 @@ class TTexts {
 
   // OnBoarding Texts
   static const String onBoardingTitle1 = "Upload your crop image";
-  static const String onBoardingTitle12 = "Analyze it and detect the crop diseases";
+  static const String onBoardingTitle2 = "Analyze it and detect the crop diseases";
   static const String onBoardingTitle3 = "See the result";
 
   static const String onBoardingSubTitle1 = "Welcome to the world of Artificial Intelligence - Your Perfect Assistant Awaits!";
