@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kilimo_app/features/authentication/screens/password_configuration/forgot_password.dart';
 
 import '../../../../../util/constants/sizes.dart';
 import '../../../../../util/constants/text_strings.dart';
@@ -51,7 +52,7 @@ class TLoginForm extends StatelessWidget {
                 ),
                 // Forgot Password
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(() => const ForgotPassword()),
                   child: const Text(TTexts.forgetPassword),
                 ),
               ],
