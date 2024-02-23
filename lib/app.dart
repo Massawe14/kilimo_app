@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../features/authentication/screens/onboarding/onboarding.dart';
-import 'theme/theme.dart';
+import '../util/theme/theme.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
