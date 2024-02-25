@@ -80,5 +80,6 @@ class UserModel {
         profilePicture: data?['ProfilePicture'] ?? '',
       );
     }
+    return document;
   }
 }

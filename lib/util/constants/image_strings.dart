@@ -19,4 +19,8 @@ class TImages {
   static const String deliveredInPlaneIllustration = "assets/images/animations/come-back-later.png";
   static const String staticSuccessIllustration = "assets/images/animations/success.png";
   static const String productsIllustration = "assets/images/animations/workout.png";
+
+  // Lottie Animations
+  static const String docerAnimation = "assets/images/animations/Docker-Logo-Animation.json";
+  static const String successfullyRegisterAnimation = "assets/images/animations/success-register-animation.json";
 }

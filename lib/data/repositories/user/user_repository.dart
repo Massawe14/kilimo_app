@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../features/personalization/models/userModal.dart';
+import '../../../util/exceptions/firebase_exceptions.dart';
+import '../../../util/exceptions/format_exceptions.dart';
+import '../../../util/exceptions/platform_exceptions.dart';
 
 // Repository class for user-related operations.
 class UserRepository extends GetxController {
