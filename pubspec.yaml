@@ -23,15 +23,17 @@ dependencies:
   flutter_riverpod: ^2.4.10
   get: ^4.6.6
   get_storage: ^2.1.1
-  
-  # Utility Packages
-  http: ^1.1.0
+
+  # Firebase
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.14.0
   firebase_storage: ^11.0.10
   firebase_core: ^2.4.1
   firebase_messaging_platform_interface: ^4.2.10
   firebase_messaging: ^14.2.1
+  
+  # Utility Packages
+  http: ^1.1.0
   flutter_image_compress: ^2.1.0
   cached_network_image: ^3.0.0
   flutter_staggered_grid_view: ^0.7.0
@@ -81,6 +83,9 @@ dependencies:
   intl: ^0.19.0
   flutter_native_splash: ^2.3.7
   smooth_page_indicator: ^1.1.0
+  connectivity_plus: ^5.0.2
+  flutter_rating_bar: ^4.0.1
+  readmore: ^2.2.0
 
 #---------------- ./ PACKAGES END -------------------------------#
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kilimo_app/bindings/general_bindings.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 
 import '../util/theme/theme.dart';
@@ -14,6 +15,7 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
+      initialBinding: GeneralBindings(),
       // Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen
       home: const Scaffold(
         backgroundColor: TColors.primary,
