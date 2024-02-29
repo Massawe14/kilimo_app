@@ -1,8 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../util/formatters/formatter.dart';
 
-class UserModel {
+class UserModel { 
   // Keep those values final which you do not want to update
   final String id;
   String firstName;
@@ -68,18 +70,20 @@ class UserModel {
 
   // Factory method to create a UserModel from a Firebase document snapshot
   factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data();
+    final data = document.data();
+    if (data != null) {
       return UserModel(
         id: document.id,
-        firstName: data?['FirstName'] ?? '',
-        lastName: data?['LastName'] ?? '',
-        username: data?['Username'] ?? '',
-        email: data?['Email'] ?? '',
-        phoneNumber: data?['PhoneNumber'] ?? '',
-        profilePicture: data?['ProfilePicture'] ?? '',
+        firstName: data['FirstName'] ?? '',
+        lastName: data['LastName'] ?? '',
+        username: data['UserName'] ?? '',
+        email: data['Email'] ?? '',
+        phoneNumber: data['PhoneNumber'] ?? '',
+        profilePicture: data['ProfilePicture'] ?? '',
       );
+    } else {
+      // Handle null case, for example, return an empty UserModel
+      return UserModel.empty();
     }
-    return document;
   }
 }
