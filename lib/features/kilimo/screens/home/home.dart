@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(
-          Iconsax.menu1,
+          Iconsax.menu_1,
         ),
         title: const Text(
           TTexts.appName,
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(
-              Iconsax.setting2,
+              Icons.more_vert_outlined,
             ),
             onPressed: () {
               // Handle justify icon action
