@@ -10,11 +10,11 @@ import 'firebase_options.dart';
 
 // Entry point of Flutter App
 void main() async {
-  // Widget Binding
-  final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
   // GetX Local storage
   await GetStorage.init();
+
+  // Widget Binding
+  final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   // Await Splash until other items load
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

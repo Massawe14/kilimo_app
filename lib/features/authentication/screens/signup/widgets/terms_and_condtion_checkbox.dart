@@ -18,13 +18,15 @@ class TTermsAndConditonCheckbox extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     return Row(
       children: [
-        SizedBox(
-          width: 24,
-          height: 24,
-          child: Obx(
-            () => Checkbox(
-              value: controller.privacyPolicy.value,
-              onChanged: (value) => controller.privacyPolicy.value = !controller.privacyPolicy.value,
+        Expanded(
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: Obx(
+              () => Checkbox(
+                value: controller.privacyPolicy.value,
+                onChanged: (value) => controller.privacyPolicy.value = !controller.privacyPolicy.value,
+              ),
             ),
           ),
         ),
