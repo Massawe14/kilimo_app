@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/util/constants/image_strings.dart';
-import 'package:kilimo_app/util/constants/sizes.dart';
-import 'package:kilimo_app/util/constants/text_strings.dart';
 
+import '../../../../util/constants/image_strings.dart';
+import '../../../../util/constants/sizes.dart';
+import '../../../../util/constants/text_strings.dart';
 import '../../../../util/helpers/helper_functions.dart';
+import '../../controllers/forget_password/forget_password_controller.dart';
+import '../login/login.dart';
 
-class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  const ResetPasswordScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class ResetPassword extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               // Title & SubTitle
               Text(
-                TTexts.changeYourPasswordTitle,
+                email,
                 style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center
               ),
@@ -50,7 +54,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Get.offAll(() => const LoginScreen()),
                   child: const Text(TTexts.done),
                 ),
               ),
@@ -58,7 +62,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => ForgetPasswordController.instance.resendPasswordResetEmail(email),
                   child: const Text(TTexts.resendEmail),
                 ),
               ),
