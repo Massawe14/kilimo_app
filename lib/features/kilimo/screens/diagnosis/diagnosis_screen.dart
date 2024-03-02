@@ -1,161 +1,142 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 
-import '../../../../data/services/classify_image.dart';
-import '../../models/loading_tflite_modal.dart';
 
 class DiagnosisScreen extends StatefulWidget {
-  const DiagnosisScreen({super.key});
+  const DiagnosisScreen({super.key, 
+  this.modelPath = 'assets/model/resnet_model_beans.tflite', 
+  this.labelsPath = 'assets/model/labels.txt', 
+  });
+
+  final String modelPath; // Path to the TensorFlow Lite model file
+  final String labelsPath; // Path to the labels.txt file
 
   @override
   DiagnosisScreenState createState() => DiagnosisScreenState();
 }
 
 class DiagnosisScreenState extends State<DiagnosisScreen> {
-  PickedFile? _image;
-  String? _result;
+  File? _imageFile;
+  List<String>? _labels;
+  List<dynamic>? _results;
 
-  final TFLiteService _tfliteService = TFLiteService();
+  // final TFLiteService _tfliteService = TFLiteService();
+
+  Future<void> _loadLabels() async {
+    var labelsFile = File(widget.labelsPath).openRead();
+    var lines = await labelsFile.transform(utf8.decoder).toList(); // Convert stream to list of strings
+    _labels = lines;
+  }
+
+  Future<void> _classifyImage() async {
+    if (_imageFile == null) return;
+
+    var interpreter = await Interpreter.fromAsset(widget.modelPath);
+
+    var inputTensor = interpreter.getInputTensor(0); // Access input tensor using getInputTensor
+    var inputShape = inputTensor.shape; // Get input shape from the tensor
+    var inputSize = inputShape[1] * inputShape[2];
+    var probabilities = List<double>.filled(inputShape[0], 0);
+
+    var image = await _loadImage(_imageFile!, inputSize); // Pass inputSize
+
+    interpreter.run(image, probabilities);
+
+    setState(() {
+      _results = probabilities;
+    });
+  }
+
+  Future<List<int>> _loadImage(File imageFile, int inputSize) async {
+    var imageBytes = await imageFile.readAsBytes();
+    var decodedBytes = await decodeImageFromList(imageBytes);
+
+    // Access image data using toByteData
+    var imageData = await decodedBytes.toByteData(); 
+
+    // Convert image data to list of floats
+    var img = convertImageToFloat32(imageData!, inputSize);
+    return img;
+  }
+
+  List<int> convertImageToFloat32(ByteData imageData, int size) {
+    var floatList = Float32List.view(imageData.buffer); // Access bytes as Float32List
+    return floatList.buffer.asUint8List(); // Convert back to Uint8List
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    setState(() {
+      _imageFile = pickedFile as File?;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _initModel();
-  }
-
-  Future<void> _initModel() async {
-    _showLoadingModal();
-    await _tfliteService.loadModel();
-    _hideLoadingModal();
-  }
-
-  Future<void> _classifyImage() async {
-    _showLoadingModal();
-
-    try {
-      final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (pickedImage != null) {
-        _image = PickedFile(pickedImage.path);
-        var classificationResult = await _tfliteService.classifyImage(_image!);
-
-        if (classificationResult['success']) {
-          setState(() {
-            _result = classificationResult['result'];
-          });
-
-          Fluttertoast.showToast(
-            msg: "Result: $_result",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.white,
-            textColor: Colors.black,
-            fontSize: 16.0,
-          );
-        } else {
-          Fluttertoast.showToast(
-            msg: "Error: ${classificationResult['error']}",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        }
-      }
-    } catch (e) {
-      debugPrint("Error picking image: $e");
-    }
-
-    _hideLoadingModal();
-  }
-
-  void _showLoadingModal() {
-    setState(() {
-    });
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => const LoadingModal(),
-    );
-  }
-
-  void _hideLoadingModal() {
-    setState(() {
-    });
-
-    Navigator.of(context).pop(); // Close the loading modal
-  }
-
-  @override
-  void dispose() {
-    _tfliteService.closeModel();
-    super.dispose();
+    _loadLabels(); // Load labels on initialization
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Diagnosis'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      children: [
+        _imageFile != null
+            ? Image.file(_imageFile!)
+            : const Text('No image selected'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _image == null 
-              ? Container(
-                  width: 200.0,
-                  height: 150.0,
-                  color: Colors.grey,
-                  child: IconButton(
-                    icon: const Icon(Icons.add_photo_alternate_outlined),
-                    onPressed: () async {
-                      // Add functionality to upload image from local file
-                      final picker = ImagePicker();
-                      final pickedImage = await picker.pickImage(
-                        source: ImageSource.gallery,
-                      );
-                      setState(() {
-                        _image = pickedImage as PickedFile?;
-                      });
-                      _classifyImage();
-                    },
-                  ),
-                )
-              : Image.file(
-                File(_image!.path),
-                height: 150.0,
-                width: 200.0,
-              ),
-            const SizedBox(height: 20.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Add functionality for scanning object
-              },
-              icon: const Icon(Icons.scanner),
-              label: const Text('Scan Crop'),
+            ElevatedButton(
+              onPressed: () => _pickImage(ImageSource.camera),
+              child: const Text('Capture Image'),
             ),
-            const SizedBox(height: 20.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Add functionality to take a picture of crop with the camera
-              },
-              icon: const Icon(Icons.camera_alt),
-              label: const Text('Take Picture'),
+            ElevatedButton(
+              onPressed: () => _pickImage(ImageSource.gallery),
+              child: const Text('Choose Image'),
             ),
-            const SizedBox(height: 20.0),
-            // _result != null 
-            //   ? Text('Result: $_result')
-            //   : Container(),
           ],
         ),
-      ),
+        ElevatedButton(
+          onPressed: _imageFile != null ? _classifyImage : null,
+          child: const Text('Classify Image'),
+        ),
+        ElevatedButton(
+          onPressed: _results != null ? _showImageInfoDialog : null,
+          child: const Text('Show Result'),
+        ),
+      ],
+    );
+  }
+
+  void _showImageInfoDialog() {
+    if (_results == null || _labels == null) return;
+
+    var topResultIndex = _results!.indexOf(_results!.reduce((a, b) => a > b ? a : b));
+    var topProbability = _results![topResultIndex];
+    var topLabel = _labels![topResultIndex];
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Classification Result'),
+          content: Text(
+            'Top label: $topLabel\nProbability: ${topProbability.toStringAsFixed(2)}',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

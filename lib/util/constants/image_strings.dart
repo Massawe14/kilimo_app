@@ -23,4 +23,10 @@ class TImages {
   // Lottie Animations
   static const String docerAnimation = "assets/images/animations/Docker-Logo-Animation.json";
   static const String successfullyRegisterAnimation = "assets/images/animations/success-register-animation.json";
+
+  // Crops Images
+  static const String cropImage1 = "assets/images/crops/maize.jpeg";
+  static const String cropImage2 = "assets/images/crops/beans.jpeg";
+  static const String cropImage3 = "assets/images/crops/rice.jpeg";
+  static const String cropImage4 = "assets/images/crops/cassava.jpeg";
 }

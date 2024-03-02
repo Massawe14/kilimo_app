@@ -10,8 +10,10 @@ class SurveyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Survey'
+        title: const Center(
+          child: Text(
+            'Survey'
+          ),
         ),
       ),
       body: GridView.builder(
