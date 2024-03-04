@@ -5,6 +5,7 @@ import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 import '../home/widgets/drawer.dart';
 import '../home/widgets/popup_menu.dart';
+import 'diagnosis_screen.dart';
 import 'widgets/custom_card.dart';
 
 class SurveyScreen extends StatelessWidget {
@@ -39,21 +40,37 @@ class SurveyScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-          child: const Column(
+          child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CustomCard(imagePath: TImages.cropImage1, title: 'Maize'),
-                  CustomCard(imagePath: TImages.cropImage2, title: 'Beans'),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const CustomCard(imagePath: TImages.cropImage1, title: 'Maize')
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const DiagnosisScreen())
+                      );
+                    },
+                    child: const CustomCard(imagePath: TImages.cropImage2, title: 'Beans')
+                  ),
                 ],
               ),
-              SizedBox(height: TSizes.spaceBtwItems),
+              const SizedBox(height: TSizes.spaceBtwItems),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CustomCard(imagePath: TImages.cropImage3, title: 'Rice'),
-                  CustomCard(imagePath: TImages.cropImage4, title: 'Cassava'),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const CustomCard(imagePath: TImages.cropImage3, title: 'Rice')
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const CustomCard(imagePath: TImages.cropImage4, title: 'Cassava')
+                  ),
                 ],
               ),
             ],

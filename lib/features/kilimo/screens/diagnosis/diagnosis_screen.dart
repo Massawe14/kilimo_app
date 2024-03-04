@@ -8,9 +8,7 @@ import 'package:tflite/tflite.dart';
 
 import '../../../../util/constants/sizes.dart';
 class DiagnosisScreen extends StatefulWidget {
-  const DiagnosisScreen({super.key, required this.index});
-
-  final int index;
+  const DiagnosisScreen({super.key});
 
   @override
   DiagnosisScreenState createState() => DiagnosisScreenState();
