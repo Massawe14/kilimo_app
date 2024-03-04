@@ -21,7 +21,7 @@ void showPopupMenu(BuildContext context) {
         value: 'share',
         child: Row(
           children: [
-            Icon(Iconsax.share),
+            Icon(Icons.share),
             SizedBox(width: 8),
             Text('Share'),
           ],
@@ -34,6 +34,16 @@ void showPopupMenu(BuildContext context) {
             Icon(Icons.history),
             SizedBox(width: 8),
             Text('History'),
+          ],
+        ),
+      ),
+      const PopupMenuItem(
+        value: 'aboutUs',
+        child: Row(
+          children: [
+            Icon(Iconsax.info_circle),
+            SizedBox(width: 8),
+            Text('About Us'),
           ],
         ),
       ),

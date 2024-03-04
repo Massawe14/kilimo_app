@@ -5,8 +5,8 @@ class TImages {
   static const String lightAppLogo = "assets/logos/splash-logo-white.png";
 
   // Social logos
-  static const String google = "assets/logos/google-icon.png";
-  static const String facebook = "assets/logos/facebook-icon.png";
+  static const String google = "assets/icons/google-icon.png";
+  static const String facebook = "assets/icons/facebook-icon.png";
 
   // OnBoarding Images
   static const String onBoardingImage1 = "assets/images/on_boarding_images/uploading.png";
@@ -29,4 +29,7 @@ class TImages {
   static const String cropImage2 = "assets/images/crops/beans.jpeg";
   static const String cropImage3 = "assets/images/crops/rice.jpeg";
   static const String cropImage4 = "assets/images/crops/cassava.jpeg";
+
+  // Profile Image
+  static const String profileImage = "assets/images/profile/profile.png";
 }

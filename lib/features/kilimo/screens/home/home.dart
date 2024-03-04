@@ -18,17 +18,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Iconsax.menu_1,
-          ),
-          onPressed: () {
-            // Open the drawer when the menu button is clicked
-            Scaffold.of(context).openDrawer();
-          }
-        ),
         title: const Text(
           TTexts.appName,
           style: TextStyle(
@@ -55,7 +47,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: openDrawer(context),
+      drawer: const NavigationDrawerMenu(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -23,6 +23,7 @@ dependencies:
   flutter_riverpod: ^2.4.10
   get: ^4.6.6
   get_storage: ^2.1.1
+  localstorage: ^4.0.0+1
 
   # Firebase
   firebase_auth: ^4.16.0
@@ -65,7 +66,6 @@ dependencies:
   country_picker: ^2.0.8
   uuid: ^4.0.0
   share: ^2.0.4
-  localstorage: ^4.0.0+1
   dio: ^5.4.1
   device_info: ^2.0.2
   carousel_slider: ^4.0.0
@@ -103,6 +103,7 @@ flutter:
     - assets/images/on_boarding_images/
     - assets/images/animations/
     - assets/images/crops/
+    - assets/images/profile/
     - assets/jsons/
     - assets/svg/
     - assets/videos/

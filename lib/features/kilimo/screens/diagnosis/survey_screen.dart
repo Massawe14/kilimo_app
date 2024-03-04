@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:iconsax/iconsax.dart';
 
-import 'diagnosis_screen.dart';
+import '../../../../common/widgets/appbar/app_bar.dart';
+import '../../../../util/constants/sizes.dart';
+import '../home/widgets/drawer.dart';
+import '../home/widgets/popup_menu.dart';
+import 'widgets/grid_items.dart';
 
 class SurveyScreen extends StatelessWidget {
   const SurveyScreen({super.key});
@@ -9,54 +13,42 @@ class SurveyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Survey'
-          ),
-        ),
-      ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
-        ),
-        itemCount: 4,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // Navigate to another screen on box click
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DiagnosisScreen(),
-                ),
-              );
-            },
-            child: GFCard(
-              boxFit: BoxFit.cover,
-              image: Image.network(
-                'https://example.com/crop_image_$index.jpg',
-              ),
-              titlePosition: GFPosition.end,
-              content: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [Colors.black, Colors.transparent],
-                  ),
-                ),
-                child: GFTypography(
-                  text: 'Crop Name $index',
-                  textColor: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+      appBar: TAppBar(
+        title: Text('Survey', style: Theme.of(context).textTheme.headlineMedium),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Iconsax.notification,
             ),
-          );
-        },
+            onPressed: () {
+              // Handle notification icon action
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.more_vert_outlined,
+            ),
+            onPressed: () {
+              // Show the popup menu when the icon is clicked
+              showPopupMenu(context);
+            },
+          ),
+        ],
+      ),
+      drawer: const NavigationDrawerMenu(),
+      body: Container(
+        padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0
+          ),
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return GridItem(index: index);
+          },
+        ),
       ),
     );
   }

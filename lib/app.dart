@@ -18,10 +18,10 @@ class App extends StatelessWidget {
       initialBinding: GeneralBindings(),
       // Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen
       home: const Scaffold(
-        backgroundColor: TColors.primary,
+        backgroundColor: TColors.grey,
         body: Center(
           child: CircularProgressIndicator(
-            color: Colors.white,
+            color: TColors.primary,
           ),
         ),
       ),

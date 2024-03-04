@@ -5,3 +5,18 @@ enum TextSizes { small, medium, large }
 enum ModalStatus { analysing, detecting, done }
 
 enum UserType { farmer, fieldExpert, extensionOfficer }
+
+enum DrawerSections {
+  home,
+  myAccounts,
+  messages,
+  surveyRecords,
+  contacts,
+  settings,
+  changeLanguage,
+  notifications,
+  privacyPolicy,
+  termsAndConditions,
+  sendFeedback,
+  logout,
+}

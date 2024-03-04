@@ -1,142 +1,113 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:tflite/tflite.dart';
 
-
+import '../../../../util/constants/sizes.dart';
 class DiagnosisScreen extends StatefulWidget {
-  const DiagnosisScreen({super.key, 
-  this.modelPath = 'assets/model/resnet_model_beans.tflite', 
-  this.labelsPath = 'assets/model/labels.txt', 
-  });
+  const DiagnosisScreen({super.key, required this.index});
 
-  final String modelPath; // Path to the TensorFlow Lite model file
-  final String labelsPath; // Path to the labels.txt file
+  final int index;
 
   @override
   DiagnosisScreenState createState() => DiagnosisScreenState();
 }
 
 class DiagnosisScreenState extends State<DiagnosisScreen> {
-  File? _imageFile;
-  List<String>? _labels;
-  List<dynamic>? _results;
-
-  // final TFLiteService _tfliteService = TFLiteService();
-
-  Future<void> _loadLabels() async {
-    var labelsFile = File(widget.labelsPath).openRead();
-    var lines = await labelsFile.transform(utf8.decoder).toList(); // Convert stream to list of strings
-    _labels = lines;
-  }
-
-  Future<void> _classifyImage() async {
-    if (_imageFile == null) return;
-
-    var interpreter = await Interpreter.fromAsset(widget.modelPath);
-
-    var inputTensor = interpreter.getInputTensor(0); // Access input tensor using getInputTensor
-    var inputShape = inputTensor.shape; // Get input shape from the tensor
-    var inputSize = inputShape[1] * inputShape[2];
-    var probabilities = List<double>.filled(inputShape[0], 0);
-
-    var image = await _loadImage(_imageFile!, inputSize); // Pass inputSize
-
-    interpreter.run(image, probabilities);
-
-    setState(() {
-      _results = probabilities;
-    });
-  }
-
-  Future<List<int>> _loadImage(File imageFile, int inputSize) async {
-    var imageBytes = await imageFile.readAsBytes();
-    var decodedBytes = await decodeImageFromList(imageBytes);
-
-    // Access image data using toByteData
-    var imageData = await decodedBytes.toByteData(); 
-
-    // Convert image data to list of floats
-    var img = convertImageToFloat32(imageData!, inputSize);
-    return img;
-  }
-
-  List<int> convertImageToFloat32(ByteData imageData, int size) {
-    var floatList = Float32List.view(imageData.buffer); // Access bytes as Float32List
-    return floatList.buffer.asUint8List(); // Convert back to Uint8List
-  }
-
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
-    setState(() {
-      _imageFile = pickedFile as File?;
-    });
-  }
+  final ImagePicker _imagePicker = ImagePicker();
+  final TextEditingController _resultController = TextEditingController();
+  final RxString _historyKey = 'history'.obs;
+  final GetStorage _storage = GetStorage();
 
   @override
   void initState() {
     super.initState();
-    _loadLabels(); // Load labels on initialization
+    loadModel();
+  }
+
+  Future<void> loadModel() async {
+    await Tflite.loadModel(
+      model: 'assets/model/resnet_model_beans.tflite',
+      labels: 'assets/model/labels.txt',
+    );
+  }
+
+  Future<void> pickImage(ImageSource source) async {
+    final pickedFile = await _imagePicker.pickImage(source: source);
+    if (pickedFile != null) {
+      classifyImage(File(pickedFile.path));
+    }
+  }
+
+  Future<void> classifyImage(File image) async {
+    final List<dynamic>? recognitions = await Tflite.runModelOnImage(
+      path: image.path,
+      numResults: 1,
+      threshold: 0.2,
+      imageMean: 127.5,
+      imageStd: 127.5,
+    );
+
+    if (recognitions != null && recognitions.isNotEmpty) {
+      final String result = recognitions[0]['label'];
+      _resultController.text = result;
+      showResultDialog(result);
+      saveToHistory(result);
+    }
+  }
+
+  void saveToHistory(String result) {
+    final List<String> history = _storage.read(_historyKey.value) ?? [];
+    history.insert(0, result);
+    _storage.write(_historyKey.value, history);
+  }
+
+  void showResultDialog(String result) {
+    Get.defaultDialog(
+      title: 'Diagnosis Result',
+      content: Text('The result is: $result'),
+      actions: [
+        TextButton(
+          onPressed: () => Get.back(),
+          child: const Text('OK'),
+        ),
+      ]
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _imageFile != null
-            ? Image.file(_imageFile!)
-            : const Text('No image selected'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () => _pickImage(ImageSource.camera),
-              child: const Text('Capture Image'),
-            ),
-            ElevatedButton(
-              onPressed: () => _pickImage(ImageSource.gallery),
-              child: const Text('Choose Image'),
-            ),
-          ],
-        ),
-        ElevatedButton(
-          onPressed: _imageFile != null ? _classifyImage : null,
-          child: const Text('Classify Image'),
-        ),
-        ElevatedButton(
-          onPressed: _results != null ? _showImageInfoDialog : null,
-          child: const Text('Show Result'),
-        ),
-      ],
-    );
-  }
-
-  void _showImageInfoDialog() {
-    if (_results == null || _labels == null) return;
-
-    var topResultIndex = _results!.indexOf(_results!.reduce((a, b) => a > b ? a : b));
-    var topProbability = _results![topResultIndex];
-    var topLabel = _labels![topResultIndex];
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Classification Result'),
-          content: Text(
-            'Top label: $topLabel\nProbability: ${topProbability.toStringAsFixed(2)}',
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Diagnosis'),
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => pickImage(ImageSource.gallery),
+                child: const Text('Pick Image from Gallery'),
+              ),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              ElevatedButton(
+                onPressed: () => pickImage(ImageSource.camera), 
+                child: const Text('Take Picture'),
+              ),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              TextFormField(
+                controller: _resultController,
+                decoration: const InputDecoration(labelText: 'Diagnosis Result'),
+                readOnly: true,
+              )
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
+        ),
+      ),
     );
   }
 }
