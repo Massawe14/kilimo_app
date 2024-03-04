@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets/appbar/app_bar.dart';
+import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 import '../home/widgets/drawer.dart';
 import '../home/widgets/popup_menu.dart';
-import 'widgets/grid_items.dart';
+import 'widgets/custom_card.dart';
 
 class SurveyScreen extends StatelessWidget {
   const SurveyScreen({super.key});
@@ -13,8 +13,8 @@ class SurveyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TAppBar(
-        title: Text('Survey', style: Theme.of(context).textTheme.headlineMedium),
+      appBar: AppBar(
+        title: const Center(child: Text('Survey')),
         actions: [
           IconButton(
             icon: const Icon(
@@ -36,18 +36,28 @@ class SurveyScreen extends StatelessWidget {
         ],
       ),
       drawer: const NavigationDrawerMenu(),
-      body: Container(
-        padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 16.0
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+          child: const Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomCard(imagePath: TImages.cropImage1, title: 'Maize'),
+                  CustomCard(imagePath: TImages.cropImage2, title: 'Beans'),
+                ],
+              ),
+              SizedBox(height: TSizes.spaceBtwItems),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomCard(imagePath: TImages.cropImage3, title: 'Rice'),
+                  CustomCard(imagePath: TImages.cropImage4, title: 'Cassava'),
+                ],
+              ),
+            ],
           ),
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return GridItem(index: index);
-          },
         ),
       ),
     );
