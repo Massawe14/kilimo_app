@@ -1,13 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:tflite/tflite.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+
 class DiagnosisScreen extends StatefulWidget {
   const DiagnosisScreen({super.key});
 
@@ -16,95 +16,192 @@ class DiagnosisScreen extends StatefulWidget {
 }
 
 class DiagnosisScreenState extends State<DiagnosisScreen> {
-  final ImagePicker _imagePicker = ImagePicker();
-  final TextEditingController _resultController = TextEditingController();
-  final RxString _historyKey = 'history'.obs;
-  final GetStorage _storage = GetStorage();
+  bool _loading = true;
+  late File _image;
+  late List _output;
+  final picker = ImagePicker(); //allows us to pick image from gallery or camera
 
   @override
   void initState() {
+    //initS is the first function that is executed by default when this class is called
     super.initState();
-    loadModel();
+    loadModel().then((value) {
+      setState(() {});
+    });
   }
 
-  Future<void> loadModel() async {
+  @override
+  void dispose() {
+    //dis function disposes and clears our memory
+    super.dispose();
+    Tflite.close();
+  }
+
+  classifyImage(File image) async {
+    // this function runs the model on the image
+    try {
+      var output = await Tflite.runModelOnImage(
+        path: image.path,
+        numResults: 7, // the amount of categories our neural network can predict
+        threshold: 0.5,
+        imageMean: 127.5,
+        imageStd: 127.5,
+      );
+
+      setState(() {
+        _output = output!;
+        _loading = false;
+      });
+    } catch (e) {
+      debugPrint("Error running TensorFlow Lite model: $e");
+    }
+  }
+
+  loadModel() async {
     await Tflite.loadModel(
       model: 'assets/model/resnet_model_beans.tflite',
       labels: 'assets/model/labels.txt',
     );
   }
 
-  Future<void> pickImage(ImageSource source) async {
-    final pickedFile = await _imagePicker.pickImage(source: source);
-    if (pickedFile != null) {
-      classifyImage(File(pickedFile.path));
-    }
+  getImage() async {
+    //this function to grab the image from camera
+    var image = await picker.pickImage(source: ImageSource.camera);
+    if (image == null) return null;
+
+    setState(() {
+      _image = File(image.path);
+    });
+    classifyImage(_image);
   }
 
-  Future<void> classifyImage(File image) async {
-    final List<dynamic>? recognitions = await Tflite.runModelOnImage(
-      path: image.path,
-      numResults: 1,
-      threshold: 0.2,
-      imageMean: 127.5,
-      imageStd: 127.5,
-    );
+  pickGalleryImage() async {
+    //this function to grab the image from gallery
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) return null;
 
-    if (recognitions != null && recognitions.isNotEmpty) {
-      final String result = recognitions[0]['label'];
-      _resultController.text = result;
-      showResultDialog(result);
-      saveToHistory(result);
-    }
-  }
-
-  void saveToHistory(String result) {
-    final List<String> history = _storage.read(_historyKey.value) ?? [];
-    history.insert(0, result);
-    _storage.write(_historyKey.value, history);
-  }
-
-  void showResultDialog(String result) {
-    Get.defaultDialog(
-      title: 'Diagnosis Result',
-      content: Text('The result is: $result'),
-      actions: [
-        TextButton(
-          onPressed: () => Get.back(),
-          child: const Text('OK'),
-        ),
-      ]
-    );
+    setState(() {
+      _image = File(image.path);
+    });
+    classifyImage(_image);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: TColors.accent,
         title: const Text('Diagnosis'),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Iconsax.notification,
+            ),
+            onPressed: () {
+              // Handle notification icon action
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.more_vert_outlined,
+            ),
+            onPressed: () {
+              // Show the popup menu when the icon is clicked
+              showPopupMenu(context);
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () => pickImage(ImageSource.gallery),
-                child: const Text('Pick Image from Gallery'),
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-              ElevatedButton(
-                onPressed: () => pickImage(ImageSource.camera), 
-                child: const Text('Take Picture'),
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-              TextFormField(
-                controller: _resultController,
-                decoration: const InputDecoration(labelText: 'Diagnosis Result'),
-                readOnly: true,
-              )
-            ],
+        child: Container(
+          color: TColors.grey.withOpacity(0.9),
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 50),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              color: TColors.grey,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: _loading == true
+                    ? null // show nothing if no picture selected
+                    : Column(
+                      children: [
+                        SizedBox(
+                          height: 250,
+                          width: 250,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Image.file(
+                              _image,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          height: 25,
+                          thickness: 1,
+                        ),
+                        // ignore: unnecessary_null_comparison
+                        _output != null
+                          ? Text(
+                              'The disease is: ${_output[0]['label']}!',
+                              style: const TextStyle(
+                                color: TColors.white,
+                                fontSize: TSizes.fontSizeLg,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          : Container(),
+                        const Divider(
+                          height: 25,
+                          thickness: 1,
+                        ),
+                      ],
+                    ),
+                ),
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: getImage,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 200,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey[600],
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const Text(
+                          'Take A Photo',
+                          style: TextStyle(color: TColors.white, fontSize: TSizes.fontSizeMd),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: pickGalleryImage,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 200,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey[600],
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const Text(
+                          'Pick From Gallery',
+                          style: TextStyle(color: TColors.white, fontSize: TSizes.fontSizeMd),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

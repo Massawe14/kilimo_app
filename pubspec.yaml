@@ -34,14 +34,10 @@ dependencies:
   firebase_messaging: ^14.2.1
 
   # Tflite
-  tflite_flutter: ^0.9.0
+  tflite_flutter: ^0.10.4
   tflite:
     git:
       url: https://github.com/Despicable-Us/tflite_flutter.git
-  tflite_flutter_helper:
-    git:
-      url: https://github.com/filofan1/tflite_flutter_helper.git
-      ref: 783f15e5a87126159147d8ea30b98eea9207ac70
 
   
   # Utility Packages
@@ -56,7 +52,7 @@ dependencies:
   multi_image_picker2: ^5.0.2
   image_picker: ^1.0.7
   collection: ^1.16.0
-  image: ^3.0.2
+  image: ^4.1.7
   toast: ^0.3.0
   fluttertoast: ^8.0.7
   mailer: ^6.1.0
@@ -85,7 +81,7 @@ dependencies:
   flutter_map_tappable_polyline: ^6.0.0
   mockito: ^5.4.4
   logging: ^1.2.0
-  lottie: ^2.7.0
+  lottie: ^3.1.0
   logger: ^2.0.2+1
   intl: ^0.19.0
   flutter_native_splash: ^2.2.16

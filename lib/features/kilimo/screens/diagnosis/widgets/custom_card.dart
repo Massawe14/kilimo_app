@@ -20,8 +20,9 @@ class CustomCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -33,11 +34,14 @@ class CustomCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              imagePath,
-              height: 160,
-              width: 160,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
+              child: Image.asset(
+                imagePath,
+                height: 161,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 8.0),
             Text(

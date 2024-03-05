@@ -8,14 +8,14 @@ class NavigationDrawerMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const Drawer(
-    child: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          MyHeaderDrawer(),
-          MyDrawerList(),
-        ],
-      ),
+    elevation: 0,
+    shape: Border(right: BorderSide(color: Colors.transparent)),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        MyHeaderDrawer(),
+        MyDrawerList(),
+      ],
     ),
   );
 }
