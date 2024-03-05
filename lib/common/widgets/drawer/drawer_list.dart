@@ -3,8 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kilimo_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 
-import '../../../../../navigation_menu.dart';
-import '../../../../../util/constants/sizes.dart';
+import '../../../navigation_menu.dart';
+import '../../../util/constants/sizes.dart';
 
 class MyDrawerList extends StatelessWidget {
   const MyDrawerList({super.key});

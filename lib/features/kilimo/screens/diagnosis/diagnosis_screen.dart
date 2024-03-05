@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
 
+import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 class DiagnosisScreen extends StatefulWidget {
   const DiagnosisScreen({super.key});
@@ -80,6 +81,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: TColors.accent,
         title: const Text('Diagnosis'),
       ),
       body: SingleChildScrollView(

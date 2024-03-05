@@ -3,9 +3,9 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
-import '../home/widgets/drawer.dart';
-import '../home/widgets/popup_menu.dart';
-import 'diagnosis_screen.dart';
+import '../../../../common/widgets/drawer/drawer.dart';
+import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
+import 'beans_diagnosis.dart';
 import 'widgets/custom_card.dart';
 
 class SurveyScreen extends StatelessWidget {
@@ -52,7 +52,7 @@ class SurveyScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DiagnosisScreen())
+                        builder: (context) => const BeansDiagnosisScreen())
                       );
                     },
                     child: const CustomCard(imagePath: TImages.cropImage2, title: 'Beans')

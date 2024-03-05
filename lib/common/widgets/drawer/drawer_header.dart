@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../util/constants/colors.dart';
-import '../../../../../util/constants/image_strings.dart';
+import '../../../util/constants/colors.dart';
+import '../../../util/constants/image_strings.dart';
 
 class MyHeaderDrawer extends StatelessWidget {
   const MyHeaderDrawer({super.key});

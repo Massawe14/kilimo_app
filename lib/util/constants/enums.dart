@@ -20,3 +20,8 @@ enum DrawerSections {
   sendFeedback,
   logout,
 }
+
+enum ResultStatus {
+  found,
+  notFound,
+}
