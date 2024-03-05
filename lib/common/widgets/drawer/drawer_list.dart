@@ -12,7 +12,8 @@ class MyDrawerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(24),
-    child: ListView(
+    child: Wrap(
+      runSpacing: 16,
       children: [
         ListTile(
           leading: const Icon(Iconsax.home),
@@ -21,9 +22,9 @@ class MyDrawerList extends StatelessWidget {
             // Close navigation drawer before
             Navigator.pop(context);
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const NavigationMenu(),
-            ));
-          },
+              builder: (context) => const NavigationMenu())
+            );
+          }
         ),
         ListTile(
           leading: const Icon(Iconsax.user),

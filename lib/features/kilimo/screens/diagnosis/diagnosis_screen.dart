@@ -90,7 +90,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Diagnosis'),
+        title: const Center(child: Text('Diagnosis')),
         actions: [
           IconButton(
             icon: const Icon(
@@ -172,8 +172,8 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
                         decoration: BoxDecoration(
-                          color: Colors.blueGrey[600],
-                          borderRadius: BorderRadius.circular(15),
+                          color: TColors.darkerGrey,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Text(
                           'Take A Photo',
@@ -189,8 +189,8 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
                         decoration: BoxDecoration(
-                          color: Colors.blueGrey[600],
-                          borderRadius: BorderRadius.circular(15),
+                          color: TColors.darkerGrey,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Text(
                           'Pick From Gallery',
