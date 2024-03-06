@@ -35,6 +35,7 @@ dependencies:
 
   # Tflite
   tflite_flutter: ^0.10.4
+  # tflite: ^1.1.2
   tflite:
     git:
       url: https://github.com/Despicable-Us/tflite_flutter.git
@@ -89,6 +90,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   flutter_rating_bar: ^4.0.1
   readmore: ^2.2.0
+  hive: ^2.2.3
 
 #---------------- ./ PACKAGES END -------------------------------#
 

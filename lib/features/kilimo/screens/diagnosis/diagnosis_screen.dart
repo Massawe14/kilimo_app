@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image/image.dart' as img;
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,7 +26,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
 
   @override
   void initState() {
-    //initS is the first function that is executed by default when this class is called
+    //initState is the first function that is executed by default when this class is called
     super.initState();
     loadModel().then((value) {
       setState(() {});
@@ -32,39 +35,12 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
 
   @override
   void dispose() {
-    //dis function disposes and clears our memory
+    //This function disposes and clears our memory
     super.dispose();
     Tflite.close();
   }
 
-  classifyImage(File image) async {
-    // this function runs the model on the image
-    try {
-      var output = await Tflite.runModelOnImage(
-        path: image.path,
-        numResults: 7, // the amount of categories our neural network can predict
-        threshold: 0.5,
-        imageMean: 127.5,
-        imageStd: 127.5,
-      );
-
-      setState(() {
-        _output = output!;
-        _loading = false;
-      });
-    } catch (e) {
-      debugPrint("Error running TensorFlow Lite model: $e");
-    }
-  }
-
-  loadModel() async {
-    await Tflite.loadModel(
-      model: 'assets/model/resnet_model_beans.tflite',
-      labels: 'assets/model/labels.txt',
-    );
-  }
-
-  getImage() async {
+  captureImage() async {
     //this function to grab the image from camera
     var image = await picker.pickImage(source: ImageSource.camera);
     if (image == null) return null;
@@ -72,7 +48,8 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
     setState(() {
       _image = File(image.path);
     });
-    classifyImage(_image);
+
+    classifyImageBinary(_image);
   }
 
   pickGalleryImage() async {
@@ -83,7 +60,86 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
     setState(() {
       _image = File(image.path);
     });
-    classifyImage(_image);
+    
+    classifyImageBinary(_image);
+  }
+
+  loadModel() async {
+    try {
+      await Tflite.loadModel(
+        model: 'assets/model/resnet_model_beans.tflite',
+        labels: 'assets/model/labels.txt',
+      );
+    } on PlatformException {
+      debugPrint('Failed to load model.');
+    }
+  }
+
+  // classifyImage(File image) async {
+  //   // this function runs the model on the image
+  //   try {
+  //     int startTime = DateTime.now().millisecondsSinceEpoch;
+  //     var output = await Tflite.runModelOnImage(
+  //       path: image.path,
+  //       numResults: 7,
+  //       threshold: 0.5,
+  //       imageMean: 127.5,
+  //       imageStd: 127.5,
+  //       asynch: true,
+  //     );
+
+  //     setState(() {
+  //       _output = output!;
+  //       _loading = false;
+  //     });
+
+  //     int endTime = DateTime.now().millisecondsSinceEpoch;
+  //     debugPrint("Inference took ${endTime - startTime}ms");
+  //   } catch (e) {
+  //     debugPrint("Error running TensorFlow Lite model: $e");
+  //   }
+  // }
+
+  Uint8List imageToByteListFloat32(img.Image image, int inputSize, double mean, double std) {
+    var convertedBytes = Float32List(1 * inputSize * inputSize * 3);
+    var buffer = Float32List.view(convertedBytes.buffer);
+
+    int pixelIndex = 0;
+    for (var i = 0; i < inputSize; i++) {
+      for (var j = 0; j < inputSize; j++) {
+        var pixel = image.getPixel(j, i);
+        buffer[pixelIndex++] = (pixel.r - mean) / std;
+        buffer[pixelIndex++] = (pixel.g - mean) / std;
+        buffer[pixelIndex++] = (pixel.b - mean) / std;
+      }
+    }
+    return convertedBytes.buffer.asUint8List();
+  }
+
+  Future classifyImageBinary(File image) async {
+    try {
+      int startTime = DateTime.now().millisecondsSinceEpoch;
+      var imageBytes = (await rootBundle.load(image.path)).buffer;
+
+      img.Image? oriImage = img.decodeJpg(imageBytes.asUint8List());
+      img.Image resizedImage = img.copyResize(oriImage!, height: 512, width: 512);
+
+      var output = await Tflite.runModelOnBinary(
+        binary: imageToByteListFloat32(resizedImage, 512, 127.5, 127.5),
+        numResults: 7,
+        threshold: 0.05,
+      );
+
+      setState(() {
+        _output = output!;
+        _loading = false;
+      });
+
+      int endTime = DateTime.now().millisecondsSinceEpoch;
+      debugPrint("Inference took ${endTime - startTime}ms");
+    } catch (e) {
+      debugPrint("Error running TensorFlow Lite model: $e");
+    }
   }
 
   @override
@@ -114,7 +170,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
       body: SingleChildScrollView(
         child: Container(
           color: TColors.grey.withOpacity(0.9),
-          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 50),
+          // padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 50),
           child: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(30),
@@ -127,7 +183,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
               children: [
                 Center(
                   child: _loading == true
-                    ? null // show nothing if no picture selected
+                    ? null
                     : Column(
                       children: [
                         SizedBox(
@@ -166,7 +222,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: getImage,
+                      onTap: captureImage,
                       child: Container(
                         width: MediaQuery.of(context).size.width - 200,
                         alignment: Alignment.center,
