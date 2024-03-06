@@ -75,31 +75,6 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
     }
   }
 
-  // classifyImage(File image) async {
-  //   // this function runs the model on the image
-  //   try {
-  //     int startTime = DateTime.now().millisecondsSinceEpoch;
-  //     var output = await Tflite.runModelOnImage(
-  //       path: image.path,
-  //       numResults: 7,
-  //       threshold: 0.5,
-  //       imageMean: 127.5,
-  //       imageStd: 127.5,
-  //       asynch: true,
-  //     );
-
-  //     setState(() {
-  //       _output = output!;
-  //       _loading = false;
-  //     });
-
-  //     int endTime = DateTime.now().millisecondsSinceEpoch;
-  //     debugPrint("Inference took ${endTime - startTime}ms");
-  //   } catch (e) {
-  //     debugPrint("Error running TensorFlow Lite model: $e");
-  //   }
-  // }
-
   Uint8List imageToByteListFloat32(img.Image image, int inputSize, double mean, double std) {
     var convertedBytes = Float32List(1 * inputSize * inputSize * 3);
     var buffer = Float32List.view(convertedBytes.buffer);
