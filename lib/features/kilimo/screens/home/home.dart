@@ -49,23 +49,23 @@ class HomeScreen extends StatelessWidget {
             children: [
               THomeCard(
                 image: 'assets/images/crops/maize.jpeg',
-                title: 'Maize',
-                subtitle: 'Card Subtitle',
+                title: TTexts.maizeCropTitle,
+                subtitle: TTexts.maizeCropDescription,
               ),
               THomeCard(
                 image: 'assets/images/crops/beans.jpeg',
-                title: 'Beans',
-                subtitle: 'Card Subtitle',
+                title: TTexts.beansCropTitle,
+                subtitle: TTexts.beansCropDescription,
               ),
               THomeCard(
                 image: 'assets/images/crops/rice.jpeg',
-                title: 'Rice',
-                subtitle: 'Card Subtitle',
+                title: TTexts.riceCropTitle,
+                subtitle: TTexts.riceCropDescription,
               ),
               THomeCard(
                 image: 'assets/images/crops/cassava.jpeg',
-                title: 'Cassava',
-                subtitle: 'Card Subtitle',
+                title: TTexts.cassavaCropTitle,
+                subtitle: TTexts.cassavaCropDescription,
               ),
             ],
           ),

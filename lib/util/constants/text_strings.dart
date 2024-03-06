@@ -52,7 +52,20 @@ class TTexts {
   static const String yourAccountCreatedTitle = "Your account successfully created";
   static const String yourAccountCreatedSubTitle = "Welcome to your Ultimate Farming Destination: Your Account is Created, Unleash the Joy of Seamless Farming Technology";
 
-  // Home
+  // Home Text
   static const String homeAppbarTitle = "Kilimo App";
   static const String homeAppbarSubTitle = "Easy crop diseases detetction";
+
+  // Crops Text
+  static const String maizeCropTitle = "Maize";
+  static const String maizeCropDescription = "The three leaf rusts on maize are common rust, polysora rust, and tropical rust. The disease is found worldwide in subtropical, temperate, and highland environments with high humidity. Common rust is most conspicuous when plants approach tasseling.";
+
+  static const String beansCropTitle = "Beans";
+  static const String beansCropDescription = "There are two widespread bacterial blights that affect most types of beans, common blight (Xanthomonas campestris pv phaseoli) and halo blight (Pseudomonas syringae pathovar phaseolicola). The stems, leaves and fruits of bean plants can be infected by either disease.";
+
+  static const String riceCropTitle = "Rice";
+  static const String riceCropDescription = "Bacterial leaf blight (BLB) disease alone can cause up to 50% yield losses worldwide. Rice yields can also be significantly impacted by some diseases like brown spot (BS) and leaf smut (LSm). One of the most common diseases affecting rice is BS, caused by Drechsleraoryzae.";
+
+  static const String cassavaCropTitle = "Cassava";
+  static const String cassavaCropDescription = "According to the different characteristics, cassava disease can bemainly classified into Cassava Bacterial Blight (CBB), Cassava Brown Streak Disease (CBSD), Cassava Green Mottle (CGM), Cassava Mosaic Disease (CMD), etc., which can lead to reduced and/or diseased cassava output.";
 }
