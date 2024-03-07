@@ -33,48 +33,6 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
     });
   }
 
-  @override
-  void dispose() {
-    //This function disposes and clears our memory
-    super.dispose();
-    Tflite.close();
-  }
-
-  captureImage() async {
-    //this function to grab the image from camera
-    var image = await picker.pickImage(source: ImageSource.camera);
-    if (image == null) return null;
-
-    setState(() {
-      _image = File(image.path);
-    });
-
-    classifyImageBinary(_image);
-  }
-
-  pickGalleryImage() async {
-    //this function to grab the image from gallery
-    var image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) return null;
-
-    setState(() {
-      _image = File(image.path);
-    });
-    
-    classifyImageBinary(_image);
-  }
-
-  loadModel() async {
-    try {
-      await Tflite.loadModel(
-        model: 'assets/model/resnet_model_beans.tflite',
-        labels: 'assets/model/labels.txt',
-      );
-    } on PlatformException {
-      debugPrint('Failed to load model.');
-    }
-  }
-
   Uint8List imageToByteListFloat32(img.Image image, int inputSize, double mean, double std) {
     var convertedBytes = Float32List(1 * inputSize * inputSize * 3);
     var buffer = Float32List.view(convertedBytes.buffer);
@@ -90,31 +48,92 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
     }
     return convertedBytes.buffer.asUint8List();
   }
+  
+  Future<void> classifyImageBinary(File image) async {
+    // Check if the image file exists before processing
+    if (!image.existsSync()) {
+      debugPrint("Image file does not exist.");
+      return;
+    } else {
+      try {
+        int startTime = DateTime.now().millisecondsSinceEpoch;
+        
+        var imageData = await rootBundle.load(image.path); // Load byte data
+        var imageBytes = imageData.buffer.asUint8List(); // Access buffer after await
 
-  Future classifyImageBinary(File image) async {
-    try {
-      int startTime = DateTime.now().millisecondsSinceEpoch;
-      var imageBytes = (await rootBundle.load(image.path)).buffer;
+        var output = await Tflite.runModelOnBinary(
+          binary: imageToByteListFloat32(img.decodeImage(imageBytes)!, 512, 127.5, 127.5),
+          numResults: 7,
+          threshold: 0.2,
+        );
 
-      img.Image? oriImage = img.decodeJpg(imageBytes.asUint8List());
-      img.Image resizedImage = img.copyResize(oriImage!, height: 512, width: 512);
+        setState(() {
+          _output = output!;
+          _loading = false;
+        });
 
-      var output = await Tflite.runModelOnBinary(
-        binary: imageToByteListFloat32(resizedImage, 512, 127.5, 127.5),
-        numResults: 7,
-        threshold: 0.05,
-      );
-
-      setState(() {
-        _output = output!;
-        _loading = false;
-      });
-
-      int endTime = DateTime.now().millisecondsSinceEpoch;
-      debugPrint("Inference took ${endTime - startTime}ms");
-    } catch (e) {
-      debugPrint("Error running TensorFlow Lite model: $e");
+        int endTime = DateTime.now().millisecondsSinceEpoch;
+        debugPrint("Inference took ${endTime - startTime}ms");
+      } catch (e) {
+        debugPrint("Error running TensorFlow Lite model: $e");
+      }
     }
+  }
+
+  // Future<void> classifyImage(File image) async {
+  //   var output = await Tflite.runModelOnImage(
+  //     path: image.path,
+  //     numResults: 7,
+  //     threshold: 0.5,
+  //     imageMean: 127.5,
+  //     imageStd: 127.5,
+  //   );
+  //   setState(() {
+  //     _output = output!;
+  //     _loading = false;
+  //   });
+  // }
+
+  Future<void> loadModel() async {
+    try {
+      await Tflite.loadModel(
+        model: 'assets/model/resnet_model_beans.tflite',
+        labels: 'assets/model/labels.txt',
+      );
+    } on PlatformException {
+      debugPrint('Failed to load model.');
+    }
+  }
+
+  @override
+  void dispose() {
+    //This function disposes and clears our memory
+    super.dispose();
+    Tflite.close();
+  }
+
+  Future<void> captureImage() async {
+    //this function to grab the image from camera
+    var image = await picker.pickImage(source: ImageSource.camera);
+    if (image == null) return;
+
+    setState(() {
+      _image = File(image.path);
+    });
+
+    await classifyImageBinary(_image);
+  }
+
+  Future<void> pickGalleryImage() async {
+    //this function to grab the image from gallery
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+
+    setState(() {
+      _image = File(image.path);
+    });
+    
+    await classifyImageBinary(_image);
   }
 
   @override
@@ -145,7 +164,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
       body: SingleChildScrollView(
         child: Container(
           color: TColors.grey.withOpacity(0.9),
-          // padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 50),
           child: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(30),
@@ -157,8 +176,8 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: _loading == true
-                    ? null
+                  child: _loading
+                    ? const CircularProgressIndicator() // Show CircularProgressIndicator when loading is true
                     : Column(
                       children: [
                         SizedBox(
@@ -177,7 +196,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                           thickness: 1,
                         ),
                         // ignore: unnecessary_null_comparison
-                        _output != null
+                        _output != null && _output.isNotEmpty
                           ? Text(
                               'The disease is: ${_output[0]['label']}!',
                               style: const TextStyle(

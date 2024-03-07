@@ -6,6 +6,7 @@ import '../../../../util/constants/sizes.dart';
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import 'diagnosis_screen.dart';
+import 'dog_or_cart.dart';
 import 'widgets/custom_card.dart';
 
 class SurveyScreen extends StatelessWidget {
@@ -46,7 +47,11 @@ class SurveyScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const DogOrCatClassification())
+                      );
+                    },
                     child: const CustomCard(imagePath: TImages.cropImage1, title: 'Maize')
                   ),
                   GestureDetector(
