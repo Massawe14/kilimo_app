@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "653462887527",
+    "project_id": "kilimo-app-b5270",
+    "storage_bucket": "kilimo-app-b5270.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653462887527:android:0b5b695336eaa8a55c48c2",
+        "android_client_info": {
+          "package_name": "com.example.kilimo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653462887527-1t04c0hnqvgh86ofnc162223pchkfslh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kilimo_app",
+            "certificate_hash": "4df9cc76ebc9d358a9ec01d6060fa1cfc67f57df"
+          }
+        },
+        {
+          "client_id": "653462887527-ns0ig6av7fj4ctl97vjg4cp4er344amg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcjKHdpnrkoI8N6xSuZ0jsxCOn25R-yiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653462887527-ns0ig6av7fj4ctl97vjg4cp4er344amg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "653462887527-311jfboeuas5o1skspr95lgfakdh9c7m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kilimoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
