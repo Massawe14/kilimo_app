@@ -11,6 +11,7 @@
 .svn/
 migrate_working_dir/
 /assets/model/resnet_model_beans.tflite
+/lib/util/constants/api_constants.dart
 
 # IntelliJ related
 *.iml

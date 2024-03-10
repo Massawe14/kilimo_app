@@ -7,6 +7,22 @@ class TTexts {
   static const String submit = "Submit";
   static const String appName = "Kilimo App";
   static const String tContinue = "Continue";
+  static const String tEditProfile = "Edit Profile";
+  static const String tJoined = "Joined ";
+  static const String tJoinedAt = "31 October 2024";
+  static const String tDelete = "Delete";
+
+  // Menu Texts
+  static const String tMenu1 = "Home";
+  static const String tMenu2 = "Profile";
+  static const String tMenu3 = "Change Language";
+  static const String tMenu4 = "Notifications";
+  static const String tMenu5 = "Messages";
+  static const String tMenu6 = "Settings";
+  static const String tMenu7 = "Privacy Policy";
+  static const String tMenu8 = "Terms and Conditions";
+  static const String tMenu9 = "Send Feedback";
+  static const String tMenu10 = "Logout";
 
   // OnBoarding Texts
   static const String onBoardingTitle1 = "Upload your crop image";

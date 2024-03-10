@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 
 class DogOrCatClassification extends StatefulWidget {
   const DogOrCatClassification({super.key});
@@ -76,38 +79,42 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.withOpacity(0.9),
+      appBar: AppBar(
+        title: const Center(child: Text('Dog and Cat Classification')),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Iconsax.notification,
+            ),
+            onPressed: () {
+              // Handle notification icon action
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.more_vert_outlined,
+            ),
+            onPressed: () {
+              // Show the popup menu when the icon is clicked
+              showPopupMenu(context);
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Center(
-                child: Text(
-                  'Detect Dog Vs Cat',
-                  style: TextStyle(
-                    color: Colors.greenAccent,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 45),
               Center(
                 child: _isLoading
-                  ? SizedBox(
+                  ? const SizedBox(
                       width: 260,
                       child: Column(
                         children: [
-                          Image.asset('assets/icons/cat.png'),
-                          const SizedBox(
+                          Icon(Iconsax.picture_frame),
+                          SizedBox(
                             height: 50,
                           )
                         ],

@@ -5,6 +5,7 @@ import 'package:kilimo_app/util/constants/text_strings.dart';
 
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
+import '../weather/weather.dart';
 import 'widgets/home_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -47,6 +48,7 @@ class HomeScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
+              WeatherScreen(),
               THomeCard(
                 image: 'assets/images/crops/maize.jpeg',
                 title: TTexts.maizeCropTitle,

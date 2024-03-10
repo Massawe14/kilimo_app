@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../features/personalization/screens/profile/profile_screen.dart';
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/image_strings.dart';
 
@@ -13,6 +14,9 @@ class MyHeaderDrawer extends StatelessWidget {
       onTap: () {
         // Close navigation drawer before
         Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ProfileScreen())
+        );
       },
       child: Container(
         padding: EdgeInsets.only(

@@ -1,15 +1,11 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:image/image.dart' as img;
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
-import '../../../../util/constants/sizes.dart';
 
 class DiagnosisScreen extends StatefulWidget {
   const DiagnosisScreen({super.key});
@@ -19,128 +15,73 @@ class DiagnosisScreen extends StatefulWidget {
 }
 
 class DiagnosisScreenState extends State<DiagnosisScreen> {
-  bool _loading = true;
+  bool _isLoading = true;
   late File _image;
   late List _output;
-  final picker = ImagePicker(); //allows us to pick image from gallery or camera
+  final picker = ImagePicker();
 
   @override
   void initState() {
-    //initState is the first function that is executed by default when this class is called
     super.initState();
     loadModel().then((value) {
       setState(() {});
     });
   }
 
-  Uint8List imageToByteListFloat32(img.Image image, int inputSize, double mean, double std) {
-    var convertedBytes = Float32List(1 * inputSize * inputSize * 3);
-    var buffer = Float32List.view(convertedBytes.buffer);
-
-    int pixelIndex = 0;
-    for (var i = 0; i < inputSize; i++) {
-      for (var j = 0; j < inputSize; j++) {
-        var pixel = image.getPixel(j, i);
-        buffer[pixelIndex++] = (pixel.r - mean) / std;
-        buffer[pixelIndex++] = (pixel.g - mean) / std;
-        buffer[pixelIndex++] = (pixel.b - mean) / std;
-      }
-    }
-    return convertedBytes.buffer.asUint8List();
-  }
-  
-  Future<void> classifyImageBinary(File image) async {
-    // Check if the image file exists before processing
-    if (!image.existsSync()) {
-      debugPrint("Image file does not exist.");
-      return;
-    } else {
-      try {
-        int startTime = DateTime.now().millisecondsSinceEpoch;
-        
-        var imageData = await rootBundle.load(image.path); // Load byte data
-        var imageBytes = imageData.buffer.asUint8List(); // Access buffer after await
-
-        var output = await Tflite.runModelOnBinary(
-          binary: imageToByteListFloat32(img.decodeImage(imageBytes)!, 512, 127.5, 127.5),
-          numResults: 7,
-          threshold: 0.2,
-        );
-
-        setState(() {
-          _output = output!;
-          _loading = false;
-        });
-
-        int endTime = DateTime.now().millisecondsSinceEpoch;
-        debugPrint("Inference took ${endTime - startTime}ms");
-      } catch (e) {
-        debugPrint("Error running TensorFlow Lite model: $e");
-      }
-    }
+  classifyImage(File image) async {
+    var output = await Tflite.runModelOnImage(
+      path: image.path,
+      numResults: 7,
+      threshold: 0.5,
+      imageMean: 127.5,
+      imageStd: 127.5,
+    );
+    setState(() {
+      _output = output!;
+      _isLoading = false;
+    });
   }
 
-  // Future<void> classifyImage(File image) async {
-  //   var output = await Tflite.runModelOnImage(
-  //     path: image.path,
-  //     numResults: 7,
-  //     threshold: 0.5,
-  //     imageMean: 127.5,
-  //     imageStd: 127.5,
-  //   );
-  //   setState(() {
-  //     _output = output!;
-  //     _loading = false;
-  //   });
-  // }
-
-  Future<void> loadModel() async {
-    try {
-      await Tflite.loadModel(
-        model: 'assets/model/resnet_model_beans.tflite',
-        labels: 'assets/model/labels.txt',
-      );
-    } on PlatformException {
-      debugPrint('Failed to load model.');
-    }
+  loadModel() async {
+    await Tflite.loadModel(
+      model: 'assets/model/resnet_model_beans.tflite', 
+      labels: 'assets/model/labels.txt',
+    );
   }
 
   @override
   void dispose() {
-    //This function disposes and clears our memory
-    super.dispose();
     Tflite.close();
+    super.dispose();
   }
 
-  Future<void> captureImage() async {
-    //this function to grab the image from camera
-    var image = await picker.pickImage(source: ImageSource.camera);
+  captureImage() async {
+    final ImagePicker picker = ImagePicker();
+    // Pick an image
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if (image == null) return;
-
     setState(() {
       _image = File(image.path);
     });
-
-    await classifyImageBinary(_image);
+    classifyImage(_image);
   }
 
-  Future<void> pickGalleryImage() async {
-    //this function to grab the image from gallery
-    var image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) return;
-
+  pickGalleryImage() async {
+    final ImagePicker picker = ImagePicker();
+    // Pick an image
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) return null;
     setState(() {
       _image = File(image.path);
     });
-    
-    await classifyImageBinary(_image);
+    classifyImage(_image);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Diagnosis')),
+        title: const Center(child: Text('Crop Diseases Diagnosis')),
         actions: [
           IconButton(
             icon: const Icon(
@@ -163,95 +104,84 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: TColors.grey.withOpacity(0.9),
-          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 50),
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(30),
-            decoration: BoxDecoration(
-              color: TColors.grey,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: _loading
-                    ? const CircularProgressIndicator() // Show CircularProgressIndicator when loading is true
-                    : Column(
-                      children: [
-                        SizedBox(
-                          height: 250,
-                          width: 250,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: Image.file(
-                              _image,
-                              fit: BoxFit.fill,
-                            ),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: _isLoading
+                  ? const SizedBox(
+                      width: 260,
+                      child: Column(
+                        children: [
+                          Icon(Iconsax.picture_frame),
+                          SizedBox(
+                            height: 50,
+                          )
+                        ],
+                      ),
+                    )
+                  : SizedBox(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 250,
+                            child: Image.file(_image),
                           ),
-                        ),
-                        const Divider(
-                          height: 25,
-                          thickness: 1,
-                        ),
-                        // ignore: unnecessary_null_comparison
-                        _output != null && _output.isNotEmpty
-                          ? Text(
-                              'The disease is: ${_output[0]['label']}!',
-                              style: const TextStyle(
-                                color: TColors.white,
-                                fontSize: TSizes.fontSizeLg,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          : Container(),
-                        const Divider(
-                          height: 25,
-                          thickness: 1,
-                        ),
-                      ],
-                    ),
-                ),
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: captureImage,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
-                        decoration: BoxDecoration(
-                          color: TColors.darkerGrey,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Text(
-                          'Take A Photo',
-                          style: TextStyle(color: TColors.white, fontSize: TSizes.fontSizeMd),
-                        ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          // ignore: unnecessary_null_comparison
+                          _output != null
+                            ? Text(
+                                '${_output[0]['label']}',
+                                style: const TextStyle(
+                                  color: TColors.primary,
+                                  fontSize: 20,
+                                ),
+                              )
+                            : Container(),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    GestureDetector(
-                      onTap: pickGalleryImage,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
-                        decoration: BoxDecoration(
-                          color: TColors.darkerGrey,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Text(
-                          'Pick From Gallery',
-                          style: TextStyle(color: TColors.white, fontSize: TSizes.fontSizeMd),
-                        ),
-                      ),
-                    ),
-                  ],
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.all(25.5),
+                decoration: BoxDecoration(
+                  color: TColors.accent,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              ],
-            ),
+                child: TextButton(
+                  onPressed: captureImage,
+                  child: const Text(
+                    'Take A Photo',
+                    style: TextStyle(
+                      color: TColors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.all(25.5),
+                decoration: BoxDecoration(
+                  color: TColors.accent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: TextButton(
+                  onPressed: pickGalleryImage,
+                  child: const Text(
+                    'Oick from Gallery',
+                    style: TextStyle(
+                      color: TColors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

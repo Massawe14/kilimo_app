@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kilimo_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 
+import '../../../features/personalization/screens/profile/profile_screen.dart';
 import '../../../navigation_menu.dart';
 import '../../../util/constants/sizes.dart';
 
@@ -32,10 +33,13 @@ class MyDrawerList extends StatelessWidget {
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const ProfileScreen())
+            );
           },
         ),
         ListTile(
-          leading: const Icon(Iconsax.microphone_2),
+          leading: const Icon(Iconsax.translate),
           title: const Text('Change Language'),
           onTap: () {
             // Close navigation drawer before
@@ -51,7 +55,7 @@ class MyDrawerList extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: const Icon(Iconsax.message_2),
+          leading: const Icon(Iconsax.messages_2),
           title: const Text('Messages'),
           onTap: () {
             // Close navigation drawer before
@@ -76,7 +80,7 @@ class MyDrawerList extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: const Icon(Iconsax.text),
+          leading: const Icon(Iconsax.text_block),
           title: const Text('Terms and Conditions'),
           onTap: () {
             // Close navigation drawer before
