@@ -150,7 +150,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.accent,
+                  color: TColors.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
@@ -168,7 +168,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.accent,
+                  color: TColors.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(

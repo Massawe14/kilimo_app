@@ -5,6 +5,7 @@ import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
+import '../../../../util/constants/colors.dart';
 
 class DogOrCatClassification extends StatefulWidget {
   const DogOrCatClassification({super.key});
@@ -135,7 +136,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                             ? Text(
                                 '${_output[0]['label']}',
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: TColors.primary,
                                   fontSize: 20,
                                 ),
                               )
@@ -149,7 +150,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: Colors.greenAccent,
+                  color: TColors.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
@@ -167,7 +168,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: Colors.greenAccent,
+                  color: TColors.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
