@@ -28,35 +28,35 @@ class TAnimationLoaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Flexible(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(child: Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8)), // Display Lottie animation
-            const SizedBox(height: TSizes.defaultSpace),
-            Text(
-              text,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: TSizes.defaultSpace),
-            showAction
-              ? SizedBox(
-                width: 250,
-                child: OutlinedButton(
-                  onPressed: onActionPressed,
-                  style: OutlinedButton.styleFrom(backgroundColor: TColors.dark),
-                  child: Text(
-                    actionText!,
-                    style: Theme.of(context).textTheme.bodyMedium!.apply(color: TColors.light),
-                  ),
-                ),
-              )
-            : const SizedBox(),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(child: Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8)), // Display Lottie animation
+        const SizedBox(height: TSizes.defaultSpace),
+        Expanded(
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
         ),
-      ),
+        const SizedBox(height: TSizes.defaultSpace),
+        showAction
+          ? Expanded(
+            child: SizedBox(
+              width: 250,
+              child: OutlinedButton(
+                onPressed: onActionPressed,
+                style: OutlinedButton.styleFrom(backgroundColor: TColors.dark),
+                child: Text(
+                  actionText!,
+                  style: Theme.of(context).textTheme.bodyMedium!.apply(color: TColors.light),
+                ),
+              ),
+            ),
+          )
+        : const Expanded(child: SizedBox()),
+      ],
     );
   }
 }

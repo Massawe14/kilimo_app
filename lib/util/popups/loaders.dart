@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/util/constants/colors.dart';
-import 'package:kilimo_app/util/helpers/helper_functions.dart';
+
+import '../constants/colors.dart';
+import '../helpers/helper_functions.dart';
 
 class TLoaders {
   static hideSnackBar() => ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();

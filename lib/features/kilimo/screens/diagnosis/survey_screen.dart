@@ -16,7 +16,7 @@ class SurveyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Survey')),
+        title: const Text('Survey'),
         actions: [
           IconButton(
             icon: const Icon(

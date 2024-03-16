@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kilimo_app/common/widgets/loaders/shimmer.dart';
 
-import '../../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../../common/widgets/image_text_widget/t_circular_image.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
-import '../../../../util/constants/text_strings.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import 'update_profile_screen.dart';
-import 'widgets/profile_menu_widget.dart';
+import '../../controllers/user_controller.dart';
+import '../settings/widgets/section_heading.dart';
+import 'widgets/change_name.dart';
+import 'widgets/profile_menu.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -17,18 +19,18 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-
+    final controller = UserController.instance;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: const Icon(Iconsax.arrow_left),
         ),
-        title: const Center(child: Text('Profile')),
+        title: const Text('Profile'),
         actions: [
           IconButton(
             icon: Icon(
-              dark? Iconsax.moon : Iconsax.sun_1
+              dark? Iconsax.moon : Iconsax.moon
             ),
             onPressed: () {
               // Handle change theme icon action
@@ -41,18 +43,16 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
+              // Profile Picture
               Stack(
                 children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: const Image(
-                        image: AssetImage(TImages.profileImage),
-                      ),
-                    ),
-                  ),
+                  Obx(() {
+                    final networkImage = controller.user.value.profilePicture;
+                    final image = networkImage.isNotEmpty ? networkImage : TImages.profileImage;
+                    return controller.imageUploading.value
+                      ? const TShimmerEffect(width: 80, height: 80, radius: 80)
+                      : TCircularImage(image: image, width: 100, height: 100, isNetworkImage: networkImage.isNotEmpty);
+                  }),
                   Positioned(
                     bottom: 0,
                     right: 0,
@@ -61,51 +61,49 @@ class ProfileScreen extends StatelessWidget {
                       height: 35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: TColors.primary,
+                        color: TColors.green,
                       ),
-                      child: const Icon(
-                        Iconsax.edit,
+                      child: IconButton(
+                        icon: const Icon(Iconsax.edit, size: 20),
                         color: TColors.black,
-                        size: 20,
+                        onPressed: () => controller.uploadUserProfilePicture(),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Text(TTexts.username, style: Theme.of(context).textTheme.headlineMedium),
-              Text(TTexts.email, style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () => Get.to(() => const UpdateProfileScreen()),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: TColors.primary,
-                    side: BorderSide.none,
-                    shape: const StadiumBorder(),
-                  ), 
-                  child: const Text(TTexts.tEditProfile, style: TextStyle(color: TColors.dark))
-                ),
-              ),
-              const SizedBox(height: 30),
-              const Divider(),
-              const SizedBox(height: 10),
-              // MENU
-              ProfileMenuWidget(title: TTexts.tMenu6, icon: Iconsax.setting_2, onPress: () {}, endIcon: true),
-              ProfileMenuWidget(title: TTexts.tMenu6, icon: Iconsax.setting_2, onPress: () {}, endIcon: true),
-              ProfileMenuWidget(title: TTexts.tMenu6, icon: Iconsax.setting_2, onPress: () {}, endIcon: true),
+              Text('Change Profile Picture', style: Theme.of(context).textTheme.bodySmall),
+              // Details
+              const SizedBox(height: TSizes.spaceBtwItems / 2),
               const Divider(color: TColors.grey),
-              const SizedBox(height: 10),
-              ProfileMenuWidget(title: TTexts.tMenu6, icon: Iconsax.setting_2, onPress: () {}, endIcon: true),
-              ProfileMenuWidget(
-                title: TTexts.tMenu10, 
-                icon: Iconsax.logout, 
-                textColor: TColors.error,
-                onPress: () {
-                  AuthenticationRepository.instance.logout();
-                }, 
-                endIcon: false,
+              const SizedBox(height: TSizes.spaceBtwItems),
+              // Heading Profile Info
+              const TSectionHeading(title: 'Profile Information', showActionButton: false),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              TProfileMenu(
+                title: 'Name', 
+                value: controller.user.value.fullName, 
+                onPressed: () => Get.to(() => const ChangeName())
+              ),
+              TProfileMenu(title: 'Username', value: controller.user.value.username, onPressed: () {}),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              const Divider(color: TColors.grey),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              // Heading Profile Info
+              const TSectionHeading(title: 'Personal Information', showActionButton: false),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              TProfileMenu(title: 'User ID', value: controller.user.value.id, icon: Iconsax.copy, onPressed: () {}),
+              TProfileMenu(title: 'E-mail', value: controller.user.value.email, onPressed: () {}),
+              TProfileMenu(title: 'Phone Number', value: controller.user.value.phoneNumber, onPressed: () {}),
+              TProfileMenu(title: 'Gender', value: 'Male', onPressed: () {}),
+              TProfileMenu(title: 'Date of Birth', value: '5 Oct 1995', onPressed: () {}),
+              const Divider(color: TColors.grey),
+              const SizedBox(height: TSizes.spaceBtwSections),
+              Center(
+                child: TextButton(
+                  onPressed: () => controller.deleteAccountWarningPopup(),
+                  child: const Text('Close Account', style: TextStyle(color: Colors.red)),
+                ),
               ),
             ],
           ),

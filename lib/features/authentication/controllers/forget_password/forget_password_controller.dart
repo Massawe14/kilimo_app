@@ -51,7 +51,8 @@ class ForgetPasswordController extends GetxController {
       TLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }
-
+  
+  // Resend Reset Password Email
   resendPasswordResetEmail(String email) async {
     try {
       // Start Loading

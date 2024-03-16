@@ -81,7 +81,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Crop Diseases Diagnosis')),
+        title: const Text('Crop Diseases Diagnosis'),
         actions: [
           IconButton(
             icon: const Icon(

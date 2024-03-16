@@ -11,7 +11,7 @@ class ResourcesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Resources')),
+        title: const Text('Resources'),
         actions: [
           IconButton(
             icon: const Icon(

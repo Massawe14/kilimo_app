@@ -11,7 +11,7 @@ class CommunityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Community')),
+        title: const Text('Community'),
         actions: [
           IconButton(
             icon: const Icon(

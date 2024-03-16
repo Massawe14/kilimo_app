@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/colors.dart';
+
 // Light & Dark Check Box Themes
 class TCheckboxTheme {
   TCheckboxTheme._(); // To avoid creating instances
@@ -16,7 +18,7 @@ class TCheckboxTheme {
     }),
     fillColor: MaterialStateProperty.resolveWith((state) {
       if (state.contains(MaterialState.selected)) {
-        return Colors.green;
+        return TColors.green;
       } else {
         return Colors.transparent;
       }
@@ -35,7 +37,7 @@ class TCheckboxTheme {
     }),
     fillColor: MaterialStateProperty.resolveWith((state) {
       if (state.contains(MaterialState.selected)) {
-        return Colors.green;
+        return TColors.green;
       } else {
         return Colors.transparent;
       }

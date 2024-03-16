@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/colors.dart';
+
 // Light & Dark EChip Themes
 class TChipTheme {
   TChipTheme._(); // To avoid creating instances
@@ -8,7 +10,7 @@ class TChipTheme {
   static ChipThemeData lightChipTheme = ChipThemeData(
     disabledColor: Colors.grey.withOpacity(0.4),
     labelStyle: const TextStyle(color: Colors.black),
-    selectedColor: Colors.green,
+    selectedColor: TColors.green,
     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
     checkmarkColor: Colors.white,
   );
@@ -17,7 +19,7 @@ class TChipTheme {
   static ChipThemeData darkChipTheme = const ChipThemeData(
     disabledColor: Colors.grey,
     labelStyle: TextStyle(color: Colors.white),
-    selectedColor: Colors.green,
+    selectedColor: TColors.green,
     padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
     checkmarkColor: Colors.white,
   );

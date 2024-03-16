@@ -81,7 +81,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Dog and Cat Classification')),
+        title: const Text('Dog and Cat Classification'),
         actions: [
           IconButton(
             icon: const Icon(

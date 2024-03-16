@@ -15,12 +15,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            TTexts.appName,
-            style: TextStyle(
-              color: TColors.black,
-            ),
+        title: const Text(
+          TTexts.appName,
+          style: TextStyle(
+            color: TColors.black,
           ),
         ),
         actions: [

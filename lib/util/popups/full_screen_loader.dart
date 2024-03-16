@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/util/constants/colors.dart';
-import 'package:kilimo_app/util/helpers/helper_functions.dart';
 
 import '../../common/widgets/loaders/animation_loader.dart';
+import '../constants/colors.dart';
+import '../helpers/helper_functions.dart';
 
 class TFullScreenLoader {
   // Open a full-screen loading with a given text and animation
