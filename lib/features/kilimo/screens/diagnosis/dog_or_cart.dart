@@ -136,7 +136,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                             ? Text(
                                 '${_output[0]['label']}',
                                 style: const TextStyle(
-                                  color: TColors.primary,
+                                  color: TColors.black,
                                   fontSize: 20,
                                 ),
                               )
@@ -150,7 +150,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.primary,
+                  color: TColors.green,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
@@ -168,13 +168,13 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.primary,
+                  color: TColors.green,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
                   onPressed: pickGallery,
                   child: const Text(
-                    'Open Gallery',
+                    'Pick from Gallery',
                     style: TextStyle(
                       color: Colors.white,
                     ),

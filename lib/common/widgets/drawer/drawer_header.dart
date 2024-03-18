@@ -5,6 +5,7 @@ import '../../../features/personalization/controllers/user_controller.dart';
 import '../../../features/personalization/screens/profile/profile_screen.dart';
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/image_strings.dart';
+import '../image_text_widget/t_circular_image.dart';
 import '../loaders/shimmer.dart';
 
 class MyHeaderDrawer extends StatelessWidget {
@@ -30,9 +31,14 @@ class MyHeaderDrawer extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const CircleAvatar(
-                radius: 52,
-                backgroundImage: AssetImage(TImages.profileImage),
+              Obx(
+                () {
+                  final networkImage = controller.user.value.profilePicture;
+                  final image = networkImage.isNotEmpty ? networkImage : TImages.profileImage;
+                  return controller.imageUploading.value
+                    ? const TShimmerEffect(width: 80, height: 80, radius: 80)
+                    : TCircularImage(image: image, width: 100, height: 100, isNetworkImage: networkImage.isNotEmpty);
+                }
               ),
               const SizedBox(height: 12),
               Obx(

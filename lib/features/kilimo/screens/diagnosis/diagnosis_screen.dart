@@ -136,7 +136,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                             ? Text(
                                 '${_output[0]['label']}',
                                 style: const TextStyle(
-                                  color: TColors.primary,
+                                  color: TColors.black,
                                   fontSize: 20,
                                 ),
                               )
@@ -150,7 +150,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.primary,
+                  color: TColors.green,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
@@ -168,13 +168,13 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.primary,
+                  color: TColors.green,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
                   onPressed: pickGalleryImage,
                   child: const Text(
-                    'Oick from Gallery',
+                    'Pick from Gallery',
                     style: TextStyle(
                       color: TColors.white,
                     ),
