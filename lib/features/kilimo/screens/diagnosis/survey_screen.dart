@@ -5,8 +5,10 @@ import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
-import 'diagnosis_screen.dart';
-import 'dog_or_cart.dart';
+import 'beans_classification_screen.dart';
+import 'cassava_classification_screen.dart';
+import 'maize_classification_screen.dart';
+import 'rice_classification_screen.dart';
 import 'widgets/custom_card.dart';
 
 class SurveyScreen extends StatelessWidget {
@@ -49,7 +51,7 @@ class SurveyScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DogOrCatClassification())
+                        builder: (context) => const MaizeDiagnosisScreen())
                       );
                     },
                     child: const CustomCard(imagePath: TImages.cropImage1, title: 'Maize')
@@ -57,7 +59,7 @@ class SurveyScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DiagnosisScreen())
+                        builder: (context) => const BeansDiagnosisScreen())
                       );
                     },
                     child: const CustomCard(imagePath: TImages.cropImage2, title: 'Beans')
@@ -69,11 +71,19 @@ class SurveyScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const RiceDiagnosisScreen())
+                      );
+                    },
                     child: const CustomCard(imagePath: TImages.cropImage3, title: 'Rice')
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CassavaDiagnosisScreen())
+                      );
+                    },
                     child: const CustomCard(imagePath: TImages.cropImage4, title: 'Cassava')
                   ),
                 ],

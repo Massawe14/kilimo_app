@@ -1,7 +1,0 @@
-angular_leaf_spot
-anthracnose
-ascochyta_leaf_spot
-bcmv_and_bcmnv
-bean_rust
-common_bacterial_blight
-mixed_infection

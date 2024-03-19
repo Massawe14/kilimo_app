@@ -6,15 +6,16 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
+import '../../../../util/constants/sizes.dart';
 
-class DogOrCatClassification extends StatefulWidget {
-  const DogOrCatClassification({super.key});
+class BeansDiagnosisScreen extends StatefulWidget {
+  const BeansDiagnosisScreen({super.key});
 
   @override
-  DogOrCatClassificationState createState() => DogOrCatClassificationState();
+  BeansDiagnosisScreenState createState() => BeansDiagnosisScreenState();
 }
 
-class DogOrCatClassificationState extends State<DogOrCatClassification> {
+class BeansDiagnosisScreenState extends State<BeansDiagnosisScreen> {
   bool _isLoading = true;
   late File _image;
   late List _output;
@@ -31,7 +32,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
   classifyImage(File image) async {
     var output = await Tflite.runModelOnImage(
       path: image.path,
-      numResults: 2,
+      numResults: 3,
       threshold: 0.5,
       imageMean: 127.5,
       imageStd: 127.5,
@@ -44,8 +45,8 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
 
   loadModel() async {
     await Tflite.loadModel(
-      model: 'assets/model/model_unquant.tflite', 
-      labels: 'assets/model/dog_vs_cat_labels.txt',
+      model: 'assets/model/beans_tflite_model.tflite', 
+      labels: 'assets/model/beans_labels.txt',
     );
   }
 
@@ -55,7 +56,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
     super.dispose();
   }
 
-  pickCamera() async {
+  captureImage() async {
     final ImagePicker picker = ImagePicker();
     // Pick an image
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
@@ -66,7 +67,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
     classifyImage(_image);
   }
 
-  pickGallery() async {
+  pickGalleryImage() async {
     final ImagePicker picker = ImagePicker();
     // Pick an image
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -81,7 +82,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dog and Cat Classification'),
+        title: const Text('Beans Leaf Classification'),
         actions: [
           IconButton(
             icon: const Icon(
@@ -112,13 +113,16 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                 child: _isLoading
                   ? const SizedBox(
                       width: 260,
-                      child: Column(
-                        children: [
-                          Icon(Iconsax.picture_frame),
-                          SizedBox(
-                            height: 50,
-                          )
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.all(TSizes.spaceBtwItems),
+                        child: Column(
+                          children: [
+                            Icon(Iconsax.picture_frame),
+                            SizedBox(
+                              height: 50,
+                            )
+                          ],
+                        ),
                       ),
                     )
                   : SizedBox(
@@ -140,7 +144,7 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                                   fontSize: 20,
                                 ),
                               )
-                            : Container(),
+                            : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
                         ],
                       ),
                     ),
@@ -154,11 +158,11 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
-                  onPressed: pickCamera,
+                  onPressed: captureImage,
                   child: const Text(
                     'Take A Photo',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: TColors.white,
                     ),
                   ),
                 ),
@@ -172,11 +176,11 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
-                  onPressed: pickGallery,
+                  onPressed: pickGalleryImage,
                   child: const Text(
                     'Pick from Gallery',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: TColors.white,
                     ),
                   ),
                 ),
@@ -188,3 +192,4 @@ class DogOrCatClassificationState extends State<DogOrCatClassification> {
     );
   }
 }
+

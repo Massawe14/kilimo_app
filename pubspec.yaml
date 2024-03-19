@@ -113,12 +113,10 @@ flutter:
     - assets/images/animations/
     - assets/images/crops/
     - assets/images/profile/
-    - assets/jsons/
-    - assets/svg/
-    - assets/videos/
     - assets/model/
     - assets/icons/
     - assets/logos/
+    - assets/language/
 
   #-------------------- LOCAL FONTS ------------------------------#
   # fonts:

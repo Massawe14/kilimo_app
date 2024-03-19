@@ -6,15 +6,16 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
+import '../../../../util/constants/sizes.dart';
 
-class DiagnosisScreen extends StatefulWidget {
-  const DiagnosisScreen({super.key});
+class MaizeDiagnosisScreen extends StatefulWidget {
+  const MaizeDiagnosisScreen({super.key});
 
   @override
-  DiagnosisScreenState createState() => DiagnosisScreenState();
+  MaizeDiagnosisScreenState createState() => MaizeDiagnosisScreenState();
 }
 
-class DiagnosisScreenState extends State<DiagnosisScreen> {
+class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
   bool _isLoading = true;
   late File _image;
   late List _output;
@@ -31,7 +32,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
   classifyImage(File image) async {
     var output = await Tflite.runModelOnImage(
       path: image.path,
-      numResults: 7,
+      numResults: 4,
       threshold: 0.5,
       imageMean: 127.5,
       imageStd: 127.5,
@@ -44,8 +45,8 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
 
   loadModel() async {
     await Tflite.loadModel(
-      model: 'assets/model/resnet_model_beans.tflite', 
-      labels: 'assets/model/labels.txt',
+      model: 'assets/model/maize_tflite_model.tflite', 
+      labels: 'assets/model/maize_labels.txt',
     );
   }
 
@@ -81,7 +82,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crop Diseases Diagnosis'),
+        title: const Text('Maize Leaf Classification'),
         actions: [
           IconButton(
             icon: const Icon(
@@ -112,13 +113,16 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                 child: _isLoading
                   ? const SizedBox(
                       width: 260,
-                      child: Column(
-                        children: [
-                          Icon(Iconsax.picture_frame),
-                          SizedBox(
-                            height: 50,
-                          )
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.all(TSizes.spaceBtwItems),
+                        child: Column(
+                          children: [
+                            Icon(Iconsax.picture_frame),
+                            SizedBox(
+                              height: 50,
+                            )
+                          ],
+                        ),
                       ),
                     )
                   : SizedBox(
@@ -140,7 +144,7 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
                                   fontSize: 20,
                                 ),
                               )
-                            : Container(),
+                            : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
                         ],
                       ),
                     ),
@@ -188,4 +192,3 @@ class DiagnosisScreenState extends State<DiagnosisScreen> {
     );
   }
 }
-
