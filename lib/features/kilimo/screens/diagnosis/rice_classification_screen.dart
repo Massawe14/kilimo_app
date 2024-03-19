@@ -19,6 +19,7 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
   bool _isLoading = true;
   late File _image;
   late List _output;
+  late double _accuracy;
   final picker = ImagePicker();
 
   @override
@@ -40,6 +41,7 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
     setState(() {
       _output = output!;
       _isLoading = false;
+      _accuracy = _output[0]['confidence'];
     });
   }
 
@@ -137,14 +139,25 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
                           ),
                           // ignore: unnecessary_null_comparison
                           _output != null
-                            ? Text(
-                                '${_output[0]['label']}',
-                                style: const TextStyle(
-                                  color: TColors.black,
-                                  fontSize: 20,
-                                ),
+                            ? Column(
+                                children: [
+                                  Text(
+                                    'Result: ${_output[0]['label']}',
+                                    style: const TextStyle(
+                                      color: TColors.black,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',
+                                    style: const TextStyle(
+                                      color: TColors.black,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
                               )
-                            : const Center(child: Text("Can't identify",style: TextStyle(fontSize: 30))),
+                            : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
                         ],
                       ),
                     ),

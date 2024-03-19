@@ -18,6 +18,7 @@ class CassavaDiagnosisScreenState extends State<CassavaDiagnosisScreen> {
   bool _isLoading = true;
   late File _image;
   late List _output;
+  late double _accuracy;
   final picker = ImagePicker();
 
   @override
@@ -39,6 +40,7 @@ class CassavaDiagnosisScreenState extends State<CassavaDiagnosisScreen> {
     setState(() {
       _output = output!;
       _isLoading = false;
+      _accuracy = _output[0]['confidence'];
     });
   }
 
@@ -133,12 +135,23 @@ class CassavaDiagnosisScreenState extends State<CassavaDiagnosisScreen> {
                           ),
                           // ignore: unnecessary_null_comparison
                           _output != null && _output.isNotEmpty
-                            ? Text(
-                                '${_output[0]['label']}',
-                                style: const TextStyle(
-                                  color: TColors.black,
-                                  fontSize: 20,
-                                ),
+                            ? Column(
+                                children: [
+                                  Text(
+                                    'Result: ${_output[0]['label']}',
+                                    style: const TextStyle(
+                                      color: TColors.black,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',
+                                    style: const TextStyle(
+                                      color: TColors.black,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
                               )
                             : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
                         ],
