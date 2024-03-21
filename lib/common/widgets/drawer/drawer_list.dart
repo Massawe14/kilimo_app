@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:kilimo_app/util/constants/colors.dart';
 
+import '../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../features/personalization/screens/profile/profile_screen.dart';
+import '../../../features/personalization/screens/settings/settings.dart';
 import '../../../navigation_menu.dart';
+import '../../../util/constants/colors.dart';
 import '../../../util/constants/sizes.dart';
+import '../../../util/constants/text_strings.dart';
 
 class MyDrawerList extends StatelessWidget {
   const MyDrawerList({super.key});
@@ -18,7 +20,7 @@ class MyDrawerList extends StatelessWidget {
       children: [
         ListTile(
           leading: const Icon(Iconsax.home),
-          title: const Text('Home'),
+          title: const Text(TTexts.tMenu1),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -29,7 +31,7 @@ class MyDrawerList extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Iconsax.user),
-          title: const Text('Profile'),
+          title: const Text(TTexts.tMenu2),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -40,7 +42,7 @@ class MyDrawerList extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Iconsax.translate),
-          title: const Text('Change Language'),
+          title: const Text(TTexts.tMenu3),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -48,7 +50,7 @@ class MyDrawerList extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Iconsax.notification),
-          title: const Text('Notifications'),
+          title: const Text(TTexts.tMenu4),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -56,7 +58,7 @@ class MyDrawerList extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Iconsax.messages_2),
-          title: const Text('Messages'),
+          title: const Text(TTexts.tMenu5),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -65,15 +67,18 @@ class MyDrawerList extends StatelessWidget {
         const Divider(color: TColors.grey),
         ListTile(
           leading: const Icon(Iconsax.setting_2),
-          title: const Text('Settings'),
+          title: const Text(TTexts.tMenu6),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const SettingsScreen())
+            );
           },
         ),
         ListTile(
           leading: const Icon(Iconsax.frame_4),
-          title: const Text('Privacy Policy'),
+          title: const Text(TTexts.tMenu7),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -81,7 +86,7 @@ class MyDrawerList extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Iconsax.text_block),
-          title: const Text('Terms and Conditions'),
+          title: const Text(TTexts.tMenu8),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -89,7 +94,7 @@ class MyDrawerList extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Iconsax.message_question),
-          title: const Text('Send Feedback'),
+          title: const Text(TTexts.tMenu9),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
@@ -99,7 +104,7 @@ class MyDrawerList extends StatelessWidget {
         const Divider(color: TColors.grey),
         ListTile(
           leading: const Icon(Iconsax.logout, color: TColors.error),
-          title: const Text('Logout', style: TextStyle(color: TColors.error)),
+          title: const Text(TTexts.tMenu10, style: TextStyle(color: TColors.error)),
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);

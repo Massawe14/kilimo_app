@@ -84,7 +84,7 @@ dependencies:
   logging: ^1.2.0
   lottie: ^3.1.0
   logger: ^2.0.2+1
-  intl: ^0.19.0
+  intl: ^0.18.1
   flutter_native_splash: ^2.2.16
   smooth_page_indicator: ^1.1.0
   connectivity_plus: ^5.0.2
@@ -92,6 +92,9 @@ dependencies:
   readmore: ^2.2.0
   hive: ^2.2.3
   flutter_settings_screens: ^0.3.3-null-safety+2
+  shimmer: ^3.0.0
+  localize_and_translate: ^5.1.2
+  flutter_translate: ^4.0.4
 
 #---------------- ./ PACKAGES END -------------------------------#
 
@@ -110,12 +113,10 @@ flutter:
     - assets/images/animations/
     - assets/images/crops/
     - assets/images/profile/
-    - assets/jsons/
-    - assets/svg/
-    - assets/videos/
     - assets/model/
     - assets/icons/
     - assets/logos/
+    - assets/language/
 
   #-------------------- LOCAL FONTS ------------------------------#
   # fonts:

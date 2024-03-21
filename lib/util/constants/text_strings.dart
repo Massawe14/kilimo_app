@@ -24,6 +24,11 @@ class TTexts {
   static const String tMenu9 = "Send Feedback";
   static const String tMenu10 = "Logout";
 
+  // Profile Texts
+  static const String accountSettings = "Account Settings";
+  static const String appSettings = "App Settings";
+  static const String generalSettings = "General Settings";
+
   // OnBoarding Texts
   static const String onBoardingTitle1 = "Upload your crop image";
   static const String onBoardingTitle2 = "Analyze it and detect the crop diseases";

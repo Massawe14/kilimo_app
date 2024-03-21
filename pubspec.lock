@@ -574,6 +574,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_map:
     dependency: "direct main"
     description:
@@ -659,6 +664,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_translate:
+    dependency: "direct main"
+    description:
+      name: flutter_translate
+      sha256: "8b1c449bf6d17753e6f188185f735ebc0a328d21d745878a43be66857de8ebb3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -856,6 +869,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.3"
+  hive_flutter:
+    dependency: transitive
+    description:
+      name: hive_flutter
+      sha256: dca1da446b1d808a51689fb5d0c6c9510c0a2ba01e22805d492c73b68e33eecc
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   html:
     dependency: transitive
     description:
@@ -964,10 +985,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.0"
+    version: "0.18.1"
   js:
     dependency: transitive
     description:
@@ -1040,6 +1061,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  localize_and_translate:
+    dependency: "direct main"
+    description:
+      name: localize_and_translate
+      sha256: c0b53a9fbaa142c8f845f94de2f26124f8ed17b286719c8b331a4d137ce9b46d
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.2"
   localstorage:
     dependency: "direct main"
     description:
@@ -1536,6 +1565,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
