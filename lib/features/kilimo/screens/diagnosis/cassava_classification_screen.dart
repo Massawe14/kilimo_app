@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
+import '../../../../util/constants/sizes.dart';
 
 class CassavaDiagnosisScreen extends StatefulWidget {
   const CassavaDiagnosisScreen({super.key});
@@ -114,13 +115,16 @@ class CassavaDiagnosisScreenState extends State<CassavaDiagnosisScreen> {
                 child: _isLoading
                   ? const SizedBox(
                       width: 260,
-                      child: Column(
-                        children: [
-                          Icon(Iconsax.picture_frame),
-                          SizedBox(
-                            height: 50,
-                          )
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.all(TSizes.spaceBtwItems),
+                        child: Column(
+                          children: [
+                            Icon(Iconsax.picture_frame),
+                            SizedBox(
+                              height: 50,
+                            )
+                          ],
+                        ),
                       ),
                     )
                   : SizedBox(

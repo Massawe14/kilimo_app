@@ -95,6 +95,7 @@ dependencies:
   shimmer: ^3.0.0
   localize_and_translate: ^5.1.2
   flutter_translate: ^4.0.4
+  firebase_app_check: ^0.2.2
 
 #---------------- ./ PACKAGES END -------------------------------#
 
@@ -112,6 +113,7 @@ flutter:
     - assets/images/on_boarding_images/
     - assets/images/animations/
     - assets/images/crops/
+    - assets/images/categories/
     - assets/images/profile/
     - assets/model/
     - assets/icons/

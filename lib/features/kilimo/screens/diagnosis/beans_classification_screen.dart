@@ -1,87 +1,49 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:tflite/tflite.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../controllers/beans/beans_controller.dart';
 
-class BeansDiagnosisScreen extends StatefulWidget {
+class BeansDiagnosisScreen extends StatelessWidget {
   const BeansDiagnosisScreen({super.key});
 
   @override
-  BeansDiagnosisScreenState createState() => BeansDiagnosisScreenState();
-}
-
-class BeansDiagnosisScreenState extends State<BeansDiagnosisScreen> {
-  bool _isLoading = true;
-  late File _image;
-  late List _output;
-  late double _accuracy;
-  final picker = ImagePicker();
-
-  @override
-  void initState() {
-    super.initState();
-    loadModel().then((value) {
-      setState(() {});
-    });
-  }
-
-  classifyImage(File image) async {
-    var output = await Tflite.runModelOnImage(
-      path: image.path,
-      numResults: 3,
-      threshold: 0.5,
-      imageMean: 127.5,
-      imageStd: 127.5,
-    );
-    setState(() {
-      _output = output!;
-      _isLoading = false;
-      _accuracy = _output[0]['confidence'];
-    });
-  }
-
-  loadModel() async {
-    await Tflite.loadModel(
-      model: 'assets/model/beans_tflite_model.tflite', 
-      labels: 'assets/model/beans_labels.txt',
-    );
-  }
-
-  @override
-  void dispose() {
-    Tflite.close();
-    super.dispose();
-  }
-
-  captureImage() async {
-    final ImagePicker picker = ImagePicker();
-    // Pick an image
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
-    if (image == null) return;
-    setState(() {
-      _image = File(image.path);
-    });
-    classifyImage(_image);
-  }
-
-  pickGalleryImage() async {
-    final ImagePicker picker = ImagePicker();
-    // Pick an image
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) return null;
-    setState(() {
-      _image = File(image.path);
-    });
-    classifyImage(_image);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BeansDiagnosisController());
+
+    captureImage() async {
+      final ImagePicker picker = ImagePicker();
+      // Pick an image
+      final XFile? pickedImage = await picker.pickImage(source: ImageSource.camera);
+      if (pickedImage != null) {
+        File image = File(pickedImage.path);
+        // Call the classifyImage function from the controller with the picked image
+        controller.classifyImage(image);
+      } else {
+        // Handle case where the user canceled image selection
+        debugPrint('No image selected');
+      }
+    }
+
+    pickGalleryImage() async {
+      final ImagePicker picker = ImagePicker();
+      // Pick an image
+      final XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        File image = File(pickedImage.path);
+        // Call the classifyImage function from the controller with the picked image
+        controller.classifyImage(image);
+      } else {
+        // Handle case where the user canceled image selection
+        debugPrint('No image selected');
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Beans Leaf Classification'),
@@ -111,56 +73,57 @@ class BeansDiagnosisScreenState extends State<BeansDiagnosisScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: _isLoading
-                  ? const SizedBox(
-                      width: 260,
-                      child: Padding(
-                        padding: EdgeInsets.all(TSizes.spaceBtwItems),
+              Obx(
+                () => Center(
+                  child: controller.isLoading.value
+                    ? const SizedBox(
+                        width: 260,
+                        child: Padding(
+                          padding: EdgeInsets.all(TSizes.spaceBtwItems),
+                          child: Column(
+                            children: [
+                              Icon(Iconsax.picture_frame),
+                              SizedBox(
+                                height: 50,
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : SizedBox(
                         child: Column(
                           children: [
-                            Icon(Iconsax.picture_frame),
                             SizedBox(
-                              height: 50,
-                            )
+                              height: 250,
+                              child: Image.file(controller.image.value!),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            controller.output.isNotEmpty
+                              ? Column(
+                                  children: [
+                                    Text(
+                                      'Result: ${controller.output[0]['label']}',
+                                      style: const TextStyle(
+                                        color: TColors.black,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
+                                      style: const TextStyle(
+                                        color: TColors.black,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
                           ],
                         ),
                       ),
-                    )
-                  : SizedBox(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 250,
-                            child: Image.file(_image),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          // ignore: unnecessary_null_comparison
-                          _output != null
-                            ? Column(
-                                children: [
-                                  Text(
-                                    'Result: ${_output[0]['label']}',
-                                    style: const TextStyle(
-                                      color: TColors.black,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',
-                                    style: const TextStyle(
-                                      color: TColors.black,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
-                        ],
-                      ),
-                    ),
+                ),
               ),
               Container(
                 height: 60,
@@ -171,7 +134,9 @@ class BeansDiagnosisScreenState extends State<BeansDiagnosisScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
-                  onPressed: captureImage,
+                  onPressed: () {
+                    captureImage();
+                  },
                   child: const Text(
                     'Take A Photo',
                     style: TextStyle(
@@ -189,7 +154,9 @@ class BeansDiagnosisScreenState extends State<BeansDiagnosisScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
-                  onPressed: pickGalleryImage,
+                  onPressed: () {
+                    pickGalleryImage();
+                  },
                   child: const Text(
                     'Pick from Gallery',
                     style: TextStyle(
@@ -205,4 +172,3 @@ class BeansDiagnosisScreenState extends State<BeansDiagnosisScreen> {
     );
   }
 }
-
