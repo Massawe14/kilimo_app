@@ -101,7 +101,7 @@ class TQuestionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: const Icon(Iconsax.like),
+                  icon: const Icon(Iconsax.like_1),
                   onPressed: () {},
                 ),
                 IconButton(

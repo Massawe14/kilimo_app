@@ -99,14 +99,12 @@ class ProfileScreen extends StatelessWidget {
               TProfileMenu(title: 'User ID', value: controller.user.value.id, icon: Iconsax.copy, onPressed: () {}),
               TProfileMenu(title: 'E-mail', value: controller.user.value.email, onPressed: () {}),
               TProfileMenu(title: 'Phone Number', value: controller.user.value.phoneNumber, onPressed: () {}),
-              TProfileMenu(title: 'Gender', value: 'Male', onPressed: () {}),
-              TProfileMenu(title: 'Date of Birth', value: '5 Oct 1995', onPressed: () {}),
               const Divider(color: TColors.grey),
               const SizedBox(height: TSizes.spaceBtwSections),
               Center(
                 child: TextButton(
                   onPressed: () => controller.deleteAccountWarningPopup(),
-                  child: const Text('Close Account', style: TextStyle(color: Colors.red)),
+                  child: const Text('Delete Account', style: TextStyle(color: Colors.red)),
                 ),
               ),
             ],
