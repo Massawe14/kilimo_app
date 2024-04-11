@@ -33,47 +33,56 @@ class AskCommunity extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Heading
               Text(
                 'Improve the probabilty of receiving the right answer', 
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelMedium,
               ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: OutlinedButton(
-                  onPressed: () {
-                    // Handle button press
-                  },
-                  child: const Text(
-                    'Add Crop',
-                    style: TextStyle(
-                      fontSize: 14.0,
+              const SizedBox(height: TSizes.spaceBtwSections),
+              Form(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          // Handle button press
+                        },
+                        child: const Text(
+                          'Add Crop',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: TSizes.spaceBtwInputFields),
+                    // Question input field
+                    TextFormField(
+                      expands: false,
+                      decoration: const InputDecoration(
+                        labelText: 'Your question to the community',
+                        hintText: 'Add a question indicating what\'s wrong with your crop',
+                      ),
+                      maxLength: 200, // Set character limit as specified in the UI
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwInputFields),
+                    // Crop details text field
+                    TextFormField(
+                      expands: false,
+                      decoration: const InputDecoration(
+                        labelText: 'Description of your problem',
+                        hintText: 'Describe specialities such as change of leaves, root colour, bugs, tears...',
+                      ),
+                      maxLength: 2500, // Set character limit as specified in the UI
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-              // Question input field
-              const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Your question to the community',
-                  hintText: 'Add a question indicating what\'s wrong with your crop',
-                  border: OutlineInputBorder(),
-                ),
-                maxLength: 200, // Set character limit as specified in the UI
-              ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-              // Crop details text field
-              const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Description of your problem',
-                  hintText: 'Describe specialities such as change of leaves, root colour, bugs, tears...',
-                  border: OutlineInputBorder(),
-                ),
-                maxLength: 2500, // Set character limit as specified in the UI
               ),
             ],
           ),
