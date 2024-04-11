@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kilimo_app/features/personalization/screens/settings/widgets/section_heading.dart';
 
+import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/constants/text_strings.dart';
@@ -96,7 +97,9 @@ class SettingsScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                      onPressed: () {}, 
+                      onPressed: () {
+                        AuthenticationRepository.instance.logout();
+                      }, 
                       child: const Text(TTexts.tMenu10, style: TextStyle(color: TColors.error))
                     ),
                   ),

@@ -30,6 +30,13 @@ class TImages {
   static const String cropImage3 = "assets/images/crops/rice.jpeg";
   static const String cropImage4 = "assets/images/crops/cassava.jpeg";
 
+  // Crops Categories
+  static const String maizeCategory = "assets/images/categories/maize.png";
+  static const String beanCategory = "assets/images/categories/beans.png";
+  static const String riceCategory = "assets/images/categories/rice.png";
+  static const String cassavaCategory = "assets/images/categories/cassava.png";
+  static const String tomatoCategory = "assets/images/categories/cassava.png";
+
   // Profile Image
   static const String profileImage = "assets/images/profile/profile.png";
 }

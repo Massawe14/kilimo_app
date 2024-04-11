@@ -81,10 +81,11 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-android:+'
     implementation 'org.tensorflow:tensorflow-lite:0.1.100'
     
-    // Import the Firebase BoM
-    // implementation platform('com.google.firebase:firebase-bom:32.7.2')
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    // Add the dependencies for the App Check libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
 
     // Add the dependency for the Firebase SDK for Google Analytics
     implementation("com.google.firebase:firebase-analytics")
