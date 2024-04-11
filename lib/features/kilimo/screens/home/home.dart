@@ -6,6 +6,7 @@ import 'package:kilimo_app/util/constants/text_strings.dart';
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../weather/weather.dart';
+import '../weather/weather_details.dart';
 import 'widgets/home_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -42,27 +43,34 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       drawer: const NavigationDrawerMenu(),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
-              WeatherScreen(),
-              THomeCard(
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const WeatherDetailScreen())
+                  );
+                },
+                child: const WeatherScreen()
+              ),
+              const THomeCard(
                 image: 'assets/images/crops/maize.jpeg',
                 title: TTexts.maizeCropTitle,
                 subtitle: TTexts.maizeCropDescription,
               ),
-              THomeCard(
+              const THomeCard(
                 image: 'assets/images/crops/beans.jpeg',
                 title: TTexts.beansCropTitle,
                 subtitle: TTexts.beansCropDescription,
               ),
-              THomeCard(
+              const THomeCard(
                 image: 'assets/images/crops/rice.jpeg',
                 title: TTexts.riceCropTitle,
                 subtitle: TTexts.riceCropDescription,
               ),
-              THomeCard(
+              const THomeCard(
                 image: 'assets/images/crops/cassava.jpeg',
                 title: TTexts.cassavaCropTitle,
                 subtitle: TTexts.cassavaCropDescription,

@@ -11,6 +11,7 @@ import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/user_controller.dart';
 import '../settings/widgets/section_heading.dart';
 import 'widgets/change_name.dart';
+import 'widgets/change_phonenumber.dart';
 import 'widgets/profile_menu.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -96,9 +97,22 @@ class ProfileScreen extends StatelessWidget {
               // Heading Profile Info
               const TSectionHeading(title: 'Personal Information', showActionButton: false),
               const SizedBox(height: TSizes.spaceBtwItems),
-              TProfileMenu(title: 'User ID', value: controller.user.value.id, icon: Iconsax.copy, onPressed: () {}),
-              TProfileMenu(title: 'E-mail', value: controller.user.value.email, onPressed: () {}),
-              TProfileMenu(title: 'Phone Number', value: controller.user.value.phoneNumber, onPressed: () {}),
+              TProfileMenu(
+                title: 'User ID', 
+                value: controller.user.value.id, 
+                icon: Iconsax.copy, 
+                onPressed: () {},
+              ),
+              TProfileMenu(
+                title: 'E-mail', 
+                value: controller.user.value.email, 
+                onPressed: () {}
+              ),
+              TProfileMenu(
+                title: 'Phone Number', 
+                value: controller.user.value.phoneNumber, 
+                onPressed: () => Get.to(() => const ChangePhoneNumber()),
+              ),
               const Divider(color: TColors.grey),
               const SizedBox(height: TSizes.spaceBtwSections),
               Center(

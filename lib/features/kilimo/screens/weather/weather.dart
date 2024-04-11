@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
 
 import '../../../../util/constants/api_constants.dart';
+import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -117,37 +119,79 @@ class WeatherScreenState extends State<WeatherScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Current Temperature: ${weather.temperature!.celsius!.toStringAsFixed(2)}°C',
-                style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        color: TColors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      weather.areaName.toString(), 
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      DateFormat().add_MMMMEEEEd().format(DateTime.now()), 
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 10.0),
-              Text(
-                'Feels Like: ${weather.tempFeelsLike!.celsius!.toStringAsFixed(2)}°C',
-                style: const TextStyle(fontSize: 16.0),
-              ),
-              const SizedBox(height: 10.0),
-              Text(
-                'Max Temperature: ${weather.tempMax!.celsius!.toStringAsFixed(2)}°C',
-                style: const TextStyle(fontSize: 16.0),
-              ),
-              const SizedBox(height: 10.0),
-              Text(
-                'Min Temperature: ${weather.tempMin!.celsius!.toStringAsFixed(2)}°C',
-                style: const TextStyle(fontSize: 16.0),
-              ),
-              const SizedBox(height: 10.0),
-              Text(
-                'Pressure: ${weather.pressure.toString()} hPa',
-                style: const TextStyle(fontSize: 16.0),
-              ),
-            ],
-          ),
+            ),
+            const Divider(color: TColors.grey),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 50),
+                  child: Column(
+                    children: [
+                      Text(
+                        weather.weatherDescription.toString(),
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(height: TSizes.sm),
+                      Text(
+                        '${weather.temperature!.celsius!.round().toString()}°C',
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      Text(
+                        'min: ${weather.tempMin!.celsius!.round().toString()}°C / max: ${weather.tempMax!.celsius!.round().toString()}°C',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 120,
+                        height: 120,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/icons/clear.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'wind ${weather.windSpeed}m/s',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -115,6 +115,7 @@ flutter:
     - assets/images/crops/
     - assets/images/categories/
     - assets/images/profile/
+    - assets/images/weather/
     - assets/model/
     - assets/icons/
     - assets/logos/
