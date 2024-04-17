@@ -10,18 +10,16 @@ class TCropList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: 6,
-        itemBuilder: (_, index) {
-          return const TQuestionCard(
-            image: 'assets/images/crops/maize.jpeg',
-            title: TTexts.maizeCropTitle,
-            description: TTexts.maizeCropDescription,
-          );
-        },
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: 6,
+      itemBuilder: (_, index) {
+        return const TQuestionCard(
+          image: 'assets/images/crops/maize.jpeg',
+          title: TTexts.maizeCropTitle,
+          description: TTexts.maizeCropDescription,
+        );
+      },
     );
   }
 }

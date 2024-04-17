@@ -32,11 +32,12 @@ class TQuestionCard extends StatelessWidget {
         ],
       ),
       child: Card(
-        elevation: 0, // Set elevation to 0 to remove default card shadow
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),

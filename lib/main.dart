@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'app.dart';
 import 'data/repositories/authentication/authentication_repository.dart';
+import 'features/kilimo/models/diseases_db.dart';
 import 'firebase_options.dart';
 
 // Entry point of Flutter App
@@ -26,24 +27,12 @@ void main() async {
   );
 
   // Initialize App Check
-  final appCheck = FirebaseAppCheck.instance;
-  await appCheck.activate(
-    // You can also use a `ReCaptchaEnterpriseProvider` provider instance as an
-    // argument for `webProvider`
-    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-    // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
-    // your preferred provider. Choose from:
-    // 1. Debug provider
-    // 2. Safety Net provider
-    // 3. Play Integrity provider
-    androidProvider: AndroidProvider.playIntegrity,
-    // Default provider for iOS/macOS is the Device Check provider. You can use the "AppleProvider" enum to choose
-        // your preferred provider. Choose from:
-        // 1. Debug provider
-        // 2. Device Check provider
-        // 3. App Attest provider
-        // 4. App Attest provider with fallback to Device Check provider (App Attest provider is only available on iOS 14.0+, macOS 14.0+)
-    appleProvider: AppleProvider.appAttest,
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
   );
+
+  // Initialize the DiseaseDatabase
+  await DiseaseDatabase().initDatabase();
+
   runApp(const App());
 }

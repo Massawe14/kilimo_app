@@ -12,17 +12,34 @@ class CropCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 80,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: 6,
+      child: ListView(
         scrollDirection: Axis.horizontal,
-        itemBuilder: (_, index) {
-          return TVerticalImageText(
-            image: TImages.beanCategory,
-            title: 'Beans',
-            onTap: () {},
-          );
-        },
+        children: [
+          Row(
+            children: [
+              TVerticalImageText(
+                image: TImages.beanCategory,
+                title: 'Beans',
+                onTap: () {},
+              ),
+              TVerticalImageText(
+                image: TImages.maizeCategory,
+                title: 'Maize',
+                onTap: () {},
+              ),
+              TVerticalImageText(
+                image: TImages.cassavaCategory,
+                title: 'Cassava',
+                onTap: () {},
+              ),
+              TVerticalImageText(
+                image: TImages.riceCategory,
+                title: 'Rice',
+                onTap: () {},
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

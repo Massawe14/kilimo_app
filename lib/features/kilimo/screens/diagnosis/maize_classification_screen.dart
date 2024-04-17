@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import 'disease_details_screen.dart';
 
 class MaizeDiagnosisScreen extends StatefulWidget {
   const MaizeDiagnosisScreen({super.key});
@@ -141,12 +143,9 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
                           _output != null
                             ? Column(
                                 children: [
-                                  Text(
-                                    'Result: ${_output[0]['label']}',
-                                    style: const TextStyle(
-                                      color: TColors.black,
-                                      fontSize: 20,
-                                    ),
+                                  TextButton(
+                                    onPressed: () => Get.to(() => DiseaseDetailsScreen(diseaseName: _output[0]['label'])),
+                                    child: Text('Result: ${_output[0]['label']}'),
                                   ),
                                   Text(
                                     'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',

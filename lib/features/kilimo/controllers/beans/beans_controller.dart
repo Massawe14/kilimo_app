@@ -12,12 +12,12 @@ class BeansDiagnosisController extends GetxController {
   var output = [].obs;
   var accuracy = 0.0.obs;
 
-  classifyImage(File img) async {
+  classifyImage(File file) async {
     final url = Uri.parse(APIConstants.tBeansAPIModel);
 
     // Create a Map to represent the request payload
     final Map<String, String> requestBody = {
-      'image': img.path.split('/').last, // Extract the filename from the path
+      "image": '"${file.path}"',
     };
 
     debugPrint("Request: $requestBody");
@@ -29,8 +29,6 @@ class BeansDiagnosisController extends GetxController {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(requestBody),
       );
-
-      debugPrint("Response: $request");
 
       if (request.statusCode == 200) {
         // Parse the response JSON and update values accordingly

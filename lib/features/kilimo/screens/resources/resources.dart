@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/sizes.dart';
+import 'fertilizer_calculator.dart';
 import 'widgets/resource_card.dart';
 
 class ResourcesScreen extends StatelessWidget {
@@ -45,7 +47,7 @@ class ResourcesScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => Get.to(() => const FertilizerCalculatorScreen()),
                       child: const ResourceCard(
                         icon: Iconsax.calculator, 
                         title: 'Fertilizer Calculator',
