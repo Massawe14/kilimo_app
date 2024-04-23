@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 
-part 'disease_model.g.dart';
+part 'disease.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class Disease {
   @HiveField(0)
   String name;

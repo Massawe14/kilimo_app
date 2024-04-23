@@ -5,8 +5,8 @@ import 'package:kilimo_app/util/constants/text_strings.dart';
 
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
-import '../weather/weather.dart';
-import '../weather/weather_details.dart';
+import '../weather/weather_screen.dart';
+import '../weather/weather_forecast_screen.dart';
 import 'widgets/home_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const WeatherDetailScreen())
+                    builder: (context) => const WeatherForecastScreen())
                   );
                 },
                 child: const WeatherScreen()

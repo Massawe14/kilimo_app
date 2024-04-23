@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
-import '../../../../util/constants/api_constants.dart';
+import '../../../../../util/constants/api_constants.dart';
 
 class BeansDiagnosisController extends GetxController {
   var isLoading = true.obs;

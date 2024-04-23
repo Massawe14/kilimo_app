@@ -20,11 +20,11 @@ class ResourceCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded( // Wrap the Row with Expanded
+            Expanded( 
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     decoration: const BoxDecoration(
@@ -33,18 +33,18 @@ class ResourceCard extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(icon), // Custom icon inside circle
+                      child: Icon(icon),
                     ),
                   ),
                   const SizedBox(height: TSizes.sm),
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 16),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: TSizes.defaultSpace), // Add space between icon and arrow
+            const SizedBox(width: TSizes.defaultSpace),
             const Center(child: Icon(Iconsax.arrow_right_3)),
           ],
         ),

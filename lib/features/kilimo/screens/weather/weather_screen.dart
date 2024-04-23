@@ -69,7 +69,7 @@ class WeatherScreenState extends State<WeatherScreen> {
 
   void _getCurrentLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       setState(() {
         _currentPosition = position;
       });
@@ -115,7 +115,7 @@ class WeatherScreenState extends State<WeatherScreen> {
         ],
       ),
       child: Card(
-        elevation: 0, // Set elevation to 0 to remove default card shadow
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -153,7 +153,7 @@ class WeatherScreenState extends State<WeatherScreen> {
                     children: [
                       Text(
                         weather.weatherDescription.toString(),
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: TSizes.sm),
                       Text(
@@ -172,15 +172,10 @@ class WeatherScreenState extends State<WeatherScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 120,
-                        height: 120,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/icons/clear.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: _getWeatherIcon(weather.weatherIcon.toString()),
                       ),
                       Text(
                         'wind ${weather.windSpeed}m/s',
@@ -195,5 +190,40 @@ class WeatherScreenState extends State<WeatherScreen> {
         ),
       ),
     );
+  }
+
+  Widget _getWeatherIcon(String icon) {
+    switch (icon) {
+      case '02n':
+        return const Image(image: AssetImage('assets/icons/lightcloud.png'));
+      case '02d':
+        return const Image(image: AssetImage('assets/icons/lightcloud.png'));
+      case '03n':
+        return const Image(image: AssetImage('assets/icons/scatteredcloud.png'));
+      case '03d':
+        return const Image(image: AssetImage('assets/icons/scatteredcloud.png'));
+      case '04n':
+        return const Image(image: AssetImage('assets/icons/heavycloud.png'));
+      case '04d':
+        return const Image(image: AssetImage('assets/icons/heavycloud.png'));
+      case '09n':
+        return const Image(image: AssetImage('assets/icons/showersrain.png'));
+      case '09d':
+        return const Image(image: AssetImage('assets/icons/showersrain.png'));
+      case '10n':
+        return const Image(image: AssetImage('assets/icons/lightrain.png'));
+      case '10d':
+        return const Image(image: AssetImage('assets/icons/lightrain.png'));
+      case '11n':
+        return const Image(image: AssetImage('assets/icons/thunderstorm.png'));
+      case '11d':
+        return const Image(image: AssetImage('assets/icons/thunderstorm.png'));
+      case '13n':
+        return const Image(image: AssetImage('assets/icons/snow.png'));
+      case '13d':
+        return const Image(image: AssetImage('assets/icons/snow.png'));
+      default:
+        return const Image(image: AssetImage('assets/icons/clear.png'));
+    }
   }
 }

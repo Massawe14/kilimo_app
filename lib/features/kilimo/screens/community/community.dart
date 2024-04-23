@@ -36,16 +36,19 @@ class CommunityScreen extends StatelessWidget {
         ],
       ),
       drawer: const NavigationDrawerMenu(),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Search Section
-            const TSearchContainer(text: 'Search in Community'),
-            const SizedBox(height: TSizes.spaceBtwSections),
-            // Filter Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+      body: CustomScrollView(
+        slivers: [
+          // Search Section
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: TSizes.spaceBtwItems),
+            sliver: SliverToBoxAdapter(
+              child: TSearchContainer(text: 'Search in community'),
+            ),
+          ),
+          // Filter Section
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+            sliver: SliverToBoxAdapter(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,32 +73,34 @@ class CommunityScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
-            // Crop Categories
-            const Padding(
-              padding: EdgeInsets.only(left: TSizes.defaultSpace),
+          ),
+          // Crop Categories Section
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+            sliver: SliverToBoxAdapter(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // Heading
-                  TSectionHeading(title: 'Crop Categories', showActionButton: false),
+                  TSectionHeading(title: 'Crop categories', showActionButton: false),
                   SizedBox(height: TSizes.spaceBtwItems),
-                  // Categories
                   CropCategories(),
                 ],
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
-            // Crop List
-            const TCropList(),
-          ],
-        ),
+          ),
+          // Crop List Section
+          const SliverPadding(
+            padding: EdgeInsets.all(5),
+            sliver: TCropList(),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        elevation: 0.0,
         onPressed: () => Get.to(() => const AskCommunity()),
+        backgroundColor: TColors.green,
         label: const Text('Ask Community', style: TextStyle(color: TColors.white)),
         icon: const Icon(Iconsax.receipt_edit, color: TColors.white),
-        backgroundColor: TColors.green,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),

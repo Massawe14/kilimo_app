@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../util/constants/colors.dart';
+import '../../../../../util/constants/image_strings.dart';
 import '../../../../../util/constants/sizes.dart';
 
 class TQuestionCard extends StatelessWidget {
@@ -50,30 +51,71 @@ class TQuestionCard extends StatelessWidget {
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
             const Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://via.placeholder.com/150'),
+                  backgroundImage: AssetImage(TImages.profileImage),
                   radius: 24,
                 ),
                 SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Username',
-                      style: TextStyle(
-                        color: TColors.green,
-                        fontSize: TSizes.fontSizeMd,
-                        fontWeight: FontWeight.bold
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Username',
+                          style: TextStyle(
+                            color: TColors.green,
+                            fontSize: TSizes.fontSizeMd,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '.',
+                          style: TextStyle(
+                            color: TColors.darkGrey,
+                            fontSize: TSizes.fontSizeSm,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Location',
+                          style: TextStyle(
+                            color: TColors.darkGrey,
+                            fontSize: TSizes.fontSizeSm,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Location',
-                      style: TextStyle(
-                        color: TColors.grey,
-                        fontSize: TSizes.fontSizeSm,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          '2 d',
+                          style: TextStyle(
+                            color: TColors.darkGrey,
+                            fontSize: TSizes.fontSizeSm,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '.',
+                          style: TextStyle(
+                            color: TColors.darkGrey,
+                            fontSize: TSizes.fontSizeSm,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'crop',
+                          style: TextStyle(
+                            color: TColors.darkGrey,
+                            fontSize: TSizes.fontSizeSm,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

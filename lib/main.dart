@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app.dart';
 import 'data/repositories/authentication/authentication_repository.dart';
+import 'features/kilimo/models/disease.dart';
 import 'features/kilimo/models/diseases_db.dart';
 import 'firebase_options.dart';
+import 'util/constants/boxes.dart';
 
 // Entry point of Flutter App
 void main() async {
@@ -31,8 +34,17 @@ void main() async {
     androidProvider: AndroidProvider.debug,
   );
 
+  // Initialize Hive
+  await Hive.initFlutter();
+
+  // Register HiveAdapter for Disease class
+  Hive.registerAdapter(DiseaseAdapter());
+
+  // Open the box
+  diseasesBox = await Hive.openBox<Disease>('diseasesBox');
+
   // Initialize the DiseaseDatabase
-  await DiseaseDatabase().initDatabase();
+  await DiseaseDatabase().addInitialDiseases(diseasesBox);
 
   runApp(const App());
 }

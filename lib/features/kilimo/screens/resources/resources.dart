@@ -5,7 +5,9 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/sizes.dart';
+import 'cultivation_tips.dart';
 import 'fertilizer_calculator.dart';
+import 'pests_and_disease_screen.dart';
 import 'widgets/resource_card.dart';
 
 class ResourcesScreen extends StatelessWidget {
@@ -56,7 +58,7 @@ class ResourcesScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => Get.to(() => const PestsAndDiseasesScreen()),
                       child: const ResourceCard(
                         icon: Iconsax.health, 
                         title: 'Pests & diseases',
@@ -71,7 +73,7 @@ class ResourcesScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => Get.to(() => const CultivationTipsScreen()),
                       child: const ResourceCard(
                         icon: Iconsax.document_normal, 
                         title: 'Cultivation Tips',

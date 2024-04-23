@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 
@@ -51,7 +52,7 @@ class AskCommunity extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: OutlinedButton(
                         onPressed: () {
-                          // Handle button press
+                          selectCrop(context);
                         },
                         child: const Text(
                           'Add Crop',

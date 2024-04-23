@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
-import '../../controllers/beans/beans_controller.dart';
+import '../../controllers/diseases/beans/beans_controller.dart';
 
 class BeansDiagnosisScreen extends StatelessWidget {
   const BeansDiagnosisScreen({super.key});
@@ -76,16 +76,23 @@ class BeansDiagnosisScreen extends StatelessWidget {
               Obx(
                 () => Center(
                   child: controller.isLoading.value
-                    ? const SizedBox(
+                    ? SizedBox(
                         width: 260,
                         child: Padding(
-                          padding: EdgeInsets.all(TSizes.spaceBtwItems),
+                          padding: const EdgeInsets.all(TSizes.spaceBtwItems),
                           child: Column(
                             children: [
-                              Icon(Iconsax.picture_frame),
-                              SizedBox(
-                                height: 50,
-                              )
+                              Container(
+                                width: 150,
+                                height: 150,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/icons/crop_image.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: TSizes.spaceBtwSections),
                             ],
                           ),
                         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/beans/disease_details_controller.dart';
-import '../../models/disease_model.dart';
+import '../../controllers/diseases/disease_details_controller.dart';
+import '../../models/disease.dart';
 
 class DiseaseDetailsScreen extends StatelessWidget {
   const DiseaseDetailsScreen({
@@ -24,25 +24,26 @@ class DiseaseDetailsScreen extends StatelessWidget {
         () {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
-          } else if (controller.disease.value == null) {
+          } else if (controller.diseases.isEmpty) {
             return const Center(child: Text('Disease data not found'));
           } else {
-            return _buildBody(controller.disease.value!); 
-            // Confident disease.value is not null at this point
+            final disease = controller.diseases.first;
+            debugPrint('$disease');
+            return _buildBody(disease);
           }
         }
       ),
     );
   }
 
-  Widget _buildBody(Disease? disease) {
+  Widget _buildBody(Disease disease) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: [
           Text(
-            'Disease Name: ${disease!.name}',
+            'Disease Name: ${disease.name}',
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),

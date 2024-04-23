@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets/custom_shapes/search_container.dart';
-import '../../../../common/widgets/image_text_widget/vertical_image_text.dart';
+import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
-import '../../../../util/constants/colors.dart';
-import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 
 class FertilizerCalculatorScreen extends StatefulWidget {
@@ -23,6 +20,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
   TextEditingController nitrogenController = TextEditingController();
   TextEditingController phosphorusController = TextEditingController();
   TextEditingController potassiumController = TextEditingController();
+  bool isCalculateButtonEnabled = false;
 
   void calculateFertilizer() {
     // Perform calculation here
@@ -49,7 +47,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                     SizedBox(
                       width: 70,
                       height: 60,
-                      child: TextFormField(
+                      child: TextField(
                         controller: nitrogenController,
                         decoration: const InputDecoration(labelText: 'N'),
                         keyboardType: TextInputType.number,
@@ -58,7 +56,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                     SizedBox(
                       width: 70,
                       height: 60,
-                      child: TextFormField(
+                      child: TextField(
                         controller: phosphorusController,
                         decoration: const InputDecoration(labelText: 'P'),
                         keyboardType: TextInputType.number,
@@ -67,7 +65,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                     SizedBox(
                       width: 70,
                       height: 60,
-                      child: TextFormField(
+                      child: TextField(
                         controller: potassiumController,
                         decoration: const InputDecoration(labelText: 'K'),
                         keyboardType: TextInputType.number,
@@ -95,6 +93,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                     TextButton(
                       onPressed: () {
                         // Add save logic here
+                        Navigator.of(context).pop();
                       },
                       child: const Text(
                         'Save', 
@@ -113,6 +112,18 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
         );
       },
     );
+  }
+
+  void _selectUnit(value) {
+    if (selectedUnit != 'Acre') {
+      setState(() {
+        selectedUnit = value;
+      });
+    } else {
+      setState(() {
+        selectedUnit = value;
+      });
+    }
   }
 
   @override
@@ -140,87 +151,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                   ),
                   OutlinedButton(
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Select your crop', style: Theme.of(context).textTheme.titleMedium),
-                            backgroundColor: TColors.white,
-                            content: SizedBox(
-                              width: double.maxFinite,
-                              child: Column(
-                                children: [
-                                  const TSearchContainer(text: 'Search'),
-                                  SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(height: TSizes.spaceBtwSections),
-                                        const TSectionHeading(title: 'Your crops', showActionButton: false),
-                                        const SizedBox(height: TSizes.spaceBtwSections),
-                                        Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                TVerticalImageText(
-                                                  image: TImages.beanCategory,
-                                                  title: 'Beans',
-                                                  onTap: () {},
-                                                ),
-                                                TVerticalImageText(
-                                                  image: TImages.maizeCategory,
-                                                  title: 'Maize',
-                                                  onTap: () {},
-                                                ),
-                                                TVerticalImageText(
-                                                  image: TImages.cassavaCategory,
-                                                  title: 'Cassava',
-                                                  onTap: () {},
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: TSizes.spaceBtwSections),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                
-                                                TVerticalImageText(
-                                                  image: TImages.riceCategory,
-                                                  title: 'Rice',
-                                                  onTap: () {},
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: TSizes.spaceBtwSections),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          'Cancel', 
-                                          style: TextStyle(
-                                            color: TColors.info,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                      selectCrop(context);
                     },
                     child: Row(
                       children: [
@@ -228,7 +159,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                           selectedCrop.isNotEmpty ? selectedCrop : 'Select crop',
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
-                        const Icon(Icons.arrow_drop_down),
+                        const Icon(Iconsax.arrow_down_1),
                       ],
                     ),
                   ),
@@ -311,21 +242,13 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                   Radio(
                     value: "Acre",
                     groupValue: selectedUnit,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedUnit = value!;
-                      });
-                    },
+                    onChanged: (value) => _selectUnit(value),
                   ),
                   const Text('Acre'),
                   Radio(
                     value: "Hector",
                     groupValue: selectedUnit,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedUnit = value!;
-                      });
-                    },
+                    onChanged: (value) => _selectUnit(value),
                   ),
                   const Text('Hector'),
                 ],
@@ -346,7 +269,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.remove),
+                    icon: const Icon(Iconsax.minus),
                     onPressed: () {
                       setState(() {
                         if (plotSize > 1.0) {
@@ -356,18 +279,23 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                     },
                   ),
                   Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(labelText: 'Plot size'),
+                    child: TextField(
+                      decoration: InputDecoration(labelText: selectedUnit),
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
                         setState(() {
-                          plotSize = double.parse(value);
+                          plotSize = double.tryParse(value) ?? 0.0;
+                          if (value.isNotEmpty) {
+                            isCalculateButtonEnabled = true;
+                          } else {
+                            isCalculateButtonEnabled = false;
+                          }
                         });
                       },
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Iconsax.add),
                     onPressed: () {
                       setState(() {
                         plotSize += 1.0;
@@ -380,9 +308,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: () {
-                    calculateFertilizer();
-                  },
+                  onPressed: isCalculateButtonEnabled ? () => calculateFertilizer() : null,
                   child: const Text('Calculate'),
                 ),
               ),

@@ -115,16 +115,23 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
             children: [
               Center(
                 child: _isLoading
-                  ? const SizedBox(
+                  ? SizedBox(
                       width: 260,
                       child: Padding(
-                        padding: EdgeInsets.all(TSizes.spaceBtwItems),
+                        padding: const EdgeInsets.all(TSizes.spaceBtwItems),
                         child: Column(
                           children: [
-                            Icon(Iconsax.picture_frame),
-                            SizedBox(
-                              height: 50,
-                            )
+                            Container(
+                              width: 150,
+                              height: 150,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('assets/icons/crop_image.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: TSizes.spaceBtwSections),
                           ],
                         ),
                       ),
@@ -136,9 +143,7 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
                             height: 250,
                             child: Image.file(_image),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: TSizes.spaceBtwSections),
                           // ignore: unnecessary_null_comparison
                           _output != null
                             ? Column(

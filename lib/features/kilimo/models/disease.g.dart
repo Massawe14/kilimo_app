@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'disease_model.dart';
+part of 'disease.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -8,7 +8,7 @@ part of 'disease_model.dart';
 
 class DiseaseAdapter extends TypeAdapter<Disease> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   Disease read(BinaryReader reader) {
