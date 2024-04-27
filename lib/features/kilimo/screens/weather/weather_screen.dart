@@ -6,6 +6,7 @@ import 'package:weather/weather.dart';
 import '../../../../util/constants/api_constants.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import 'widgets/weather_icons.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
@@ -175,7 +176,7 @@ class WeatherScreenState extends State<WeatherScreen> {
                       SizedBox(
                         width: 100,
                         height: 100,
-                        child: _getWeatherIcon(weather.weatherIcon.toString()),
+                        child: getWeatherIcon(weather.weatherConditionCode.toString()),
                       ),
                       Text(
                         'wind ${weather.windSpeed}m/s',
@@ -190,40 +191,5 @@ class WeatherScreenState extends State<WeatherScreen> {
         ),
       ),
     );
-  }
-
-  Widget _getWeatherIcon(String icon) {
-    switch (icon) {
-      case '02n':
-        return const Image(image: AssetImage('assets/icons/lightcloud.png'));
-      case '02d':
-        return const Image(image: AssetImage('assets/icons/lightcloud.png'));
-      case '03n':
-        return const Image(image: AssetImage('assets/icons/scatteredcloud.png'));
-      case '03d':
-        return const Image(image: AssetImage('assets/icons/scatteredcloud.png'));
-      case '04n':
-        return const Image(image: AssetImage('assets/icons/heavycloud.png'));
-      case '04d':
-        return const Image(image: AssetImage('assets/icons/heavycloud.png'));
-      case '09n':
-        return const Image(image: AssetImage('assets/icons/showersrain.png'));
-      case '09d':
-        return const Image(image: AssetImage('assets/icons/showersrain.png'));
-      case '10n':
-        return const Image(image: AssetImage('assets/icons/lightrain.png'));
-      case '10d':
-        return const Image(image: AssetImage('assets/icons/lightrain.png'));
-      case '11n':
-        return const Image(image: AssetImage('assets/icons/thunderstorm.png'));
-      case '11d':
-        return const Image(image: AssetImage('assets/icons/thunderstorm.png'));
-      case '13n':
-        return const Image(image: AssetImage('assets/icons/snow.png'));
-      case '13d':
-        return const Image(image: AssetImage('assets/icons/snow.png'));
-      default:
-        return const Image(image: AssetImage('assets/icons/clear.png'));
-    }
   }
 }

@@ -62,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                       height: 35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: TColors.green,
+                        color: TColors.accent,
                       ),
                       child: IconButton(
                         icon: const Icon(Iconsax.edit, size: 20),

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 import '../../../../util/constants/api_constants.dart';
 import '../../screens/weather/widgets/weather.dart';
@@ -19,7 +18,8 @@ class WeatherForecastController extends GetxController {
     maxTemperature: 0.0,
     humidity: 0,
     windSpeed: 0.0,
-    icon: WeatherIcons.na,
+    weatherIconCode: 800,
+    weatherDescription: "Loading..."
   ).obs;
 
   var nextFourDaysWeather = [].obs;
@@ -43,14 +43,14 @@ class WeatherForecastController extends GetxController {
       var currentWeatherResponse = await http.get(Uri.parse(currentWeatherUrl));
       var currentWeatherData = jsonDecode(currentWeatherResponse.body);
 
-      String location = currentWeatherData['name'];
+      String location = currentWeatherData['name'] ?? "Unknown Location";
       double temperature = currentWeatherData['main']['temp'];
       double minTemperature = currentWeatherData['main']['temp_min'];
       double maxTemperature = currentWeatherData['main']['temp_max'];
       int humidity = currentWeatherData['main']['humidity'];
       double windSpeed = currentWeatherData['wind']['speed'];
-      String weatherIconCode = currentWeatherData['weather'][0]['icon'];
-      IconData iconData = WeatherIcons.fromString(weatherIconCode, fallback: WeatherIcons.na);
+      int weatherIconCode = currentWeatherData['weather'][0]['id'];
+      String weatherDescription = currentWeatherData['weather'][0]['description'] ?? "No description available";
 
       weatherData.value = Weather(
         location: location,
@@ -60,7 +60,8 @@ class WeatherForecastController extends GetxController {
         maxTemperature: maxTemperature,
         humidity: humidity,
         windSpeed: windSpeed,
-        icon: iconData,
+        weatherIconCode: weatherIconCode,
+        weatherDescription: weatherDescription,
       );
 
       // Fetch weather forecast for the next four days
@@ -73,8 +74,8 @@ class WeatherForecastController extends GetxController {
 
       nextFourDaysWeather.value = [];
 
-      for (var i = 0; i < 4; i++) {
-        var weather = weatherList[i];
+      for (var i = 1; i < 5; i++) {
+        var weather = weatherList[i * 8];
 
         String date = weather['dt_txt'];
         // Parse the date string into a DateTime object
@@ -84,17 +85,14 @@ class WeatherForecastController extends GetxController {
         String formattedDate = DateFormat.EEEE().format(dateTime);
 
         double temperature = weather['main']['temp'];
-        String weatherIcon = weather['weather'][0]['icon'];
-        debugPrint('Weather Icon Code: $weatherIconCode');
-
-        // Check if the icon code is supported by WeatherIcons library
-        IconData iconData = WeatherIcons.fromString(weatherIcon, fallback: WeatherIcons.na);
+        int weatherIcon = weather['weather'][0]['id'];
+        debugPrint('Weather Icon Code: $weatherIcon');
 
         // Construct a map with string keys
         nextFourDaysWeather.add({
           'date': formattedDate,
           'temperature': '${temperature.round()}°C',
-          'weatherIcon': iconData,
+          'weatherIcon': weatherIcon,
         });
       }
     } catch (e) {

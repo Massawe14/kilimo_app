@@ -19,7 +19,7 @@ class DiagnosisContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
                   width: 50,
@@ -28,6 +28,7 @@ class DiagnosisContainer extends StatelessWidget {
                     image: AssetImage('assets/icons/detection.png'),
                   )
                 ),
+                const SizedBox(width: 5),
                 Text(
                   'Crop diagnosis',
                   style: Theme.of(context).textTheme.headlineSmall,
@@ -65,6 +66,7 @@ class DiagnosisContainer extends StatelessWidget {
                           color: TColors.white,
                         )
                       ),
+                      SizedBox(width: 5),
                       Text('Diagnose'),
                     ],
                   ),

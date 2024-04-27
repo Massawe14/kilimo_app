@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Weather {
   final String location;
   final String date;
@@ -8,7 +6,8 @@ class Weather {
   final double maxTemperature;
   final int humidity;
   final double windSpeed;
-  final IconData icon;
+  final int weatherIconCode;
+  final String weatherDescription;
 
   Weather({
     required this.location,
@@ -18,6 +17,7 @@ class Weather {
     required this.maxTemperature,
     required this.humidity,
     required this.windSpeed,
-    required this.icon,
+    required this.weatherIconCode,
+    required this.weatherDescription,
   });
 }

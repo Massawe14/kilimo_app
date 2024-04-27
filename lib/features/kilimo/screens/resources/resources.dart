@@ -7,6 +7,7 @@ import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/sizes.dart';
 import 'cultivation_tips.dart';
 import 'fertilizer_calculator.dart';
+import 'pests_and_disease_alert.dart';
 import 'pests_and_disease_screen.dart';
 import 'widgets/resource_card.dart';
 
@@ -82,7 +83,7 @@ class ResourcesScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => Get.to(() => const PestsAndDiseaseAlert()),
                       child: const ResourceCard(
                         icon: Iconsax.danger, 
                         title: 'Pests & Disease Alert',

@@ -46,7 +46,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Beans Leaf Classification'),
+        title: const Text('Beans Disease Detector'),
         actions: [
           IconButton(
             icon: const Icon(
@@ -137,7 +137,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.green,
+                  color: TColors.accent,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
@@ -157,7 +157,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.green,
+                  color: TColors.accent,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(

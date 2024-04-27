@@ -19,7 +19,7 @@ class TCultivationTipsMenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, size: 25, color: TColors.green),
+      leading: Icon(icon, size: 25, color: TColors.accent),
       title: Text(title, style: Theme.of(context).textTheme.titleMedium),
       trailing: Icon(icon, color: TColors.dark),
       onTap: onTap,

@@ -84,7 +84,7 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rice Leaf Classification'),
+        title: const Text('Rice Disease Detector'),
         actions: [
           IconButton(
             icon: const Icon(
@@ -172,7 +172,7 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.green,
+                  color: TColors.accent,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
@@ -190,7 +190,7 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.all(25.5),
                 decoration: BoxDecoration(
-                  color: TColors.green,
+                  color: TColors.accent,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(

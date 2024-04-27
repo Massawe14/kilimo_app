@@ -8,10 +8,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app.dart';
 import 'data/repositories/authentication/authentication_repository.dart';
-import 'features/kilimo/models/disease.dart';
-import 'features/kilimo/models/diseases_db.dart';
+import 'features/kilimo/models/disease/disease.dart';
 import 'firebase_options.dart';
-import 'util/constants/boxes.dart';
 
 // Entry point of Flutter App
 void main() async {
@@ -41,10 +39,7 @@ void main() async {
   Hive.registerAdapter(DiseaseAdapter());
 
   // Open the box
-  diseasesBox = await Hive.openBox<Disease>('diseasesBox');
-
-  // Initialize the DiseaseDatabase
-  await DiseaseDatabase().addInitialDiseases(diseasesBox);
+  await Hive.openBox<Disease>('plant_diseases');
 
   runApp(const App());
 }

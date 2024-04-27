@@ -67,7 +67,7 @@ class TQuestionCard extends StatelessWidget {
                         Text(
                           'Username',
                           style: TextStyle(
-                            color: TColors.green,
+                            color: TColors.accent,
                             fontSize: TSizes.fontSizeMd,
                             fontWeight: FontWeight.bold
                           ),

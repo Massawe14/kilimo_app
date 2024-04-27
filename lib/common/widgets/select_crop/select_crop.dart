@@ -33,17 +33,23 @@ Future<dynamic> selectCrop(BuildContext context) {
                             TVerticalImageText(
                               image: TImages.beanCategory,
                               title: 'Beans',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).pop('Beans');
+                              },
                             ),
                             TVerticalImageText(
                               image: TImages.maizeCategory,
                               title: 'Maize',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).pop('Maize');
+                              },
                             ),
                             TVerticalImageText(
                               image: TImages.cassavaCategory,
                               title: 'Cassava',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).pop('Cassava');
+                              },
                             ),
                           ],
                         ),
@@ -55,7 +61,9 @@ Future<dynamic> selectCrop(BuildContext context) {
                             TVerticalImageText(
                               image: TImages.riceCategory,
                               title: 'Rice',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).pop('Rice');
+                              },
                             ),
                           ],
                         ),

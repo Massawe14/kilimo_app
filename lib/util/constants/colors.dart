@@ -4,9 +4,9 @@ class TColors {
   TColors._();
   
   // App Basic Colors
-  static const Color primary = Color(0xFF00AE58);
-  static const Color secondary = Color(0xFFFFE24B);
-  static const Color accent = Color(0xFF19FA89);
+  static const Color primary = Color(0xFF075e54);
+  static const Color secondary = Color(0xFF128c7e);
+  static const Color accent = Color(0xFF25d366);
 
   // Text Colors
   static const Color textPrimary = Color(0xFF333333);
@@ -23,9 +23,9 @@ class TColors {
   static Color darkContainer = Colors.white.withOpacity(0.1);
 
   // Button Colors
-  static const Color buttonPrimary = Color(0xFF00AE58);
-  static const Color buttonSecondary = Color(0xFF6C757D);
-  static const Color buttonDisabled = Color(0xFFC4C4C4);
+  static const Color buttonPrimary = Color(0xFF25d366);
+  static const Color buttonSecondary = Color(0xFFdcf8c6);
+  static const Color buttonDisabled = Color(0xFFece5dd);
 
   // Border Colors
   static const Color borderPrimary = Color(0xFFD9D9D9);
@@ -33,7 +33,7 @@ class TColors {
 
   // Error and validation Colors
   static const Color error = Color(0xFFD32F2F);
-  static const Color success = Color(0xFF388E3C);
+  static const Color success = Color(0xFF25d366);
   static const Color warning = Color(0xFFF57C00);
   static const Color info = Color(0xFF1976D2);
 
@@ -45,5 +45,4 @@ class TColors {
   static const Color softGrey = Color(0xFFF4F4F4);
   static const Color lightGrey = Color(0xFFF9F9F9);
   static const Color white = Color(0xFFFFFFFF);
-  static const Color green = Colors.green;
 }

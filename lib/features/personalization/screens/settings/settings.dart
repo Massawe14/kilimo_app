@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
           onPressed: () => Get.back(),
           icon: const Icon(Iconsax.arrow_left),
         ),
-        title: const Text('General Settings'),
+        title: const Text('Settings'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -28,67 +28,67 @@ class SettingsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Account Settings
-                  const TSectionHeading(title: 'Account Settings', showActionButton: false),
+                  // General Settings
+                  const TSectionHeading(title: 'General', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  TSettingsMenuTile(
-                    icon: Iconsax.safe_home,
-                    title: 'My Addresses',
-                    subTitle: 'Set farm location address',
-                    onTap: () {},
+                  Text(
+                    'Select your language',
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.translate,
-                    title: 'Change Language',
-                    subTitle: 'Choose your choice language',
-                    onTap: () {},
+                  TextButton(
+                    onPressed: () {}, 
+                    child: Text(
+                      'English', 
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.notification,
-                    title: 'Notifications',
-                    subTitle: 'Set any kind of notification message',
-                    onTap: () {},
-                  ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.security_card,
-                    title: 'Account Privacy',
-                    subTitle: 'Manage data usage and connected accounts',
-                    onTap: () {},
-                  ),
-                  // App Settings
-                  const SizedBox(height: TSizes.spaceBtwSections),
-                  const Divider(color: TColors.grey),
-                  const TSectionHeading(title: 'App Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  TSettingsMenuTile(
-                    icon: Iconsax.document_upload,
-                    title: 'Load Data',
-                    subTitle: 'Upload Data to your Cloud Firebase',
-                    onTap: () {},
+                  Text(
+                    'App country',
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.location,
-                    title: 'Geolocation',
-                    subTitle: 'Set recommendation based on location',
-                    trailing: Switch(value: false, onChanged: (value) {}),
-                  ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.security_user,
-                    title: 'Safe Mode',
-                    subTitle: 'Search result is safe for all ages',
-                    trailing: Switch(value: false, onChanged: (value) {}),
-                  ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.image,
-                    title: 'HD Image Quality',
-                    subTitle: 'Set image quality to be seen',
-                    trailing: Switch(value: false, onChanged: (value) {}),
+                  TextButton(
+                    onPressed: () {}, 
+                    child: Text(
+                      'Tanzania', 
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                   TSettingsMenuTile(
                     icon: Iconsax.moon,
                     title: 'Dark Theme',
                     subTitle: 'Set dark theme',
+                    trailing: Switch(value: false, onChanged: (value) {}),
+                  ),
+                  // Notifications Settings
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  const Divider(color: TColors.grey),
+                  const TSectionHeading(title: 'Notifications', showActionButton: false),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  TSettingsMenuTile(
+                    icon: Iconsax.location,
+                    title: 'Receive Push Notification',
+                    subTitle: 'Information about my crops',
+                    trailing: Switch(value: false, onChanged: (value) {}),
+                  ),
+                  TSettingsMenuTile(
+                    icon: Iconsax.security_user,
+                    title: 'Receive Push Notification',
+                    subTitle: 'Popular Posts',
+                    trailing: Switch(value: false, onChanged: (value) {}),
+                  ),
+                  TSettingsMenuTile(
+                    icon: Iconsax.image,
+                    title: 'Receive Push Notification',
+                    subTitle: 'Answer to your post',
+                    trailing: Switch(value: false, onChanged: (value) {}),
+                  ),
+                  TSettingsMenuTile(
+                    icon: Iconsax.moon,
+                    title: 'Receive Push Notification',
+                    subTitle: 'Upvote to your post',
                     trailing: Switch(value: false, onChanged: (value) {}),
                   ),
                   // Logout Button

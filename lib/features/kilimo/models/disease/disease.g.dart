@@ -18,16 +18,18 @@ class DiseaseAdapter extends TypeAdapter<Disease> {
     };
     return Disease(
       name: fields[0] as String,
-      symptoms: (fields[1] as List).cast<String>(),
-      causes: (fields[2] as List).cast<String>(),
-      treatment: (fields[3] as List).cast<String>(),
-    );
+      imagePath: fields[4] as String,
+    )
+      ..symptoms = (fields[1] as List).cast<String>()
+      ..causes = (fields[2] as List).cast<String>()
+      ..treatment = (fields[3] as List).cast<String>()
+      ..dateTime = fields[5] as DateTime;
   }
 
   @override
   void write(BinaryWriter writer, Disease obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +37,11 @@ class DiseaseAdapter extends TypeAdapter<Disease> {
       ..writeByte(2)
       ..write(obj.causes)
       ..writeByte(3)
-      ..write(obj.treatment);
+      ..write(obj.treatment)
+      ..writeByte(4)
+      ..write(obj.imagePath)
+      ..writeByte(5)
+      ..write(obj.dateTime);
   }
 
   @override

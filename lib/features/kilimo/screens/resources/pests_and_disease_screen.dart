@@ -67,12 +67,12 @@ class PestsAndDiseasesScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               const TPestsAndDiseasesList(),
               const SizedBox(height: TSizes.spaceBtwInputFields),
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {}, 
-                    child: const Text('See More'),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {}, 
+                  child: const Center(
+                    child: Text('See More'),
                   ),
                 ),
               ),
@@ -81,12 +81,12 @@ class PestsAndDiseasesScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               const TPestsAndDiseasesList(),
               const SizedBox(height: TSizes.spaceBtwInputFields),
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {}, 
-                    child: const Text('See More'),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {}, 
+                  child: const Center(
+                    child: Text('See More'),
                   ),
                 ),
               ),
@@ -95,12 +95,12 @@ class PestsAndDiseasesScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               const TPestsAndDiseasesList(),
               const SizedBox(height: TSizes.spaceBtwInputFields),
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {}, 
-                    child: const Text('See More'),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {}, 
+                  child: const Center(
+                    child: Text('See More'),
                   ),
                 ),
               ),
@@ -109,12 +109,12 @@ class PestsAndDiseasesScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               const TPestsAndDiseasesList(),
               const SizedBox(height: TSizes.spaceBtwInputFields),
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {}, 
-                    child: const Text('See More'),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {}, 
+                  child: const Center(
+                    child: Text('See More'),
                   ),
                 ),
               ),
@@ -123,12 +123,12 @@ class PestsAndDiseasesScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               const TPestsAndDiseasesList(),
               const SizedBox(height: TSizes.spaceBtwInputFields),
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {}, 
-                    child: const Text('See More'),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {}, 
+                  child: const Center(
+                    child: Text('See More'),
                   ),
                 ),
               ),

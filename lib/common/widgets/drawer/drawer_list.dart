@@ -40,30 +40,6 @@ class MyDrawerList extends StatelessWidget {
             );
           },
         ),
-        ListTile(
-          leading: const Icon(Iconsax.translate),
-          title: const Text(TTexts.tMenu3),
-          onTap: () {
-            // Close navigation drawer before
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Iconsax.notification),
-          title: const Text(TTexts.tMenu4),
-          onTap: () {
-            // Close navigation drawer before
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Iconsax.messages_2),
-          title: const Text(TTexts.tMenu5),
-          onTap: () {
-            // Close navigation drawer before
-            Navigator.pop(context);
-          },
-        ),
         const Divider(color: TColors.grey),
         ListTile(
           leading: const Icon(Iconsax.setting_2),

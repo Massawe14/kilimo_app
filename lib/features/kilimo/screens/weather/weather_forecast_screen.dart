@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../controllers/weather/weather_forecast_controller.dart';
+import 'widgets/weather_icons.dart';
 
 class WeatherForecastScreen extends StatelessWidget {
   const WeatherForecastScreen({super.key});
@@ -62,14 +63,15 @@ class WeatherForecastScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: TSizes.spaceBtwItems),
                             Text(
-                              'Wind speed ${controller.weatherData.value.windSpeed}',
+                              'Wind speed ${controller.weatherData.value.windSpeed}m/s',
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ],
                         ),
-                        Icon(
-                          controller.weatherData.value.icon,
-                          size: 50,
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: getWeatherIcon(controller.weatherData.value.weatherIconCode.toString()),
                         ),
                       ],
                     ),
@@ -78,25 +80,35 @@ class WeatherForecastScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Cloud in the morning, rain in the\nafternoon',
+                          controller.weatherData.value.weatherDescription,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
-                        Text(
-                          '${controller.weatherData.value.humidity}%',
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Row(
+                          children: [
+                            const SizedBox(
+                              height: 30,
+                              child: Image(
+                                image: AssetImage('assets/icons/humidity.png'),
+                              ),
+                            ),
+                            Text(
+                              '${controller.weatherData.value.humidity}%',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),
                     Text(
-                      'Today would be a bay day for: APPLYING PESTICIDES',
+                      getWeatherAdvice(controller.weatherData.value.weatherDescription),
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
-              const Divider(color: TColors.darkGrey),
+              const Divider(color: TColors.grey),
               const SizedBox(height: TSizes.spaceBtwItems),
               Text(
                 'Next 4 days',
@@ -114,7 +126,11 @@ class WeatherForecastScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 10),
-                        Icon(weatherData['weatherIcon']),
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: getWeatherIcon(weatherData['weatherIcon'].toString()),
+                        ),
                         const SizedBox(height: 10),
                         Text(
                           weatherData['temperature'],
@@ -145,5 +161,13 @@ class WeatherForecastScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getWeatherAdvice(String weatherDescription) {
+    if (['light rain', 'rain', 'shower rain', 'heavy rain'].contains(weatherDescription.toLowerCase())) {
+      return 'Today would be a bad day for: APPLYING PESTICIDES';
+    } else {
+      return 'Today would be a good day for: APPLYING PESTICIDES';
+    }
   }
 }

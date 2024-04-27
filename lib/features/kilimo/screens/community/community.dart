@@ -64,7 +64,7 @@ class CommunityScreen extends StatelessWidget {
                     child: const Text(
                       'change',
                       style: TextStyle(
-                        color: TColors.green,
+                        color: TColors.accent,
                         fontSize: TSizes.fontSizeMd,
                         fontWeight: FontWeight.bold,
                       ),
@@ -97,8 +97,8 @@ class CommunityScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0.0,
-        onPressed: () => Get.to(() => const AskCommunity()),
-        backgroundColor: TColors.green,
+        onPressed: () => Get.to(() => AskCommunity()),
+        backgroundColor: TColors.accent,
         label: const Text('Ask Community', style: TextStyle(color: TColors.white)),
         icon: const Icon(Iconsax.receipt_edit, color: TColors.white),
         shape: RoundedRectangleBorder(
