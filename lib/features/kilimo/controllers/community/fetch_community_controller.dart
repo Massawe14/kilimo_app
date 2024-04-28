@@ -8,13 +8,7 @@ import '../../models/community/community.dart';
 class CommunityPostsController extends GetxController {
   RxList <Community> communityPosts = <Community>[].obs;
 
-  // Observable flags for loading states
-  RxBool isLoading = true.obs;
-
   void fetchCommunityPosts(Community currentPost) async {
-    // Set loading state
-    isLoading.value = true;
-    
     // Create a Configuration object
     var config = Configuration.local([Community.schema]);
 
@@ -33,9 +27,6 @@ class CommunityPostsController extends GetxController {
 
       // Update communityPosts with filtered posts
       communityPosts.assignAll(filteredPosts);
-
-      // Reset loading states
-      isLoading.value = false;
     } catch (e) {
       debugPrint('Error reading data: $e');
       THelperFunctions.showSnackBar('Failed to read data. Please try again.');

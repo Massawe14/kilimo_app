@@ -27,7 +27,7 @@ class PestsAndDiseaseAlert extends StatelessWidget {
             children: [
               Text(
                 'Currently, there are no pests or diseases reported in your vicinity.',
-                style: Theme.of(context).textTheme.labelMedium,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               Center(
                 child: Container(
@@ -57,7 +57,7 @@ class PestsAndDiseaseAlert extends StatelessWidget {
                   const SizedBox(width: 5),
                   Text(
                     'Prevention Tip',
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),
@@ -66,7 +66,7 @@ class PestsAndDiseaseAlert extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwItems),
               Text(
                 'Catch early and prevent the build-up of fatal pests in your field.',
-                style: Theme.of(context).textTheme.labelMedium,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
               Center(

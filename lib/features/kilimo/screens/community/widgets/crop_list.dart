@@ -11,14 +11,11 @@ class TCropList extends StatelessWidget {
   Widget build(BuildContext context) {
     final CommunityPostsController controller = Get.put(CommunityPostsController());
     return Obx(() {
-      if (controller.isLoading.value) {
-        // Show a loading indicator while fetching data
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (controller.communityPosts.isEmpty) {
-        return const Center(
-          child: Text('No community posts available'),
+      if (controller.communityPosts.isEmpty) {
+        return const SliverToBoxAdapter(
+          child: Center(
+            child: Text('No community posts available'),
+          ),
         );
       } else {
         return SliverList(

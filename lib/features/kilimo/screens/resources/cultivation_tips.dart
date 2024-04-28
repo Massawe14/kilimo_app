@@ -31,7 +31,7 @@ class CultivationTipsScreen extends StatelessWidget {
                 // Heading
                 Text(
                   'See relavant information on', 
-                  style: Theme.of(context).textTheme.labelMedium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 OutlinedButton(
                   onPressed: () {
@@ -43,7 +43,7 @@ class CultivationTipsScreen extends StatelessWidget {
                         'Select crop',
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
-                      const Icon(Iconsax.arrow_down_1),
+                      const Icon(Iconsax.arrow_down_1, size: 16),
                     ],
                   ),
                 ),

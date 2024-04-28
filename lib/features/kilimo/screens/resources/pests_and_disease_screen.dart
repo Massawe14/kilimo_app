@@ -32,7 +32,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   // Heading
                   Text(
                     'See relavant information on', 
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   OutlinedButton(
                     onPressed: () {
@@ -44,7 +44,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                           'Select crop',
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
-                        const Icon(Iconsax.arrow_down_1),
+                        const Icon(Iconsax.arrow_down_1, size: 16),
                       ],
                     ),
                   ),
@@ -58,7 +58,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                 children: [
                   Text(
                     'All pests and diseases that might appear in\nyour crop at different stages', 
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),

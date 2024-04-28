@@ -147,7 +147,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                   // Heading
                   Text(
                     'See relavant information on', 
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   OutlinedButton(
                     onPressed: () {
@@ -159,7 +159,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                           selectedCrop.isNotEmpty ? selectedCrop : 'Select crop',
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
-                        const Icon(Iconsax.arrow_down_1),
+                        const Icon(Iconsax.arrow_down_1, size: 16),
                       ],
                     ),
                   ),
@@ -261,7 +261,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                 children: [
                   Text(
                     'Sizes smaller than one unit are expressed as 0.\nExample: half acre = 0.5', 
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),
