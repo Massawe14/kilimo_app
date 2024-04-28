@@ -212,7 +212,7 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
                                     },
                                     child: Text(
                                       'Result: ${_output[0]['label']}',
-                                      style: Theme.of(context).textTheme.headlineMedium,
+                                      style: Theme.of(context).textTheme.headlineSmall,
                                     ),
                                   ),
                                   Text(

@@ -18,7 +18,7 @@ class TextProperty extends StatelessWidget {
         ListTile(
           title: Text(
             '$title:',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

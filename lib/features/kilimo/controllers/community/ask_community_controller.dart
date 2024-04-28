@@ -11,7 +11,7 @@ import '../../models/community/community.dart';
 class AskCommunityController extends GetxController {
   List<String> crops = ['Beans', 'Maize', 'Cassava', 'Rice'];
   late String selectedCrop = '';
-  late File selectedImage = File('');
+  late File selectedImage = File('assets/images/crops/default.jpeg');
   final problem = TextEditingController();
   final problemDescription = TextEditingController();
 
@@ -92,7 +92,7 @@ class AskCommunityController extends GetxController {
 
   // Method to reset form fields
   void _resetForm() {
-    selectedCrop = '';
+    selectedCrop = 'assets/images/crops/default.jpeg';
     selectedImage;
     problem.clear();
     problemDescription.clear();
