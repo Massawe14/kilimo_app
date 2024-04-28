@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 import 'package:kilimo_app/util/helpers/helper_functions.dart';
 
-import 'features/kilimo/screens/community/community.dart';
+import 'features/kilimo/screens/community/community_screen.dart';
 import 'features/kilimo/screens/diagnosis/survey_screen.dart';
 import 'features/kilimo/screens/home/home.dart';
 import 'features/kilimo/screens/resources/resources.dart';

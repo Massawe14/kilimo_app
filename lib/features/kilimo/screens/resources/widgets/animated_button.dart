@@ -17,7 +17,7 @@ class AnimatedButton extends StatefulWidget {
 class AnimatedButtonState extends State<AnimatedButton> {
   Color _buttonColor = TColors.darkGrey;
   Color _textColor = TColors.info;
-  late final String title;
+  late String title = 'Button';
 
   void _changeColor() {
     setState(() {

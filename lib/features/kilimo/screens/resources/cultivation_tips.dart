@@ -20,8 +20,10 @@ class CultivationTipsScreen extends StatelessWidget {
         ),
         title: const Text('Cultivation Tips'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,19 +43,19 @@ class CultivationTipsScreen extends StatelessWidget {
                         'Select crop',
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
-                      const Icon(Icons.arrow_drop_down),
+                      const Icon(Iconsax.arrow_down_1),
                     ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
-            const Row(
-              children: [
-                Text(''),
-              ],
-            ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            // const Row(
+            //   children: [
+            //     Text(''),
+            //   ],
+            // ),
+            // const SizedBox(height: TSizes.spaceBtwItems),
             Expanded(
               child: Center(
                 child: Row(
@@ -69,7 +71,7 @@ class CultivationTipsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: TSizes.spaceBtwItems),
             const Expanded(
               child: ContainerSlider(),
             ),

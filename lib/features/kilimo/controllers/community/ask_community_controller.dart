@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:realm/realm.dart';
 
+import '../../../../util/helpers/helper_functions.dart';
 import '../../models/community/community.dart';
 
 class AskCommunityController extends GetxController {
@@ -38,14 +39,17 @@ class AskCommunityController extends GetxController {
       selectedImage = File(pickedImage.path);
       update(); // Notify UI of changes
     } else {
-      showSnackBar('Image selection cancelled');
+      THelperFunctions.showSnackBar('Image selection cancelled');
     }
   }
 
   // Method to submit data to Realm database
   void submitData() async {
     if (_validateData()) {
+      // Create a Configuration object
       var config = Configuration.local([Community.schema]);
+
+      // Open a Realm
       var realm = Realm(config);
 
       var communityData = Community(
@@ -60,18 +64,22 @@ class AskCommunityController extends GetxController {
       );
 
       try {
+        // Open a write transaction
         realm.write(() {
           realm.add(communityData);
         });
 
         _resetForm();
-        showSnackBar('Data submitted successfully');
+        THelperFunctions.showSnackBar('Data submitted successfully');
       } catch (e) {
         debugPrint('Error submitting data: $e');
-        showSnackBar('Failed to submit data. Please try again.');
-      }
+        THelperFunctions.showSnackBar('Failed to submit data. Please try again.');
+      } finally {
+        // Close the realm
+        realm.close();
+      }  
     } else {
-      showSnackBar('Please fill in all fields');
+      THelperFunctions.showSnackBar('Please fill in all fields');
     }
   }
 
@@ -89,14 +97,5 @@ class AskCommunityController extends GetxController {
     problem.clear();
     problemDescription.clear();
     update(); // Notify UI of changes
-  }
-
-  // Method to show a SnackBar
-  void showSnackBar(String message) {
-    ScaffoldMessenger.of(Get.context!).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
   }
 }

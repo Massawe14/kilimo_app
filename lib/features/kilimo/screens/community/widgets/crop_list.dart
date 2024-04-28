@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../../../../util/constants/text_strings.dart';
+import '../../../controllers/community/fetch_community_controller.dart';
 import 'question_card.dart';
 
 class TCropList extends StatelessWidget {
@@ -8,17 +9,32 @@ class TCropList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return const TQuestionCard(
-            image: 'assets/images/crops/maize.jpeg',
-            title: TTexts.maizeCropTitle,
-            description: TTexts.maizeCropDescription,
-          );
-        },
-        childCount: 4,
-      ),
-    );
+    final CommunityPostsController controller = Get.put(CommunityPostsController());
+    return Obx(() {
+      if (controller.isLoading.value) {
+        // Show a loading indicator while fetching data
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (controller.communityPosts.isEmpty) {
+        return const Center(
+          child: Text('No community posts available'),
+        );
+      } else {
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              final post = controller.communityPosts[index];
+              return TQuestionCard(
+                image: '${post.image}',
+                title: post.problem,
+                description: post.description,
+              );
+            },
+            childCount: controller.communityPosts.length,
+          ),
+        );
+      }
+    });
   }
 }
