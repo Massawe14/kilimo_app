@@ -50,26 +50,24 @@ class CultivationTipsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
-            // const Row(
-            //   children: [
-            //     Text(''),
-            //   ],
-            // ),
-            // const SizedBox(height: TSizes.spaceBtwItems),
-            Expanded(
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    AnimatedButton(
-                      onPressed: () => ContainerSlider.updateShowDefault(false),
-                    ),
-                    AnimatedButton(
-                      onPressed: () => ContainerSlider.updateShowDefault(true),
-                    ),
-                  ],
+            const Row(
+              children: [
+                Text('Sowing Date 18 April, 24'),
+                SizedBox(width: 5),
+                Icon(Icons.edit),
+              ],
+            ),
+            const SizedBox(height: TSizes.spaceBtwSections),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                AnimatedButton(
+                  onPressed: () => ContainerSlider.updateShowDefault(false),
                 ),
-              ),
+                AnimatedButton(
+                  onPressed: () => ContainerSlider.updateShowDefault(true),
+                ),
+              ],
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
             const Expanded(
