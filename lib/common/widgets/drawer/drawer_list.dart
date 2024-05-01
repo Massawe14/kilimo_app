@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../features/kilimo/screens/legal/privacy_policy_screen.dart';
+import '../../../features/kilimo/screens/legal/terms_and_conditions_screen.dart';
 import '../../../features/personalization/screens/profile/profile_screen.dart';
 import '../../../features/personalization/screens/settings/settings.dart';
 import '../../../navigation_menu.dart';
@@ -58,6 +60,9 @@ class MyDrawerList extends StatelessWidget {
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const PrivacyPolicyScreen())
+            );
           },
         ),
         ListTile(
@@ -66,6 +71,9 @@ class MyDrawerList extends StatelessWidget {
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const TermsAndConditionsScreen())
+            );
           },
         ),
         ListTile(

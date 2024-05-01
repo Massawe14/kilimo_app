@@ -4,8 +4,8 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../util/constants/sizes.dart';
-import 'widgets/animated_button.dart';
-import 'widgets/container_slider.dart';
+import 'widgets/cultivationTips/animated_button.dart';
+import 'widgets/cultivationTips/container_slider.dart';
 
 class CultivationTipsScreen extends StatelessWidget {
   const CultivationTipsScreen({super.key});

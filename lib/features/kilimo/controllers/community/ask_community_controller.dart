@@ -1,101 +1,117 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart'; 
 import 'package:realm/realm.dart';
 
+import '../../../../data/repositories/user/user_repository.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import '../../models/community/community.dart';
+import '../../models/community/post.dart';
 
 class AskCommunityController extends GetxController {
-  List<String> crops = ['Beans', 'Maize', 'Cassava', 'Rice'];
-  late String selectedCrop = '';
-  late File selectedImage = File('assets/images/crops/default.jpeg');
-  final problem = TextEditingController();
-  final problemDescription = TextEditingController();
+  // Create a Configuration object
+  final config = Configuration.local([Post.schema]);
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final ImagePicker _picker = ImagePicker();
 
-  final picker = ImagePicker();
+  // Observables to track form data
+  final problemTitle = TextEditingController().obs;
+  final problemDescription = TextEditingController().obs;
+  RxString selectedCrop = ''.obs; 
+  Rx<File?> selectedImage = Rx(null);
+  var isImageUploaded = false.obs;
 
-  @override
-  void onClose() {
-    problem.dispose();
-    problemDescription.dispose();
-    super.onClose();
-  }
+  // Image picking logic
+  Future<void> pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final cacheDirectoryPath = await getCacheDirectoryPath();
+      final newImagePath = '$cacheDirectoryPath/${pickedFile.name}';
 
-  // Method to set selected crop
-  void setSelectedCrop(String crop) {
-    selectedCrop = crop;
-    update(); // Notify UI of changes
-  }
+      // Create a File object using XFile.readAsBytes()
+      final imageBytes = await pickedFile.readAsBytes();
+      final newImageFile = await File(newImagePath).writeAsBytes(imageBytes);
 
-  // Method to pick image from gallery or camera
-  void pickImage() async {
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      selectedImage = File(pickedImage.path);
-      update(); // Notify UI of changes
-    } else {
-      THelperFunctions.showSnackBar('Image selection cancelled');
+      selectedImage.value = newImageFile;
+      debugPrint("Image Path: ${selectedImage.value!.path}");
     }
   }
 
-  // Method to submit data to Realm database
-  void submitData() async {
+  // Data submission
+  Future<void> submitData() async {
+    // Open a Realm
+    final realm = Realm(config);
+
+    // Basic validation
     if (_validateData()) {
-      // Create a Configuration object
-      var config = Configuration.local([Community.schema]);
+      // Get user data from Firebase
+      final userRepository = Get.put(UserRepository());
+      final user = await userRepository.fetchUserDetails();
 
-      // Open a Realm
-      var realm = Realm(config);
-
-      var communityData = Community(
-        ObjectId(), // Assuming ObjectId is required as the first argument
-        selectedCrop,
-        problem.text,
-        problemDescription.text,
-        DateTime.now(),
-        image: selectedImage.path,
-        location: '',
-        profileImage: '',
+      // Get user's current location
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      String userLocation = '${position.latitude}, ${position.longitude}';
+      
+      final newPost = Post(
+        ObjectId(),
+        selectedCrop.value,
+        selectedImage.value!.path,
+        problemTitle.value.text,
+        problemDescription.value.text,
+        user.id, 
+        user.username,
+        userLocation,
+        0, // Initialize upvotes
+        0, // Initialize downvotes
+        0, // Initialize reply count
+        user.profilePicture,
+        DateTime.now()
       );
 
+      // 3. Save Post (Realm) 
       try {
         // Open a write transaction
-        realm.write(() {
-          realm.add(communityData);
+          realm.write(() {
+          realm.add(newPost);
         });
 
         _resetForm();
-        THelperFunctions.showSnackBar('Data submitted successfully');
+        
+        THelperFunctions.showSnackBar('Post Submitted');
       } catch (e) {
         debugPrint('Error submitting data: $e');
-        THelperFunctions.showSnackBar('Failed to submit data. Please try again.');
+        THelperFunctions.showSnackBar('Failed to post data. Please try again.');
       } finally {
         // Close the realm
         realm.close();
-      }  
-    } else {
-      THelperFunctions.showSnackBar('Please fill in all fields');
+      }
     }
+  }
+
+  setSelectedCrop(String crop) {
+    selectedCrop.value = crop; 
   }
 
   // Method to validate form data
   bool _validateData() {
-    return selectedCrop.isNotEmpty &&
-      problem.text.isNotEmpty &&
-      problemDescription.text.isNotEmpty;
+    return selectedCrop.value.isNotEmpty &&
+      problemTitle.value.text.isNotEmpty &&
+      problemDescription.value.text.isNotEmpty;
   }
 
-  // Method to reset form fields
   void _resetForm() {
-    selectedCrop = 'assets/images/crops/default.jpeg';
-    selectedImage;
-    problem.clear();
-    problemDescription.clear();
-    update(); // Notify UI of changes
+    selectedCrop.value = ''; // Reset selectedCrop (Assuming it's an RxString)
+    selectedImage.value = null; // Reset Rx<File?>
+    problemTitle.value.clear();  // Clear problem TextEditingController
+    problemDescription.value.clear(); // Clear problemDescription TextEditingController
   }
+
+  Future<String> getCacheDirectoryPath() async {
+  final directory = await getTemporaryDirectory(); 
+  return directory.path;
+}
 }

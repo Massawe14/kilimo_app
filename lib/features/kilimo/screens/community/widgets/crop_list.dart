@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/community/fetch_community_controller.dart';
+import '../../../controllers/community/post_controller.dart';
 import 'question_card.dart';
 
 class TCropList extends StatelessWidget {
@@ -9,9 +9,13 @@ class TCropList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CommunityPostsController controller = Get.put(CommunityPostsController());
+    final PostController controller = Get.put(PostController());
     return Obx(() {
-      if (controller.communityPosts.isEmpty) {
+      if (controller.isLoading.value) { // Add a new 'isLoading' in your controller
+        return const SliverToBoxAdapter(
+          child: Center(child: CircularProgressIndicator()),
+        );
+      } else if (controller.posts.isNotEmpty) {
         return const SliverToBoxAdapter(
           child: Center(
             child: Text('No community posts available'),
@@ -21,14 +25,14 @@ class TCropList extends StatelessWidget {
         return SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              final post = controller.communityPosts[index];
+              final post = controller.posts[index];
               return TQuestionCard(
-                image: '${post.image}',
-                title: post.problem,
-                description: post.description,
+                image: post.imageUrl,
+                title: post.problemTitle,
+                description: post.problemDescription,
               );
             },
-            childCount: controller.communityPosts.length,
+            childCount: controller.posts.length,
           ),
         );
       }

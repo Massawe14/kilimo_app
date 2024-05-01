@@ -111,7 +111,7 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get disease from controller
+    // Find the controller
     final diseaseController = Get.put(DiseaseDetailsController());
 
     // Hive service

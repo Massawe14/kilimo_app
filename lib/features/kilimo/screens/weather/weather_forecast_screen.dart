@@ -63,7 +63,7 @@ class WeatherForecastScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: TSizes.spaceBtwItems),
                             Text(
-                              'Wind speed ${controller.weatherData.value.windSpeed}m/s',
+                              'Wind speed ${controller.weatherData.value.windSpeed} m/s',
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ],
@@ -143,7 +143,7 @@ class WeatherForecastScreen extends StatelessWidget {
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
               Text(
-                'Raining until tomorrow',
+                getWeatherAdviceFromNextFourDays(controller.weatherData.value.weatherDescription),
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
@@ -153,7 +153,7 @@ class WeatherForecastScreen extends StatelessWidget {
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
               Text(
-                'WEDNESDAY would be a bad day for: APPLYING PESTICIDES',
+                getWeatherAdvice(controller.weatherData.value.weatherDescription),
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
@@ -168,6 +168,14 @@ class WeatherForecastScreen extends StatelessWidget {
       return 'Today would be a bad day for: APPLYING PESTICIDES';
     } else {
       return 'Today would be a good day for: APPLYING PESTICIDES';
+    }
+  }
+
+  String getWeatherAdviceFromNextFourDays(String weatherDescription) {
+    if (['light rain', 'rain', 'shower rain', 'heavy rain'].contains(weatherDescription.toLowerCase())) {
+      return 'Raining until tomorrow';
+    } else {
+      return 'No rain is forcast this week';
     }
   }
 }

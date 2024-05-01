@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../util/constants/colors.dart';
+import '../../../../../../util/constants/colors.dart';
 
 class TCultivationTipsMenuTile extends StatelessWidget {
   const TCultivationTipsMenuTile({

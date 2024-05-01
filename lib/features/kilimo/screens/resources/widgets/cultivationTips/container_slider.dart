@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../../util/constants/colors.dart';
-import '../../../../../util/constants/sizes.dart';
+import '../../../../../../util/constants/colors.dart';
+import '../../../../../../util/constants/sizes.dart';
 import 'cultivation_tips_menu_tile.dart';
 
 class ContainerSlider extends StatefulWidget {

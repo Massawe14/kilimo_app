@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../../../../util/constants/colors.dart';
-import '../../../controllers/diseases/disease_details_controller.dart';
-import '../../../models/disease/disease.dart';
-import '../../../models/disease/hive_database.dart';
+import '../../../util/constants/colors.dart';
+import '../../../features/kilimo/controllers/diseases/disease_details_controller.dart';
+import '../../../features/kilimo/models/disease/disease.dart';
+import '../../../features/kilimo/models/disease/hive_database.dart';
 
 class History extends SliverFixedExtentList {
   History(Size size, BuildContext context, DiseaseDetailsController diseaseController,

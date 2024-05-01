@@ -99,6 +99,7 @@ dependencies:
   firebase_app_check: ^0.2.2
   weather_icons: ^3.0.0
   realm: ^2.1.0
+  flutter_markdown: ^0.7.1
 
 #---------------- ./ PACKAGES END -------------------------------#
 
@@ -125,6 +126,7 @@ flutter:
     - assets/icons/
     - assets/logos/
     - assets/language/
+    - assets/legal/
 
   #-------------------- LOCAL FONTS ------------------------------#
   # fonts:

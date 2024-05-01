@@ -109,4 +109,14 @@ class THelperFunctions {
     }
     return wrappedList;
   }
+
+  static double convertUnits(double amount, String fromUnit, String toUnit) {
+    if (fromUnit == 'Acre' && toUnit == 'Hector') {
+      return amount * 2.47105; 
+    } else if (fromUnit == 'Hector' && toUnit == 'Acre') {
+      return amount / 2.47105;
+    } else {
+      return amount; // No conversion needed
+    }
+  }
 }

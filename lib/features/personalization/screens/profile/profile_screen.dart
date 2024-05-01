@@ -7,7 +7,7 @@ import '../../../../common/widgets/image_text_widget/t_circular_image.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
-import '../../../../util/helpers/helper_functions.dart';
+import '../../controllers/theme_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../settings/widgets/section_heading.dart';
 import 'widgets/change_name.dart';
@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final ThemeController themeController = Get.find();
     final controller = UserController.instance;
     return Scaffold(
       appBar: AppBar(
@@ -29,13 +29,15 @@ class ProfileScreen extends StatelessWidget {
         ),
         title: const Text('Profile'),
         actions: [
-          IconButton(
-            icon: Icon(
-              dark? Iconsax.moon : Iconsax.moon
+          Obx(
+            () => IconButton(
+              icon: Icon(
+                themeController.isDarkMode.value 
+                  ? Iconsax.sun_1 
+                  : Iconsax.moon,
+              ),
+              onPressed: () => themeController.changeTheme(),
             ),
-            onPressed: () {
-              // Handle change theme icon action
-            },
           ),
         ],
       ),

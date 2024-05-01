@@ -179,7 +179,7 @@ class WeatherScreenState extends State<WeatherScreen> {
                         child: getWeatherIcon(weather.weatherConditionCode.toString()),
                       ),
                       Text(
-                        'wind ${weather.windSpeed}m/s',
+                        'wind ${weather.windSpeed} m/s',
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ],

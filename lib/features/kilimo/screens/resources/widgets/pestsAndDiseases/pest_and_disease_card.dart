@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../util/constants/sizes.dart';
+import '../../../../../../util/constants/sizes.dart';
 
 class TPestsAndDiseasesCard extends StatelessWidget {
   const TPestsAndDiseasesCard({

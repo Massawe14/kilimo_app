@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../../../features/kilimo/controllers/diseases/disease_details_controller.dart';
+import '../history/history.dart';
 
 // Function to show the popup menu
 void showPopupMenu(BuildContext context) {
@@ -55,7 +59,12 @@ void showPopupMenu(BuildContext context) {
     } else if (value == 'share') {
       // Handle share action
     } else if (value == 'history') {
-      // Handle history action
+      Size size = MediaQuery.of(context).size;
+      // Get disease from controller
+      final diseaseService = Get.put(DiseaseDetailsController());
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => History(size, context, diseaseService))
+      );
     }
   });
 }

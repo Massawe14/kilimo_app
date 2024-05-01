@@ -7,6 +7,7 @@ import '../../../../data/repositories/authentication/authentication_repository.d
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/constants/text_strings.dart';
+import '../../controllers/theme_controller.dart';
 import 'widgets/settings_menu_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.find();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -56,11 +58,16 @@ class SettingsScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  TSettingsMenuTile(
-                    icon: Iconsax.moon,
-                    title: 'Dark Theme',
-                    subTitle: 'Set dark theme',
-                    trailing: Switch(value: false, onChanged: (value) {}),
+                  Obx(
+                    () => TSettingsMenuTile(
+                      icon: themeController.isDarkMode.value ? Iconsax.sun_1 : Iconsax.moon,
+                      title: 'Dark Theme',
+                      subTitle: 'Set dark theme',
+                      trailing: Switch(
+                        value: themeController.isDarkMode.value, 
+                        onChanged: (value) => themeController.changeTheme(),
+                      ),
+                    ),
                   ),
                   // Notifications Settings
                   const SizedBox(height: TSizes.spaceBtwSections),

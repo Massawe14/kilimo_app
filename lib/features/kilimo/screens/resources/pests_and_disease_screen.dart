@@ -6,7 +6,7 @@ import '../../../../common/widgets/custom_shapes/diagnosis_container.dart';
 import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../util/constants/sizes.dart';
-import 'widgets/pests_and_diseases_list.dart';
+import 'widgets/pestsAndDiseases/pests_and_diseases_list.dart';
 
 class PestsAndDiseasesScreen extends StatelessWidget {
   const PestsAndDiseasesScreen({super.key});

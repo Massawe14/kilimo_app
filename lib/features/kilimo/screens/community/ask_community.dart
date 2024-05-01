@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,8 +11,9 @@ import '../../controllers/community/ask_community_controller.dart';
 
 class AskCommunity extends StatelessWidget {
   AskCommunity({super.key});
-
-  final AskCommunityController controller = Get.put(AskCommunityController());
+  
+  // Instantiate controller
+  final controller = Get.put(AskCommunityController());
   
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class AskCommunity extends StatelessWidget {
               Form(
                 child: Column(
                   children: [
+                    // Crop selection
                     Align(
                       alignment: Alignment.centerLeft,
                       child: OutlinedButton(
@@ -47,9 +51,9 @@ class AskCommunity extends StatelessWidget {
                             controller.setSelectedCrop(selectedCrop);
                           }
                         },
-                        child: const Text(
-                          'Add Crop',
-                          style: TextStyle(
+                        child: Text(
+                          'Add Crop: ${controller.selectedCrop.value}',
+                          style: const TextStyle(
                             fontSize: 14.0,
                           ),
                         ),
@@ -57,47 +61,49 @@ class AskCommunity extends StatelessWidget {
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Question input field
-                    TextFormField(
-                      expands: false,
-                      controller: controller.problem,
-                      decoration: const InputDecoration(
-                        labelText: 'Your question to the community',
-                        hintText: 'Add a question indicating what\'s wrong with your crop',
+                    Obx(
+                      () => TextFormField(
+                        expands: false,
+                        // Bind to controller
+                        controller: controller.problemTitle.value,
+                        decoration: const InputDecoration(
+                          labelText: 'Your question to the community',
+                          hintText: 'Add a question indicating what\'s wrong with your crop',
+                        ),
+                        // Set character limit as specified in the UI
+                        maxLength: 200, 
                       ),
-                      maxLength: 200, // Set character limit as specified in the UI
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Crop details text field
-                    TextFormField(
-                      expands: false,
-                      controller: controller.problemDescription,
-                      decoration: const InputDecoration(
-                        labelText: 'Description of your problem',
-                        hintText: 'Describe specialities such as change of leaves, root colour, bugs, tears...',
+                    Obx(
+                      () => TextFormField(
+                        expands: false,
+                        controller: controller.problemDescription.value,
+                        decoration: const InputDecoration(
+                          labelText: 'Description of your problem',
+                          hintText: 'Describe specialities such as change of leaves, root colour, bugs, tears...',
+                        ),
+                        maxLength: 2500, // Set character limit as specified in the UI
                       ),
-                      maxLength: 2500, // Set character limit as specified in the UI
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Display selected image if available
-                    Visibility(
-                      // ignore: unnecessary_null_comparison
-                      visible: controller.selectedImage != null,
-                      child: Image.file(
-                        controller.selectedImage,
-                        width: double.infinity,
-                        height: 200, // Adjust the height as needed
-                        fit: BoxFit.cover, // Adjust the fit as needed
-                      ),
-                    ),
+                    Obx(() {
+                      controller.isImageUploaded.value = false; // Not an observable
+                      return Image.file(
+                        File(controller.selectedImage.value.toString()),
+                        width: double.infinity, 
+                        height: 200, 
+                        fit: BoxFit.cover
+                      );
+                    }),
                     const SizedBox(height: TSizes.spaceBtwSections),
                     // Image uploading
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
-                        onPressed: () {
-                          // Handle image uploading
-                          controller.pickImage();
-                        },
+                        onPressed: () => controller.pickImage(),
                         child: const Text(
                           'Upload Crop Image',
                           style: TextStyle(color: TColors.accent),
@@ -109,10 +115,7 @@ class AskCommunity extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          // Handle data submission
-                          controller.submitData();
-                        },
+                        onPressed: () => controller.submitData(),
                         child: const Text('Send'),
                       ),
                     ),

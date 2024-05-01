@@ -5,6 +5,9 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../controllers/fertilizer_calculator/fertilizer_calculator_controller.dart';
+import 'past_calculation_history.dart';
+import 'widgets/fertilization/fertizer_recommendation.dart';
 
 class FertilizerCalculatorScreen extends StatefulWidget {
   const FertilizerCalculatorScreen({super.key});
@@ -14,19 +17,8 @@ class FertilizerCalculatorScreen extends StatefulWidget {
 }
 
 class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> {
-  String selectedCrop = "";
-  String selectedUnit = "Acre";
-  double plotSize = 1.0; // Default plot size
-  TextEditingController nitrogenController = TextEditingController();
-  TextEditingController phosphorusController = TextEditingController();
-  TextEditingController potassiumController = TextEditingController();
-  bool isCalculateButtonEnabled = false;
-
-  void calculateFertilizer() {
-    // Perform calculation here
-    // Save locally
-    // Display output
-  }
+  // Instantiate Controller
+  final controller = Get.put(FertilizerCalculatorController());
 
   void showNutrientQuantitiesDialog(BuildContext context) {
     showDialog(
@@ -48,16 +40,16 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                       width: 70,
                       height: 60,
                       child: TextField(
-                        controller: nitrogenController,
+                        controller: controller.nitrogenController,
                         decoration: const InputDecoration(labelText: 'N'),
                         keyboardType: TextInputType.number,
-                      ),
+                    ),
                     ),
                     SizedBox(
                       width: 70,
                       height: 60,
                       child: TextField(
-                        controller: phosphorusController,
+                        controller: controller.phosphorusController,
                         decoration: const InputDecoration(labelText: 'P'),
                         keyboardType: TextInputType.number,
                       ),
@@ -66,7 +58,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                       width: 70,
                       height: 60,
                       child: TextField(
-                        controller: potassiumController,
+                        controller: controller.potassiumController,
                         decoration: const InputDecoration(labelText: 'K'),
                         keyboardType: TextInputType.number,
                       ),
@@ -79,7 +71,8 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                   children: [
                     TextButton(
                       onPressed: () {
-                        // Add reset logic here
+                        controller.resetNutrientQuantities();
+                        Navigator.of(context).pop();
                       },
                       child: const Text(
                         'Reset', 
@@ -93,6 +86,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                     TextButton(
                       onPressed: () {
                         // Add save logic here
+                        controller.saveNutrientQuantities();
                         Navigator.of(context).pop();
                       },
                       child: const Text(
@@ -115,13 +109,13 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
   }
 
   void _selectUnit(value) {
-    if (selectedUnit != 'Acre') {
+    if (controller.selectedUnit.value != 'Acre') {
       setState(() {
-        selectedUnit = value;
+        controller.selectedUnit.value = value;
       });
     } else {
       setState(() {
-        selectedUnit = value;
+        controller.selectedUnit.value = value;
       });
     }
   }
@@ -155,9 +149,13 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                     },
                     child: Row(
                       children: [
-                        Text(
-                          selectedCrop.isNotEmpty ? selectedCrop : 'Select crop',
-                          style: Theme.of(context).textTheme.labelMedium,
+                        Obx(
+                          () => Text(
+                            controller.selectedCrop.value.isNotEmpty 
+                            ? controller.selectedCrop.value
+                            : 'Select crop',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
                         ),
                         const Icon(Iconsax.arrow_down_1, size: 16),
                       ],
@@ -178,10 +176,12 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                       onPressed: () {
                         showNutrientQuantitiesDialog(context);
                       },
-                      child: const Text(
-                        'N:120', 
-                        style: TextStyle(
-                          fontSize: 12,
+                      child: Obx(
+                        () => Text(
+                          controller.nitrogen.value, 
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
@@ -194,10 +194,12 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                       onPressed: () {
                         showNutrientQuantitiesDialog(context);
                       },
-                      child: const Text(
-                        'P:60',
-                        style: TextStyle(
-                          fontSize: 12,
+                      child: Obx(
+                        () => Text(
+                          controller.phosphorus.value, 
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
@@ -210,10 +212,12 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                       onPressed: () {
                         showNutrientQuantitiesDialog(context);
                       },
-                      child: const Text(
-                        'K:50',
-                        style: TextStyle(
-                          fontSize: 12,
+                      child: Obx(
+                        () => Text(
+                          controller.potassium  .value, 
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
@@ -241,13 +245,13 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                 children: [
                   Radio(
                     value: "Acre",
-                    groupValue: selectedUnit,
+                    groupValue: controller.selectedUnit.value,
                     onChanged: (value) => _selectUnit(value),
                   ),
                   const Text('Acre'),
                   Radio(
                     value: "Hector",
-                    groupValue: selectedUnit,
+                    groupValue: controller.selectedUnit.value,
                     onChanged: (value) => _selectUnit(value),
                   ),
                   const Text('Hector'),
@@ -270,37 +274,27 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                 children: [
                   IconButton(
                     icon: const Icon(Iconsax.minus),
-                    onPressed: () {
-                      setState(() {
-                        if (plotSize > 1.0) {
-                          plotSize -= 1.0;
-                        }
-                      });
-                    },
+                    onPressed: controller.decrementPlotSize,
                   ),
                   Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(labelText: selectedUnit),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        setState(() {
-                          plotSize = double.tryParse(value) ?? 0.0;
+                    child: Obx(
+                      () => TextField(
+                        decoration: InputDecoration(labelText: controller.selectedUnit.value),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
                           if (value.isNotEmpty) {
-                            isCalculateButtonEnabled = true;
+                            controller.plotSize.value = double.parse(value);
+                            controller.isCalculateButtonEnabled.value = true;
                           } else {
-                            isCalculateButtonEnabled = false;
+                            controller.isCalculateButtonEnabled.value = false;
                           }
-                        });
-                      },
+                        },
+                      ),
                     ),
                   ),
                   IconButton(
                     icon: const Icon(Iconsax.add),
-                    onPressed: () {
-                      setState(() {
-                        plotSize += 1.0;
-                      });
-                    },
+                    onPressed: controller.incrementPlotSize,
                   ),
                 ],
               ),
@@ -308,11 +302,29 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: isCalculateButtonEnabled ? () => calculateFertilizer() : null,
+                  onPressed: controller.isCalculateButtonEnabled.value 
+                  ? controller.calculateFertilizer 
+                  : null,
                   child: const Text('Calculate'),
                 ),
               ),
               // Output display area
+              const SizedBox(height: TSizes.spaceBtwSections),
+              Obx(
+                () => controller.isLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : controller.isCalculationDone.value
+                      ? FertilizerRecommendation(controller: controller)
+                      : const SizedBox(),
+              ),
+              const SizedBox(height: TSizes.spaceBtwSections),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Get.to(() => PastCalculationsScreen()),
+                  child: const Text('View History'),
+                ),
+              ),
             ],
           ),
         ),
