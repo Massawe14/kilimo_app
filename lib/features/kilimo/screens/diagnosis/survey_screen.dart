@@ -40,55 +40,57 @@ class SurveyScreen extends StatelessWidget {
         ],
       ),
       drawer: const NavigationDrawerMenu(),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const MaizeDiagnosisScreen())
-                      );
-                    },
-                    child: const CustomCard(imagePath: TImages.cropImage1, title: 'Maize')
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const BeansDiagnosisScreen())
-                      );
-                    },
-                    child: const CustomCard(imagePath: TImages.cropImage2, title: 'Beans')
-                  ),
-                ],
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const RiceDiagnosisScreen())
-                      );
-                    },
-                    child: const CustomCard(imagePath: TImages.cropImage3, title: 'Rice')
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const CassavaDiagnosisScreen())
-                      );
-                    },
-                    child: const CustomCard(imagePath: TImages.cropImage4, title: 'Cassava')
-                  ),
-                ],
-              ),
-            ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const MaizeDiagnosisScreen())
+                        );
+                      },
+                      child: const CustomCard(imagePath: TImages.cropImage1, title: 'Maize')
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const BeansDiagnosisScreen())
+                        );
+                      },
+                      child: const CustomCard(imagePath: TImages.cropImage2, title: 'Beans')
+                    ),
+                  ],
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const RiceDiagnosisScreen())
+                        );
+                      },
+                      child: const CustomCard(imagePath: TImages.cropImage3, title: 'Rice')
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const CassavaDiagnosisScreen())
+                        );
+                      },
+                      child: const CustomCard(imagePath: TImages.cropImage4, title: 'Cassava')
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

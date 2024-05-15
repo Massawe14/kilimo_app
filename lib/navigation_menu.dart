@@ -6,8 +6,8 @@ import 'package:kilimo_app/util/helpers/helper_functions.dart';
 
 import 'features/kilimo/screens/community/community_screen.dart';
 import 'features/kilimo/screens/diagnosis/survey_screen.dart';
-import 'features/kilimo/screens/home/home.dart';
-import 'features/kilimo/screens/resources/resources.dart';
+import 'features/kilimo/screens/home/home_screen.dart';
+import 'features/kilimo/screens/resources/resources_screen.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../util/formatters/formatter.dart';
 
-class UserModel { 
+class UserModal { 
   // Keep those values final which you do not want to update
   final String id;
   String firstName;
@@ -15,7 +15,7 @@ class UserModel {
   String profilePicture;
   
   // Constructor for UserModel
-  UserModel({
+  UserModal({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -45,8 +45,8 @@ class UserModel {
     return usernameWithPrefix;
   }
 
-  // static function to create an empty user model
-  static UserModel empty() => UserModel(
+  // static function to create an empty user modal
+  static UserModal empty() => UserModal(
     id: '',
     firstName: '',
     lastName: '',
@@ -56,7 +56,7 @@ class UserModel {
     profilePicture: '',
   );
 
-  // Convert model to JSON structure for storing data in firebase
+  // Convert modal to JSON structure for storing data in firebase
   Map<String, dynamic> toJson() {
     return {
       'FirstName': firstName,
@@ -68,11 +68,11 @@ class UserModel {
     };
   }
 
-  // Factory method to create a UserModel from a Firebase document snapshot
-  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  // Factory method to create a UserModal from a Firebase document snapshot
+  factory UserModal.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;
-      return UserModel(
+      return UserModal(
         id: document.id,
         firstName: data['FirstName'] ?? '',
         lastName: data['LastName'] ?? '',
@@ -82,8 +82,8 @@ class UserModel {
         profilePicture: data['ProfilePicture'] ?? '',
       );
     } else {
-      // Handle null case, for example, return an empty UserModel
-      return UserModel.empty();
+      // Handle null case, for example, return an empty UserModal
+      return UserModal.empty();
     }
   }
 }

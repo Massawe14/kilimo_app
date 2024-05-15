@@ -14,7 +14,7 @@ import 'features/kilimo/models/disease/disease.dart';
 import 'firebase_options.dart';
 
 // Entry point of Flutter App
-void main() async {
+Future<void> main() async {
   // GetX Local storage
   await GetStorage.init();
 

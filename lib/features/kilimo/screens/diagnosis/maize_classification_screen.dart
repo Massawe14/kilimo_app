@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/disease_details_controller.dart';
 import '../../models/disease/disease.dart';
 import '../../models/disease/hive_database.dart';
@@ -114,6 +115,8 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
     // Find the controller
     final diseaseController = Get.put(DiseaseDetailsController());
 
+    final darkMode = THelperFunctions.isDarkMode(context);
+
     // Hive service
     HiveService hiveService = HiveService();
 
@@ -121,6 +124,13 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Iconsax.arrow_left, 
+            color: darkMode ? TColors.white : TColors.black,
+          ),
+        ),
         title: const Text('Maize Disease Detector'),
         actions: [
           IconButton(
@@ -142,134 +152,136 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: _isLoading
-                  ? SizedBox(
-                      width: 260,
-                      child: Padding(
-                        padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 150,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/icons/crop_image.png'),
-                                  fit: BoxFit.cover,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: _isLoading
+                    ? SizedBox(
+                        width: 260,
+                        child: Padding(
+                          padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 150,
+                                height: 150,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/icons/crop_image.png'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
+                              const SizedBox(height: TSizes.spaceBtwSections),
+                            ],
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 250,
+                              child: Image.file(_image),
                             ),
                             const SizedBox(height: TSizes.spaceBtwSections),
+                            // ignore: unnecessary_null_comparison
+                            _output != null
+                              ? Column(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        late double confidence;
+                                        confidence = _accuracy;
+                                        // Check confidence
+                                        if (confidence >= 0.5) {
+                                          await Get.to(const DiseaseDetailsScreen())!.then((_output) {
+                                            disease = Disease(
+                                              name: _output[0]['label'], 
+                                              imagePath: _image.path,
+                                            );
+                                          });
+        
+                                          // Set disease for Disease Controller
+                                          diseaseController.setDiseaseValue(disease);
+        
+                                          // Save disease
+                                          hiveService.addDisease(disease);
+                                        } else {
+                                          // Display unsure message
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text('Unable to identify with sufficient confidence.'),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      child: Text(
+                                        'Result: ${_output[0]['label']}',
+                                        style: Theme.of(context).textTheme.headlineSmall,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',
+                                      style: const TextStyle(
+                                        color: TColors.black,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
                           ],
                         ),
                       ),
-                    )
-                  : SizedBox(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 250,
-                            child: Image.file(_image),
-                          ),
-                          const SizedBox(height: TSizes.spaceBtwSections),
-                          // ignore: unnecessary_null_comparison
-                          _output != null
-                            ? Column(
-                                children: [
-                                  TextButton(
-                                    onPressed: () async {
-                                      late double confidence;
-                                      confidence = _accuracy;
-                                      // Check confidence
-                                      if (confidence >= 0.5) {
-                                        await Get.to(const DiseaseDetailsScreen())!.then((value) {
-                                          disease = Disease(
-                                            name: value![0]['label'], 
-                                            imagePath: _image.path,
-                                          );
-                                        });
-
-                                        // Set disease for Disease Controller
-                                        diseaseController.setDiseaseValue(disease);
-
-                                        // Save disease
-                                        hiveService.addDisease(disease);
-                                      } else {
-                                        // Display unsure message
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Unable to identify with sufficient confidence.'),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: Text(
-                                      'Result: ${_output[0]['label']}',
-                                      style: Theme.of(context).textTheme.headlineSmall,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',
-                                    style: const TextStyle(
-                                      color: TColors.black,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
-                        ],
+                ),
+                Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.all(25.5),
+                  decoration: BoxDecoration(
+                    color: TColors.accent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      captureImage();
+                    },
+                    child: const Text(
+                      'Take A Photo',
+                      style: TextStyle(
+                        color: TColors.white,
                       ),
                     ),
-              ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.all(25.5),
-                decoration: BoxDecoration(
-                  color: TColors.accent,
-                  borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                child: TextButton(
-                  onPressed: () {
-                    captureImage();
-                  },
-                  child: const Text(
-                    'Take A Photo',
-                    style: TextStyle(
-                      color: TColors.white,
+                Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.all(25.5),
+                  decoration: BoxDecoration(
+                    color: TColors.accent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      pickGalleryImage();
+                    },
+                    child: const Text(
+                      'Pick from Gallery',
+                      style: TextStyle(
+                        color: TColors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.all(25.5),
-                decoration: BoxDecoration(
-                  color: TColors.accent,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    pickGalleryImage();
-                  },
-                  child: const Text(
-                    'Pick from Gallery',
-                    style: TextStyle(
-                      color: TColors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

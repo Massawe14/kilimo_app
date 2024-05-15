@@ -6,7 +6,7 @@ import '../../../features/kilimo/controllers/diseases/disease_details_controller
 import '../history/history.dart';
 
 // Function to show the popup menu
-void showPopupMenu(BuildContext context) {
+showPopupMenu(BuildContext context) {
   showMenu(
     context: context,
     position: const RelativeRect.fromLTRB(50, 50, 0, 0),

@@ -11,7 +11,7 @@ class TCropList extends StatelessWidget {
   Widget build(BuildContext context) {
     final PostController controller = Get.put(PostController());
     return Obx(() {
-      if (controller.isLoading.value) { // Add a new 'isLoading' in your controller
+      if (controller.isLoading.value) { 
         return const SliverToBoxAdapter(
           child: Center(child: CircularProgressIndicator()),
         );
@@ -28,6 +28,10 @@ class TCropList extends StatelessWidget {
               final post = controller.posts[index];
               return TQuestionCard(
                 image: post.imageUrl,
+                username: post.userName,
+                location: post.userLocation,
+                crop: post.cropType,
+                date: post.date,
                 title: post.problemTitle,
                 description: post.problemDescription,
               );

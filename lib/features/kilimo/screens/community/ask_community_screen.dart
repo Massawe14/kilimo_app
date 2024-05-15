@@ -7,38 +7,42 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/community/ask_community_controller.dart';
 
 class AskCommunity extends StatelessWidget {
-  AskCommunity({super.key});
-  
-  // Instantiate controller
-  final controller = Get.put(AskCommunityController());
+  const AskCommunity({super.key});
   
   @override
   Widget build(BuildContext context) {
+    // Instantiate controller
+    final controller = Get.put(AskCommunityController());
+    final darkMode = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.back(),
-          icon: const Icon(Iconsax.arrow_left),
+          icon: Icon(
+            Iconsax.arrow_left, 
+            color: darkMode ? TColors.white : TColors.black,
+          ),
         ),
         title: const Text('Ask Community'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Heading
-              Text(
-                'Improve the probabilty of receiving the right answer', 
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-              const SizedBox(height: TSizes.spaceBtwSections),
-              Form(
-                child: Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(TSizes.defaultSpace),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Heading
+                Text(
+                  'Improve the probabilty of receiving the right answer', 
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: TSizes.spaceBtwSections),
+                Column(
                   children: [
                     // Crop selection
                     Align(
@@ -52,7 +56,7 @@ class AskCommunity extends StatelessWidget {
                           }
                         },
                         child: Text(
-                          'Add Crop: ${controller.selectedCrop.value}',
+                          controller.selectedCrop.value,
                           style: const TextStyle(
                             fontSize: 14.0,
                           ),
@@ -62,13 +66,14 @@ class AskCommunity extends StatelessWidget {
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Question input field
                     Obx(
-                      () => TextFormField(
-                        expands: false,
+                      () => TextField(
+                        //expands: false,
                         // Bind to controller
                         controller: controller.problemTitle.value,
                         decoration: const InputDecoration(
                           labelText: 'Your question to the community',
                           hintText: 'Add a question indicating what\'s wrong with your crop',
+                          border: InputBorder.none,
                         ),
                         // Set character limit as specified in the UI
                         maxLength: 200, 
@@ -77,20 +82,21 @@ class AskCommunity extends StatelessWidget {
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Crop details text field
                     Obx(
-                      () => TextFormField(
-                        expands: false,
+                      () => TextField(
+                        //expands: false,
                         controller: controller.problemDescription.value,
                         decoration: const InputDecoration(
                           labelText: 'Description of your problem',
                           hintText: 'Describe specialities such as change of leaves, root colour, bugs, tears...',
+                          border: InputBorder.none,
                         ),
-                        maxLength: 2500, // Set character limit as specified in the UI
+                        maxLength: 1500, // Set character limit as specified in the UI
                       ),
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Display selected image if available
                     Obx(() {
-                      controller.isImageUploaded.value = false; // Not an observable
+                      controller.isImageUploaded.value = true;
                       return Image.file(
                         File(controller.selectedImage.value.toString()),
                         width: double.infinity, 
@@ -104,9 +110,9 @@ class AskCommunity extends StatelessWidget {
                       width: double.infinity,
                       child: OutlinedButton(
                         onPressed: () => controller.pickImage(),
-                        child: const Text(
-                          'Upload Crop Image',
-                          style: TextStyle(color: TColors.accent),
+                        child: Text(
+                          'upload_image'.tr,
+                          style: const TextStyle(color: TColors.accent),
                         ),
                       ),
                     ),
@@ -116,13 +122,13 @@ class AskCommunity extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () => controller.submitData(),
-                        child: const Text('Send'),
+                        child: Text('send'.tr),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

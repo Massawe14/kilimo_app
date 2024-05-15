@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -44,42 +41,51 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDnmOGGoM8OJoGMmEFUkjZg1TUK4FQOQEg',
-    appId: '1:653462887527:web:f3de0780b7c204c45c48c2',
-    messagingSenderId: '653462887527',
-    projectId: 'kilimo-app-b5270',
-    authDomain: 'kilimo-app-b5270.firebaseapp.com',
-    storageBucket: 'kilimo-app-b5270.appspot.com',
-    measurementId: 'G-B16W57035R',
+    apiKey: 'AIzaSyAUBaR6x2bLRLiHZ_3ljcZgThYhazn1uOw',
+    appId: '1:904681071274:web:40019eb6f0eaef531466d3',
+    messagingSenderId: '904681071274',
+    projectId: 'kilimoapp-107fb',
+    authDomain: 'kilimoapp-107fb.firebaseapp.com',
+    storageBucket: 'kilimoapp-107fb.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBcjKHdpnrkoI8N6xSuZ0jsxCOn25R-yiI',
-    appId: '1:653462887527:android:0b5b695336eaa8a55c48c2',
-    messagingSenderId: '653462887527',
-    projectId: 'kilimo-app-b5270',
-    storageBucket: 'kilimo-app-b5270.appspot.com',
+    apiKey: 'AIzaSyBs-imtqQgHO9itBsix5rVh9eR4xRdAUng',
+    appId: '1:904681071274:android:a4893f64740c24e11466d3',
+    messagingSenderId: '904681071274',
+    projectId: 'kilimoapp-107fb',
+    storageBucket: 'kilimoapp-107fb.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC4NhDYIdePMyvllU8Kj03_a6w7cBwGNBo',
-    appId: '1:653462887527:ios:937d2af8c29213305c48c2',
-    messagingSenderId: '653462887527',
-    projectId: 'kilimo-app-b5270',
-    storageBucket: 'kilimo-app-b5270.appspot.com',
-    androidClientId: '653462887527-1t04c0hnqvgh86ofnc162223pchkfslh.apps.googleusercontent.com',
-    iosClientId: '653462887527-311jfboeuas5o1skspr95lgfakdh9c7m.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAtttjG8qnlWAunnDVB2yVUC0EMCl2E3bI',
+    appId: '1:904681071274:ios:572eeb551545399a1466d3',
+    messagingSenderId: '904681071274',
+    projectId: 'kilimoapp-107fb',
+    storageBucket: 'kilimoapp-107fb.appspot.com',
+    androidClientId: '904681071274-akj25u712e7vu98sg6dtjs6d5k36h34a.apps.googleusercontent.com',
+    iosClientId: '904681071274-m2b6tun3n5pqa43hfe1c4qk1vs5rpgjm.apps.googleusercontent.com',
     iosBundleId: 'com.example.kilimoApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC4NhDYIdePMyvllU8Kj03_a6w7cBwGNBo',
-    appId: '1:653462887527:ios:45c842a8ff1fb3ac5c48c2',
-    messagingSenderId: '653462887527',
-    projectId: 'kilimo-app-b5270',
-    storageBucket: 'kilimo-app-b5270.appspot.com',
-    androidClientId: '653462887527-1t04c0hnqvgh86ofnc162223pchkfslh.apps.googleusercontent.com',
-    iosClientId: '653462887527-jti1o6tu5nfaogku381pt1q79ql3ese6.apps.googleusercontent.com',
-    iosBundleId: 'com.example.kilimoApp.RunnerTests',
+    apiKey: 'AIzaSyAtttjG8qnlWAunnDVB2yVUC0EMCl2E3bI',
+    appId: '1:904681071274:ios:572eeb551545399a1466d3',
+    messagingSenderId: '904681071274',
+    projectId: 'kilimoapp-107fb',
+    storageBucket: 'kilimoapp-107fb.appspot.com',
+    androidClientId: '904681071274-akj25u712e7vu98sg6dtjs6d5k36h34a.apps.googleusercontent.com',
+    iosClientId: '904681071274-m2b6tun3n5pqa43hfe1c4qk1vs5rpgjm.apps.googleusercontent.com',
+    iosBundleId: 'com.example.kilimoApp',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAUBaR6x2bLRLiHZ_3ljcZgThYhazn1uOw',
+    appId: '1:904681071274:web:7cbddf521d8ac5701466d3',
+    messagingSenderId: '904681071274',
+    projectId: 'kilimoapp-107fb',
+    authDomain: 'kilimoapp-107fb.firebaseapp.com',
+    storageBucket: 'kilimoapp-107fb.appspot.com',
+  );
+
 }

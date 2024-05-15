@@ -9,13 +9,18 @@ class TQuestionCard extends StatelessWidget {
   const TQuestionCard({
     super.key,
     required this.image,
+    required this.username,
+    required this.location,
+    required this.crop,
     required this.title,
     required this.description,
+    required this.date,
   });
 
-  final String image;
+  final String image, username, location, crop;
   final String title;
   final String description;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +55,14 @@ class TQuestionCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundImage: AssetImage(TImages.profileImage),
                   radius: 24,
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -65,25 +70,25 @@ class TQuestionCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Username',
-                          style: TextStyle(
+                          username,
+                          style: const TextStyle(
                             color: TColors.accent,
                             fontSize: TSizes.fontSizeMd,
                             fontWeight: FontWeight.bold
                           ),
                         ),
-                        SizedBox(width: 5),
-                        Text(
+                        const SizedBox(width: 5),
+                        const Text(
                           '.',
                           style: TextStyle(
                             color: TColors.darkGrey,
                             fontSize: TSizes.fontSizeSm,
                           ),
                         ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         Text(
-                          'Location',
-                          style: TextStyle(
+                          location,
+                          style: const TextStyle(
                             color: TColors.darkGrey,
                             fontSize: TSizes.fontSizeSm,
                           ),
@@ -93,24 +98,24 @@ class TQuestionCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '2 d',
-                          style: TextStyle(
+                          date.toString(),
+                          style: const TextStyle(
                             color: TColors.darkGrey,
                             fontSize: TSizes.fontSizeSm,
                           ),
                         ),
-                        SizedBox(width: 5),
-                        Text(
+                        const SizedBox(width: 5),
+                        const Text(
                           '.',
                           style: TextStyle(
                             color: TColors.darkGrey,
                             fontSize: TSizes.fontSizeSm,
                           ),
                         ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         Text(
-                          'crop',
-                          style: TextStyle(
+                          crop,
+                          style: const TextStyle(
                             color: TColors.darkGrey,
                             fontSize: TSizes.fontSizeSm,
                           ),

@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../util/constants/colors.dart';
 import '../../../../../util/constants/sizes.dart';
+import '../../../../../util/helpers/helper_functions.dart';
 
 class ResourceCard extends StatelessWidget {
   const ResourceCard({
@@ -16,37 +17,37 @@ class ResourceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded( 
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: darkMode ? TColors.accent : TColors.grey,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(icon),
+                ),
+              ),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: TColors.grey,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(icon),
-                    ),
-                  ),
-                  const SizedBox(height: TSizes.sm),
                   Text(
                     title,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
+                  const Icon(Iconsax.arrow_right_3)
                 ],
               ),
-            ),
-            const SizedBox(width: TSizes.defaultSpace),
-            const Center(child: Icon(Iconsax.arrow_right_3)),
-          ],
+            ],
+          ),
         ),
       ),
     );

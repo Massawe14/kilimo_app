@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../../../util/helpers/helper_functions.dart';
 
 class RiceDiagnosisScreen extends StatefulWidget {
   const RiceDiagnosisScreen({super.key});
@@ -82,8 +84,16 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Iconsax.arrow_left, 
+            color: darkMode ? TColors.white : TColors.black,
+          ),
+        ),
         title: const Text('Rice Disease Detector'),
         actions: [
           IconButton(
@@ -105,105 +115,107 @@ class RiceDiagnosisScreenState extends State<RiceDiagnosisScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: _isLoading
-                  ? SizedBox(
-                      width: 260,
-                      child: Padding(
-                        padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 150,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/icons/crop_image.png'),
-                                  fit: BoxFit.cover,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: _isLoading
+                    ? SizedBox(
+                        width: 260,
+                        child: Padding(
+                          padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 150,
+                                height: 150,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/icons/crop_image.png'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
+                              const SizedBox(height: TSizes.spaceBtwSections),
+                            ],
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 250,
+                              child: Image.file(_image),
                             ),
                             const SizedBox(height: TSizes.spaceBtwSections),
+                            // ignore: unnecessary_null_comparison
+                            _output != null
+                              ? Column(
+                                  children: [
+                                    Text(
+                                      'Result: ${_output[0]['label']}',
+                                      style: const TextStyle(
+                                        color: TColors.black,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',
+                                      style: const TextStyle(
+                                        color: TColors.black,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
                           ],
                         ),
                       ),
-                    )
-                  : SizedBox(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 250,
-                            child: Image.file(_image),
-                          ),
-                          const SizedBox(height: TSizes.spaceBtwSections),
-                          // ignore: unnecessary_null_comparison
-                          _output != null
-                            ? Column(
-                                children: [
-                                  Text(
-                                    'Result: ${_output[0]['label']}',
-                                    style: const TextStyle(
-                                      color: TColors.black,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%',
-                                    style: const TextStyle(
-                                      color: TColors.black,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
-                        ],
+                ),
+                Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.all(25.5),
+                  decoration: BoxDecoration(
+                    color: TColors.accent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextButton(
+                    onPressed: captureImage,
+                    child: const Text(
+                      'Take A Photo',
+                      style: TextStyle(
+                        color: TColors.white,
                       ),
                     ),
-              ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.all(25.5),
-                decoration: BoxDecoration(
-                  color: TColors.accent,
-                  borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                child: TextButton(
-                  onPressed: captureImage,
-                  child: const Text(
-                    'Take A Photo',
-                    style: TextStyle(
-                      color: TColors.white,
+                Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.all(25.5),
+                  decoration: BoxDecoration(
+                    color: TColors.accent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextButton(
+                    onPressed: pickGalleryImage,
+                    child: const Text(
+                      'Pick from Gallery',
+                      style: TextStyle(
+                        color: TColors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.all(25.5),
-                decoration: BoxDecoration(
-                  color: TColors.accent,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextButton(
-                  onPressed: pickGalleryImage,
-                  child: const Text(
-                    'Pick from Gallery',
-                    style: TextStyle(
-                      color: TColors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

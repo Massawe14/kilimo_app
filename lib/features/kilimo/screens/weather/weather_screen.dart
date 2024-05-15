@@ -6,6 +6,7 @@ import 'package:weather/weather.dart';
 import '../../../../util/constants/api_constants.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../../../util/helpers/helper_functions.dart';
 import 'widgets/weather_icons.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -91,7 +92,7 @@ class WeatherScreenState extends State<WeatherScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return const Text('Network problem');
               } else {
                 Weather weather = snapshot.data!;
                 return _buildWeatherCard(weather);
@@ -102,6 +103,7 @@ class WeatherScreenState extends State<WeatherScreen> {
   }
 
   Widget _buildWeatherCard(Weather weather) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return Container(
       width: 350,
       decoration: BoxDecoration(
@@ -120,7 +122,7 @@ class WeatherScreenState extends State<WeatherScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
-        color: TColors.white,
+        color: darkMode ? TColors.dark : TColors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

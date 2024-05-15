@@ -12,7 +12,7 @@ class DiagnosisContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.0,
-      color: TColors.accent.withOpacity(0.5),
+      color: TColors.buttonSecondary.withOpacity(0.5),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -57,6 +57,7 @@ class DiagnosisContainer extends StatelessWidget {
                 onPressed: () => Get.to(() => const SurveyScreen()),
                 child: const Center(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: 25,
