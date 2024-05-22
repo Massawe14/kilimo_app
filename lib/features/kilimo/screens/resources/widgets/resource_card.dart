@@ -43,7 +43,7 @@ class ResourceCard extends StatelessWidget {
                     title,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  const Icon(Iconsax.arrow_right_3)
+                  const Icon(Iconsax.arrow_right_3),
                 ],
               ),
             ],

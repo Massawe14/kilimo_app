@@ -51,10 +51,10 @@ class ResourcesScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => Get.to(() => const FertilizerCalculatorScreen()),
+                        onTap: () => Get.to(() => FertilizerCalculatorScreen()),
                         child: const ResourceCard(
                           icon: Iconsax.calculator, 
-                          title: 'Fertilizer Calculator',
+                          title: 'Fertilizer\nCalculator',
                         ),
                       ),
                     ),
@@ -63,7 +63,7 @@ class ResourcesScreen extends StatelessWidget {
                         onTap: () => Get.to(() => const PestsAndDiseasesScreen()),
                         child: const ResourceCard(
                           icon: Iconsax.health, 
-                          title: 'Pests & diseases',
+                          title: 'Pests &\nDiseases',
                         ),
                       ),
                     ),
@@ -78,7 +78,7 @@ class ResourcesScreen extends StatelessWidget {
                         onTap: () => Get.to(() => const CultivationTipsScreen()),
                         child: const ResourceCard(
                           icon: Iconsax.document_normal, 
-                          title: 'Cultivation Tips',
+                          title: 'Cultivation\nTips',
                         ),
                       ),
                     ),
@@ -87,7 +87,7 @@ class ResourcesScreen extends StatelessWidget {
                         onTap: () => Get.to(() => const PestsAndDiseaseAlert()),
                         child: const ResourceCard(
                           icon: Iconsax.danger, 
-                          title: 'Pests & Disease Alert',
+                          title: 'Pests &\nDisease\nAlert',
                         ),
                       ),
                     ),

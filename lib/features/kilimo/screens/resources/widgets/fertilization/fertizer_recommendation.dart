@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../util/constants/colors.dart';
 import '../../../../../../util/constants/sizes.dart';
-import '../../../../controllers/fertilizer_calculator/fertilizer_calculator_controller.dart';
+import '../../../../controllers/fertilizer_calculator/fertilizer_controller.dart';
 
 class FertilizerRecommendation extends StatelessWidget {
   const FertilizerRecommendation({
@@ -10,7 +10,7 @@ class FertilizerRecommendation extends StatelessWidget {
     required this.controller,
   });
 
-  final FertilizerCalculatorController controller;
+  final FertilizerController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +46,12 @@ class FertilizerRecommendation extends StatelessWidget {
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        '${controller.mop.value} kg',
+                        '',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        '${controller.mopBagsNeeded.value}',
+                        '',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],
@@ -64,12 +64,12 @@ class FertilizerRecommendation extends StatelessWidget {
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        '${controller.ssp.value} kg',
+                        'kg',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        '${controller.sspBagsNeeded.value}',
+                        '',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],
@@ -82,12 +82,12 @@ class FertilizerRecommendation extends StatelessWidget {
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        '${controller.urea.value} kg',
+                        'kg',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        '${controller.ureaBagsNeeded.value}',
+                        '',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],

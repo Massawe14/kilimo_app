@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../features/kilimo/controllers/fertilizer_calculator/fertilizer_calculator_controller.dart';
+import '../../../features/kilimo/controllers/fertilizer_calculator/fertilizer_controller.dart';
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/image_strings.dart';
 import '../../../util/constants/sizes.dart';
@@ -12,7 +12,7 @@ import '../texts/section_heading.dart';
 
 selectCrop(BuildContext context) {
   // Instantiate Controller
-  final controller = Get.put(FertilizerCalculatorController());
+  final controller = Get.put(FertilizerController());
   final darkMode = THelperFunctions.isDarkMode(context);
   return showDialog(
     context: context,

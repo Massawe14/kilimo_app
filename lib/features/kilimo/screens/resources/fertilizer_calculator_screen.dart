@@ -7,20 +7,16 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import '../../controllers/fertilizer_calculator/fertilizer_calculator_controller.dart';
+import '../../controllers/fertilizer_calculator/fertilizer_controller.dart';
 import 'past_calculation_history_screen.dart';
-import 'widgets/fertilization/fertizer_recommendation.dart';
 
-class FertilizerCalculatorScreen extends StatefulWidget {
-  const FertilizerCalculatorScreen({super.key});
+class FertilizerCalculatorScreen extends StatelessWidget {
+  FertilizerCalculatorScreen({super.key});
 
-  @override
-  FertilizerCalculatorScreenState createState() => FertilizerCalculatorScreenState();
-}
-
-class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> {
   // Instantiate Controller
-  final controller = Get.put(FertilizerCalculatorController());
+  final controller = Get.put(FertilizerController());
+
+  final _formKey = GlobalKey<FormState>();
 
   showNutrientQuantitiesDialog(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
@@ -45,7 +41,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                           width: 70,
                           height: 60,
                           child: TextField(
-                            controller: controller.nitrogenController,
+                            controller: controller.nController,
                             decoration: const InputDecoration(labelText: 'N'),
                             keyboardType: TextInputType.number,
                         ),
@@ -54,7 +50,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                           width: 70,
                           height: 60,
                           child: TextField(
-                            controller: controller.phosphorusController,
+                            controller: controller.pController,
                             decoration: const InputDecoration(labelText: 'P'),
                             keyboardType: TextInputType.number,
                           ),
@@ -63,7 +59,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                           width: 70,
                           height: 60,
                           child: TextField(
-                            controller: controller.potassiumController,
+                            controller: controller.kController,
                             decoration: const InputDecoration(labelText: 'K'),
                             keyboardType: TextInputType.number,
                           ),
@@ -81,7 +77,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
               children: [
                 TextButton(
                   onPressed: () {
-                    controller.resetNutrientQuantities();
+                    controller.resetNutrients();
                     Navigator.of(context).pop();
                   },
                   child: const Text(
@@ -96,7 +92,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
                 TextButton(
                   onPressed: () {
                     // Add save logic here
-                    controller.saveNutrientQuantities();
+                    controller.saveTemporaryNutrients();
                     Navigator.of(context).pop();
                   },
                   child: const Text(
@@ -117,15 +113,7 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
   }
 
   void _selectUnit(value) {
-    if (controller.selectedUnit.value != 'Acre') {
-      setState(() {
-        controller.selectedUnit.value = value;
-      });
-    } else {
-      setState(() {
-        controller.selectedUnit.value = value;
-      });
-    }
+    controller.selectedUnit.value = value;
   }
 
   @override
@@ -146,199 +134,191 @@ class FertilizerCalculatorScreenState extends State<FertilizerCalculatorScreen> 
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(TSizes.defaultSpace),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Heading
-                    Text(
-                      'See relavant information on', 
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    OutlinedButton(
-                      onPressed: () {
-                        selectCrop(context);
-                      },
-                      child: Row(
-                        children: [
-                          Obx(
-                            () => Text(
-                              controller.selectedCrop.value.isNotEmpty 
-                              ? controller.selectedCrop.value
-                              : 'Select crop',
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
-                          ),
-                          const Icon(Iconsax.arrow_down_1, size: 16),
-                        ],
+            child: Form(
+              key: _formKey,
+              onChanged: () => controller.checkFormValidity(),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Heading
+                      Text(
+                        'See relavant information on', 
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Nutrient quantities', showActionButton: false),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 73,
-                      height: 60,
-                      child: OutlinedButton(
+                      OutlinedButton(
                         onPressed: () {
-                          showNutrientQuantitiesDialog(context);
+                          selectCrop(context);
                         },
-                        child: Obx(
-                          () => Text(
-                            controller.nitrogen.value, 
-                            style: const TextStyle(
-                              fontSize: 12,
+                        child: Row(
+                          children: [
+                            Obx(
+                              () => Text(
+                                controller.selectedCrop.value,
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
                             ),
-                          ),
+                            const Icon(Iconsax.arrow_down_1, size: 16),
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    SizedBox(
-                      width: 73,
-                      height: 60,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          showNutrientQuantitiesDialog(context);
-                        },
-                        child: Obx(
-                          () => Text(
-                            controller.phosphorus.value, 
-                            style: const TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    SizedBox(
-                      width: 75,
-                      height: 60,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          showNutrientQuantitiesDialog(context);
-                        },
-                        child: Obx(
-                          () => Text(
-                            controller.potassium  .value, 
-                            style: const TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: TSizes.spaceBtwItems),
-                    TextButton(
-                      onPressed: () {
-                        showNutrientQuantitiesDialog(context);
-                      },
-                      child: const Text(
-                        'Edit', 
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Unit', showActionButton: false),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Radio(
-                      value: "Acre",
-                      groupValue: controller.selectedUnit.value,
-                      onChanged: (value) => _selectUnit(value),
-                    ),
-                    const Text('Acre'),
-                    Radio(
-                      value: "Hector",
-                      groupValue: controller.selectedUnit.value,
-                      onChanged: (value) => _selectUnit(value),
-                    ),
-                    const Text('Hector'),
-                  ],
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Plot size', showActionButton: false),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Sizes smaller than one unit are expressed as 0.\nExample: half acre = 0.5', 
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Iconsax.minus),
-                      onPressed: controller.decrementPlotSize,
-                    ),
-                    Expanded(
-                      child: Obx(
-                        () => TextField(
-                          decoration: InputDecoration(labelText: controller.selectedUnit.value),
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              controller.plotSize.value = double.parse(value);
-                              controller.isCalculateButtonEnabled.value = true;
-                            } else {
-                              controller.isCalculateButtonEnabled.value = false;
-                            }
+                    ],
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  const TSectionHeading(title: 'Nutrient quantities', showActionButton: false),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 73,
+                        height: 60,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            showNutrientQuantitiesDialog(context);
                           },
+                          child: Text(
+                            controller.nController.text, 
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Iconsax.add),
-                      onPressed: controller.incrementPlotSize,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: controller.isCalculateButtonEnabled.value 
-                    ? controller.calculateFertilizer 
-                    : null,
-                    child: const Text('Calculate'),
+                      const SizedBox(width: 5),
+                      SizedBox(
+                        width: 73,
+                        height: 60,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            showNutrientQuantitiesDialog(context);
+                          },
+                          child: Text(
+                            controller.pController.text, 
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      SizedBox(
+                        width: 75,
+                        height: 60,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            showNutrientQuantitiesDialog(context);
+                          },
+                          child: Text(
+                            controller.kController.text, 
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: TSizes.spaceBtwItems),
+                      TextButton(
+                        onPressed: () {
+                          showNutrientQuantitiesDialog(context);
+                        },
+                        child: const Text(
+                          'Edit', 
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                // Output display area
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Obx(
-                  () => controller.isLoading.value
-                    ? const Center(child: CircularProgressIndicator())
-                    : controller.isCalculationDone.value
-                        ? FertilizerRecommendation(controller: controller)
-                        : const SizedBox(),
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => Get.to(() => PastCalculationsScreen()),
-                    child: const Text('View History'),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  const TSectionHeading(title: 'Unit', showActionButton: false),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Radio(
+                        value: "Acre",
+                        groupValue: controller.selectedUnit.value,
+                        onChanged: (value) => _selectUnit(value),
+                      ),
+                      const Text('Acre'),
+                      Radio(
+                        value: "Hector",
+                        groupValue: controller.selectedUnit.value,
+                        onChanged: (value) => _selectUnit(value),
+                      ),
+                      const Text('Hector'),
+                    ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  const TSectionHeading(title: 'Plot size', showActionButton: false),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Sizes smaller than one unit are expressed as 0.\nExample: half acre = 0.5', 
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Iconsax.minus),
+                        onPressed: controller.decrementPlotSize,
+                      ),
+                      Expanded(
+                        child: Obx(
+                          () => TextFormField(
+                            decoration: InputDecoration(labelText: controller.selectedUnit.value),
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => controller.plotSizeController.value,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Iconsax.add),
+                        onPressed: controller.incrementPlotSize,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: controller.isFormValid.value 
+                      ? controller.calculateAndSave 
+                      : null,
+                      child: const Text('Calculate'),
+                    ),
+                  ),
+                  // Output display area
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  Obx(
+                    () => controller.results.isEmpty
+                      ? Container()
+                      : Column(children: controller.results.entries.map(
+                          (entry) => Text(
+                            '${entry.key}: ${entry.value}',
+                          ),
+                        ).toList(),
+                      ),
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => Get.to(() => PastCalculationsScreen()),
+                      child: const Text('View History'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

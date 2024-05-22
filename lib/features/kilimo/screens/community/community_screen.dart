@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets/custom_shapes/search_container.dart';
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
+import '../../../../data/repositories/post/post_repository.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../models/community/post_modal.dart';
 import 'ask_community_screen.dart';
 import 'widgets/crop_categories.dart';
 import 'widgets/crop_list.dart';
 
 class CommunityScreen extends StatelessWidget {
-  const CommunityScreen({super.key});
+  CommunityScreen({super.key});
+  
+  final PostRepository postRepository = Get.put(PostRepository());
+  final TextEditingController _searchController = TextEditingController();
+  final RxString _selectedFilter = 'All'.obs; // Initial filter
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +46,44 @@ class CommunityScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             // Search Section
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: TSizes.spaceBtwItems),
+            SliverPadding(
+              padding: const EdgeInsets.all(TSizes.spaceBtwItems),
               sliver: SliverToBoxAdapter(
-                child: TSearchContainer(text: 'Search in community'),
+                child: TypeAheadField<PostModal>(
+                  builder: (context, controller, focusNode) {
+                    return TextField(
+                      controller: _searchController,
+                      decoration: const InputDecoration(
+                        labelText: 'Search by crop type or location',
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                      onChanged: (value) {
+                        // Trigger filtering whenever the search text changes
+                        _selectedFilter.value = 'All';
+                      },
+                    );
+                  },
+                  suggestionsCallback: (pattern) async {
+                    if (pattern.isEmpty) return [];
+                    return await postRepository.searchPosts(pattern);
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion.problemTitle), // Show post title
+                      subtitle: Text(suggestion.cropType),   // Show crop type
+                    );
+                  },
+                  onSelected: (suggestion) {
+                    _searchController.text = suggestion.problemTitle; // Set the title as search text
+                  },
+                  emptyBuilder: (context) => const ListTile(
+                    title: Text('No results found'),
+                  ),
+                ),
               ),
             ),
             // Filter Section
+            // Crop Filter Dropdown
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
               sliver: SliverToBoxAdapter(
@@ -61,9 +98,20 @@ class CommunityScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        String selectedFilter = _selectedFilter.value;
+                        String searchQuery = _searchController.text.trim();
+
+                        if (selectedFilter == 'All' && searchQuery.isEmpty) {
+                          postRepository.fetchAllPosts();
+                        } else if (selectedFilter == 'All') {
+                          postRepository.fetchPostsByLocation(searchQuery);
+                        } else {
+                          postRepository.fetchFilteredPosts(selectedFilter, searchQuery);
+                        }
+                      },
                       child: const Text(
-                        'change',
+                        'Apply Filter',
                         style: TextStyle(
                           color: TColors.accent,
                           fontSize: TSizes.fontSizeMd,
@@ -90,9 +138,14 @@ class CommunityScreen extends StatelessWidget {
               ),
             ),
             // Crop List Section
-            const SliverPadding(
-              padding: EdgeInsets.all(5),
-              sliver: TCropList(),
+            SliverPadding(
+              padding: const EdgeInsets.all(5),
+              sliver: Obx(
+                () => TCropList(
+                  filter: _selectedFilter.value,
+                  searchQuery: _searchController.text,
+                ),
+              ),
             ),
           ],
         ),

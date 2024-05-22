@@ -8,7 +8,8 @@ class PostModal {
   final String problemDescription;
   final String cropImage;
   final String userId;
-  late String userLocation;
+  final String userName;
+  final String userLocation;
   final DateTime date;
 
   // Constructor for PostModel
@@ -19,9 +20,13 @@ class PostModal {
     required this.problemDescription,
     required this.cropImage,
     required this.userId,
+    required this.userName,
     required this.userLocation,
     required this.date,
   });
+
+  // Add a calculated searchIndex field
+  List<String> get searchIndex => [cropType.toLowerCase(), userLocation.toLowerCase()];
 
   // static function to create an empty post modal
   static PostModal empty() => PostModal(
@@ -31,11 +36,13 @@ class PostModal {
     problemDescription: '',
     cropImage: '',
     userId: '',
+    userName: '',
     userLocation: '',
     date: DateTime.now(),
   );
 
   // Convert modal to JSON structure for storing data in firebase
+  // toJson() - For Firestore serialization (No change needed)
   Map<String, dynamic> toJson() {
     return {
       'CropType': cropType,
@@ -43,28 +50,33 @@ class PostModal {
       'ProblemDescription': problemDescription,
       'CropImage': cropImage,
       'UserId': userId,
+      'UserName': userName,
       'UserLocation': userLocation,
       'Date': date,
     };
   }
 
   // Factory method to create a PostModal from a Firebase document snapshot
+  // fromSnapshot() - Now handles potential nulls more gracefully
   factory PostModal.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data()!;
-      return PostModal(
-        id: document.id,
-        cropType: data['CropType'] ?? '',
-        problemTitle: data['ProblemTitle'] ?? '',
-        problemDescription: data['ProblemDescription'] ?? '',
-        cropImage: data['CropImage'] ?? '',
-        userId: data['UserId'] ?? '',
-        userLocation: data['UserLocation'] ?? '',
-        date: DateTime.now(),
-      );
-    } else {
-      // Handle null case, for example, return an empty PostModal
+    if (!document.exists) {
+      // Document doesn't exist, return empty PostModal
       return PostModal.empty();
     }
+
+    final data = document.data()!;
+
+    return PostModal(
+      id: document.id,
+      cropType: data['CropType'] ?? '',
+      problemTitle: data['ProblemTitle'] ?? '',
+      problemDescription: data['ProblemDescription'] ?? '',
+      cropImage: data['CropImage'] ?? '',
+      userId: data['UserId'] ?? '',
+      userName: data['UserName'] ?? '',
+      userLocation: data['UserLocation'] ?? '',
+      // Parse date from Firestore Timestamp or use current time
+      date: (data['Date'] as Timestamp?)?.toDate() ?? DateTime.now(),
+    );
   }
 }

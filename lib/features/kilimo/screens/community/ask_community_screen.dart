@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,7 +6,7 @@ import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import '../../controllers/community/ask_community_controller.dart';
+import '../../controllers/community/post_community_controller.dart';
 
 class AskCommunity extends StatelessWidget {
   const AskCommunity({super.key});
@@ -16,8 +14,9 @@ class AskCommunity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Instantiate controller
-    final controller = Get.put(AskCommunityController());
+    final controller = Get.put(PostCommunityController());
     final darkMode = THelperFunctions.isDarkMode(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -44,85 +43,87 @@ class AskCommunity extends StatelessWidget {
                 const SizedBox(height: TSizes.spaceBtwSections),
                 Column(
                   children: [
-                    // Crop selection
+                    // Crop Selection
                     Align(
                       alignment: Alignment.centerLeft,
                       child: OutlinedButton(
                         onPressed: () async {
-                          // Show crop selection dialog
+                          // Crop Selection
                           final selectedCrop = await selectCrop(context);
                           if (selectedCrop != null) {
-                            controller.setSelectedCrop(selectedCrop);
+                            controller.selectedCrop.value = selectedCrop;
                           }
                         },
-                        child: Text(
-                          controller.selectedCrop.value,
-                          style: const TextStyle(
-                            fontSize: 14.0,
+                        child: Obx(
+                          () => Text(
+                            controller.selectedCrop.value.isEmpty
+                              ? 'Select Crop'
+                              : controller.selectedCrop.value, // Display selected crop
+                            style: const TextStyle(
+                              fontSize: 14.0,
+                            ),
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
-                    // Question input field
-                    Obx(
-                      () => TextField(
-                        //expands: false,
-                        // Bind to controller
-                        controller: controller.problemTitle.value,
-                        decoration: const InputDecoration(
-                          labelText: 'Your question to the community',
-                          hintText: 'Add a question indicating what\'s wrong with your crop',
-                          border: InputBorder.none,
-                        ),
-                        // Set character limit as specified in the UI
-                        maxLength: 200, 
+                    // Question Title
+                    TextField(
+                      controller: controller.problemTitleController,
+                      decoration: const InputDecoration(
+                        labelText: 'Your question to the community',
+                        hintText: 'Add a question...',
                       ),
+                      // Set character limit as specified in the UI
+                      maxLength: 200, 
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
-                    // Crop details text field
-                    Obx(
-                      () => TextField(
-                        //expands: false,
-                        controller: controller.problemDescription.value,
-                        decoration: const InputDecoration(
-                          labelText: 'Description of your problem',
-                          hintText: 'Describe specialities such as change of leaves, root colour, bugs, tears...',
-                          border: InputBorder.none,
-                        ),
-                        maxLength: 1500, // Set character limit as specified in the UI
+                    // Problem Description
+                    TextField(
+                      controller: controller.problemDescriptionController,
+                      decoration: const InputDecoration(
+                        labelText: 'Description of your problem',
+                        hintText: 'Describe specialities...',
                       ),
+                      maxLines: null, // Allow unlimited lines
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
-                    // Display selected image if available
-                    Obx(() {
-                      controller.isImageUploaded.value = true;
-                      return Image.file(
-                        File(controller.selectedImage.value.toString()),
-                        width: double.infinity, 
-                        height: 200, 
-                        fit: BoxFit.cover
-                      );
-                    }),
+                    // Display Selected Image
+                    Obx(() =>controller.imageFile.value != null
+                      ? Image.file(
+                          controller.imageFile.value!,
+                          width: double.infinity, 
+                          height: 200, 
+                          fit: BoxFit.cover
+                        )
+                      : const SizedBox.shrink(),
+                    ),
                     const SizedBox(height: TSizes.spaceBtwSections),
-                    // Image uploading
+                    // Image Upload Button
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
                         onPressed: () => controller.pickImage(),
-                        child: Text(
-                          'upload_image'.tr,
-                          style: const TextStyle(color: TColors.accent),
+                        child: Obx(
+                          () => Text(
+                            controller.imageFile.value == null 
+                            ? 'upload_image'.tr : 'Change Image',
+                            style: const TextStyle(color: TColors.accent),
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
-                    // Inside the Form widget's Column children
+                    //Submit Button
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () => controller.submitData(),
-                        child: Text('send'.tr),
+                      child: Obx(
+                        () => ElevatedButton(
+                          onPressed: () => controller.submitPost(), // Trigger action
+                          child: controller.isLoading.value // Use value directly
+                            ? const CircularProgressIndicator(color: TColors.white) // Loading indicator
+                            : Text('send'.tr)
+                        ),
                       ),
                     ),
                   ],

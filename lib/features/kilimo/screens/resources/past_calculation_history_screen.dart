@@ -4,13 +4,12 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../util/constants/colors.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import '../../controllers/fertilizer_calculator/fertilizer_calculator_controller.dart';
-import 'widgets/fertilization/calculation_card.dart';
+import '../../controllers/fertilizer_calculator/fertilizer_controller.dart';
 
 class PastCalculationsScreen extends StatelessWidget {
   PastCalculationsScreen({super.key}); 
 
-  final controller = Get.put(FertilizerCalculatorController());
+  final controller = Get.put(FertilizerController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +25,10 @@ class PastCalculationsScreen extends StatelessWidget {
         ),
         title: const Text('Calculation History')
       ),
-      body: SafeArea(
-        child: Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return ListView.builder(
-              itemCount: controller.pastCalculations.length,
-              itemBuilder: (context, index) {
-                final calculation = controller.pastCalculations[index];
-                return CalculationCard(calculation: calculation); // Your custom CalculationCard
-              },
-            );
-          }
-        }),
+      body: const SafeArea(
+        child: Center(
+          child: Text('Calculation History')
+        ),
       ),
     );
   }

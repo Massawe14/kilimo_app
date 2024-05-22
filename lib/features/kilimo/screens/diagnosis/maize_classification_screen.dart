@@ -200,9 +200,9 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
                                         confidence = _accuracy;
                                         // Check confidence
                                         if (confidence >= 0.5) {
-                                          await Get.to(const DiseaseDetailsScreen())!.then((_output) {
+                                          await Get.to(const DiseaseDetailsScreen())!.then((output) {
                                             disease = Disease(
-                                              name: _output[0]['label'], 
+                                              name: output[0]['label'], 
                                               imagePath: _image.path,
                                             );
                                           });

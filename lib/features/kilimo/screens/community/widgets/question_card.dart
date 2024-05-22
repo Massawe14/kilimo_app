@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../util/constants/colors.dart';
 import '../../../../../util/constants/image_strings.dart';
@@ -45,84 +47,89 @@ class TQuestionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
-              child: Image.asset(
-                image,
-                height: 150,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            // Image (Using CachedNetworkImage)
+            CachedNetworkImage(
+              imageUrl: image,
+              placeholder: (context, url) => const CircularProgressIndicator(), // Loading indicator
+              errorWidget: (context, url, error) => const Icon(Icons.error),     // Error icon
+              height: 150,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Profile Image
                 const CircleAvatar(
                   backgroundImage: AssetImage(TImages.profileImage),
                   radius: 24,
                 ),
                 const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          username,
-                          style: const TextStyle(
-                            color: TColors.accent,
-                            fontSize: TSizes.fontSizeMd,
-                            fontWeight: FontWeight.bold
+                // User Information
+                Expanded( // Make the column take available space
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            username,
+                            style: const TextStyle(
+                              color: TColors.accent,
+                              fontSize: TSizes.fontSizeMd,
+                              fontWeight: FontWeight.bold
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        const Text(
-                          '.',
-                          style: TextStyle(
-                            color: TColors.darkGrey,
-                            fontSize: TSizes.fontSizeSm,
+                          // Location & Date
+                          const SizedBox(width: 5),
+                          const Text(
+                            '.',
+                            style: TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          location,
-                          style: const TextStyle(
-                            color: TColors.darkGrey,
-                            fontSize: TSizes.fontSizeSm,
+                          const SizedBox(width: 5),
+                          Text(
+                            location,
+                            style: const TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          date.toString(),
-                          style: const TextStyle(
-                            color: TColors.darkGrey,
-                            fontSize: TSizes.fontSizeSm,
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            timeago.format(date),
+                            style: const TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        const Text(
-                          '.',
-                          style: TextStyle(
-                            color: TColors.darkGrey,
-                            fontSize: TSizes.fontSizeSm,
+                          const SizedBox(width: 5),
+                          const Text(
+                            '.',
+                            style: TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          crop,
-                          style: const TextStyle(
-                            color: TColors.darkGrey,
-                            fontSize: TSizes.fontSizeSm,
+                          const SizedBox(width: 5),
+                          Text(
+                            crop,
+                            style: const TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
