@@ -71,8 +71,8 @@ class AskCommunity extends StatelessWidget {
                     TextField(
                       controller: controller.problemTitleController,
                       decoration: const InputDecoration(
-                        labelText: 'Your question to the community',
                         hintText: 'Add a question...',
+                        border: InputBorder.none,
                       ),
                       // Set character limit as specified in the UI
                       maxLength: 200, 
@@ -82,8 +82,18 @@ class AskCommunity extends StatelessWidget {
                     TextField(
                       controller: controller.problemDescriptionController,
                       decoration: const InputDecoration(
-                        labelText: 'Description of your problem',
-                        hintText: 'Describe specialities...',
+                        hintText: 'Describe your question...',
+                        border: InputBorder.none,
+                      ),
+                      maxLines: null, // Allow unlimited lines
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwInputFields),
+                    // Location
+                    TextField(
+                      controller: controller.locationController,
+                      decoration: const InputDecoration(
+                        hintText: 'Add your location',
+                        border: InputBorder.none,
                       ),
                       maxLines: null, // Allow unlimited lines
                     ),

@@ -2,17 +2,18 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../data/repositories/post/post_repository.dart';
 import '../../../../data/repositories/user/user_repository.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/helpers/network_manager.dart';
 import '../../../../util/popups/full_screen_loader.dart';
 import '../../../../util/popups/loaders.dart';
+import '../../../personalization/models/user_modal.dart';
 import '../../models/community/post_modal.dart';
 
 class PostCommunityController extends GetxController {
@@ -24,10 +25,12 @@ class PostCommunityController extends GetxController {
   final selectedCrop = ''.obs;
   final problemTitle = ''.obs;
   final problemDescription = ''.obs;
+  final location = ''.obs;
   final uid = const Uuid().v4();
 
-  final TextEditingController problemTitleController = TextEditingController();
-  final TextEditingController problemDescriptionController = TextEditingController();
+  final problemTitleController = TextEditingController();
+  final problemDescriptionController = TextEditingController();
+  final locationController = TextEditingController();
 
   final imageFile = Rxn<File>(); // Use Rxn for better null handling
   final isImageUploaded = false.obs;
@@ -37,10 +40,13 @@ class PostCommunityController extends GetxController {
   void onInit() {
     super.onInit();
     problemTitleController.addListener(() {
-      problemTitle.value = problemTitleController.text;
+      problemTitle.value = problemTitleController.text.trim();
     });
     problemDescriptionController.addListener(() {
-      problemDescription.value = problemDescriptionController.text;
+      problemDescription.value = problemDescriptionController.text.trim();
+    });
+    locationController.addListener(() {
+      location.value = locationController.text.trim();
     });
   }
 
@@ -48,6 +54,7 @@ class PostCommunityController extends GetxController {
   void onClose() {
     problemTitleController.dispose();
     problemDescriptionController.dispose();
+    locationController.dispose();
     super.onClose();
   }
 
@@ -60,14 +67,16 @@ class PostCommunityController extends GetxController {
     }
   }
 
-  Future<String?> uploadImageToFirebase(File image) async {
+  Future<String?> uploadImageToFirebase(String path, File image) async {
     try {
-      Reference ref = FirebaseStorage.instance
+      final ref = FirebaseStorage.instance
         .ref()
-        .child('crop_images/${DateTime.now().millisecondsSinceEpoch}');
+        .child(path)
+        .child(AuthenticationRepository.instance.authUser!.uid);
       UploadTask uploadTask = ref.putFile(image);
       TaskSnapshot snapshot = await uploadTask;
-      return await snapshot.ref.getDownloadURL();
+      String downloadUrl = await snapshot.ref.getDownloadURL();
+      return downloadUrl;
     } catch (e) {
       throw Exception('Error uploading image: $e');
     }
@@ -96,14 +105,7 @@ class PostCommunityController extends GetxController {
       }
       
       // Fetch user details
-      final user = await userRepository.fetchUserDetails();
-
-      // Get user's current location
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-
-      String userLocation = '${position.latitude}, ${position.longitude}';
+      UserModal user = await userRepository.fetchUserDetails();
 
       // Check if the image is uploaded
       if (imageFile.value == null) {
@@ -115,29 +117,29 @@ class PostCommunityController extends GetxController {
       }
       
       // Upload the image to Firebase Storage
-      String? imageUrl = await uploadImageToFirebase(imageFile.value!);
+      String? imageUrl = await uploadImageToFirebase('Posts/Images/', imageFile.value!);
 
       if (imageUrl == null) {
-        throw Exception('Failed to upload image');
+        return TLoaders.errorSnackBar(title: 'Oh Snap', message: 'Failed to upload image');
       }
       
       // Check if user data is loaded
       if (user.id.isEmpty) {
         // Map Data
-        final post = PostModal(
+        final newPost = PostModal(
           id: uid,
           cropType: selectedCrop.value,
-          problemTitle: problemTitle.value.trim(),
-          problemDescription: problemDescription.value.trim(),
+          problemTitle: problemTitle.value,
+          problemDescription: problemDescription.value,
           cropImage: imageUrl,
           userId: user.id,
           userName: user.username,
-          userLocation: userLocation,
+          userLocation: location.value,
           date: DateTime.now(),
         );
 
         // Save user data to Firestore
-        await postRepository.savePostRecord(post);
+        await postRepository.savePostRecord(newPost);
 
         // Reset image
         imageFile.value = null;
@@ -152,7 +154,7 @@ class PostCommunityController extends GetxController {
         );
       } else {
         // Handle the case where user details couldn't be fetched
-        throw Exception('Failed to get user details');
+        TLoaders.errorSnackBar(title: 'Oh Snap', message: 'Failed to get user details');
       }
     } catch (e) {
       // Remove Loader

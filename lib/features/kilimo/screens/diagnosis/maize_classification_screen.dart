@@ -112,6 +112,27 @@ class MaizeDiagnosisScreenState extends State<MaizeDiagnosisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Hive.openBox<Disease>('plant_diseases'),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(child: Text('Error: ${snapshot.error}')),
+          );
+        }
+
+        return _buildContent(context);
+      },
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     // Find the controller
     final diseaseController = Get.put(DiseaseDetailsController());
 

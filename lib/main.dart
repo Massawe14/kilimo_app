@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -14,41 +15,48 @@ import 'firebase_options.dart';
 
 // Entry point of Flutter App
 Future<void> main() async {
-  // GetX Local storage
-  await GetStorage.init();
-
-  // Widget Binding
+  // Ensure Flutter binding and preserve splash screen
   final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
-  // Await Splash until other items load
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // Initialize Firebase & Authentication Repository
-  await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform).then(
-    (FirebaseApp value) => Get.put(AuthenticationRepository()),
-  );
+  // Initialize GetX storage
+  await GetStorage.init();
+
+  // Initialize Firebase and Authentication Repository
+  await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform)
+    .then((FirebaseApp app) => Get.put(AuthenticationRepository()));
 
   // Initialize App Check
-  // await FirebaseAppCheck.instance.activate(
-  //   androidProvider: AndroidProvider.debug,
-  // );
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
+  );
 
   // Initialize Hive
   await Hive.initFlutter();
-
-  // Register HiveAdapter for Disease class
-  Hive.registerAdapter(DiseaseAdapter());
+  Hive
+    ..registerAdapter(DiseaseAdapter())
+    ..registerAdapter(FertilizerCalculationAdapter());
   
-  // Register HiveAdapter for FertilizerCalculation class
-  Hive.registerAdapter(FertilizerCalculationAdapter());
+  // Open Hive boxes
+  await Future.wait([
+    Hive.openBox<Disease>('plant_diseases'),
+    Hive.openBox('calculations')
+  ]);
 
-  // Open the box
-  await Hive.openBox<Disease>('plant_diseases');
+  // // Register HiveAdapter for Disease class
+  // Hive.registerAdapter(DiseaseAdapter());
 
-  await Hive.openBox('calculations');
+  // // Open the box
+  // await Hive.openBox<Disease>('plant_diseases');
+  
+  // // Register HiveAdapter for FertilizerCalculation class
+  // Hive.registerAdapter(FertilizerCalculationAdapter());
+
+  // await Hive.openBox('calculations');
   
   // Initialize theme controller
   Get.put(ThemeController());
-
+  
+  // Run the app
   runApp(const App());
 }

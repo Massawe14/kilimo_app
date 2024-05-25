@@ -26,30 +26,24 @@ class PrivacyPolicyScreen extends StatelessWidget {
         title: const Text("Privacy Policy"),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: FutureBuilder(
-                  future: Future.delayed(const Duration(milliseconds: 150)).then((value) {
-                    return rootBundle.loadString('assets/legal/privacy_policy.md');
-                  }), 
-                  builder: (context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.hasData) {
-                      return Markdown(
-                        data: snapshot.data!,
-                      );
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+        child: FutureBuilder(
+          future: Future.delayed(const Duration(milliseconds: 150)).then((value) {
+            return rootBundle.loadString('assets/legal/privacy_policy.md');
+          }), 
+          builder: (context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.hasData) {
+              return Padding(
+                padding: const EdgeInsets.all(TSizes.defaultSpace),
+                child: Markdown(
+                  data: snapshot.data!,
+                  shrinkWrap: true, // Ensure the content wraps correctly
                 ),
-              ),
-            ],
-          ),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         ),
       ),
     );

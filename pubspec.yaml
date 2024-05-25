@@ -32,6 +32,7 @@ dependencies:
   firebase_core: ^2.4.1
   firebase_messaging_platform_interface: ^4.2.10
   firebase_messaging: ^14.2.1
+  firebase_app_check: ^0.2.2
 
   # Tflite
   tflite_flutter: ^0.10.4
@@ -96,7 +97,6 @@ dependencies:
   shimmer: ^3.0.0
   localize_and_translate: ^5.1.2
   flutter_translate: ^4.0.4
-  firebase_app_check: ^0.2.2
   weather_icons: ^3.0.0
   realm: ^2.1.0
   flutter_markdown: ^0.7.1
