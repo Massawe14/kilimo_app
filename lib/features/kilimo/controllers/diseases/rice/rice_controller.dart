@@ -7,14 +7,14 @@ import 'package:http_parser/http_parser.dart'; // For MediaType
 
 import '../../../../../util/constants/api_constants.dart';
 
-class MaizeDetectorController extends GetxController {
+class RiceDetectorController extends GetxController {
   var isLoading = true.obs;
   final image = Rx<File?>(null);
   var output = <dynamic>[].obs; // Ensure output is always initialized as a list
   var accuracy = 0.0.obs;
 
   classifyImage(File file) async {
-    final url = Uri.parse(APIConstants.tMaizeAPIModel);
+    final url = Uri.parse(APIConstants.tRiceAPIModel);
 
     // Print request details for debugging
     debugPrint('URL: $url');

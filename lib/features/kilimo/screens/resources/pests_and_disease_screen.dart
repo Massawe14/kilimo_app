@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets/custom_shapes/diagnosis_container.dart';
+import '../../../../common/widgets/custom_shapes/detector_container.dart';
 import '../../../../common/widgets/select_crop/select_crop.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../util/constants/colors.dart';
@@ -140,7 +140,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const DiagnosisContainer(),
+                const DetectorContainer(),
               ],
             ),
           ),

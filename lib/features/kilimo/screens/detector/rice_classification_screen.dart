@@ -1,58 +1,22 @@
 import 'dart:io';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import '../../controllers/diseases/disease_details_controller.dart';
-import '../../controllers/diseases/maize/maize_controller.dart';
-import '../../models/disease/disease.dart';
-import '../../models/disease/hive_database.dart';
-import 'disease_details_screen.dart';
+import '../../controllers/diseases/rice/rice_controller.dart';
 
-class MaizeDiagnosisScreen extends StatelessWidget {
-  const MaizeDiagnosisScreen({super.key});
+class RiceDetectorScreen extends StatelessWidget {
+  const RiceDetectorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Hive.openBox<Disease>('plant_diseases'),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator()
-            ),
-          );
-        }
-
-        if (snapshot.hasError) {
-          return Scaffold(
-            body: Center(child: Text('Error: ${snapshot.error}')),
-          );
-        }
-
-        return _buildContent(context);
-      },
-    );
-  }
-
-  Widget _buildContent(BuildContext context) {
-    // Find the controller
-    final controller = Get.put(MaizeDiagnosisController());
-    final diseaseController = Get.put(DiseaseDetailsController());
-
+    final controller = Get.put(RiceDetectorController());
     final darkMode = THelperFunctions.isDarkMode(context);
-
-    // Hive service
-    HiveService hiveService = HiveService();
-
-    late Disease disease;
 
     Future<void> captureImage(ImageSource source) async {
       final ImagePicker picker = ImagePicker();
@@ -90,7 +54,7 @@ class MaizeDiagnosisScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Maize Disease Detector'),
+        title: const Text('Rice Disease Detector'),
         actions: [
           IconButton(
             icon: const Icon(
@@ -120,7 +84,7 @@ class MaizeDiagnosisScreen extends StatelessWidget {
               children: [
                 Obx(
                   () => Center(
-                    child: controller.isLoading.value
+                    child: controller.isLoading.value 
                       ? SizedBox(
                           width: 260,
                           child: Padding(
@@ -142,7 +106,7 @@ class MaizeDiagnosisScreen extends StatelessWidget {
                           ),
                         )
                       : SizedBox(
-                          width: double.infinity,
+                          width: double.infinity, // Make the container take the full width
                           child: Column(
                             children: [
                               if (controller.image.value != null)
@@ -150,48 +114,19 @@ class MaizeDiagnosisScreen extends StatelessWidget {
                               const SizedBox(height: TSizes.spaceBtwSections),
                               if (controller.output.isNotEmpty)
                                 Column(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () async {
-                                          late double confidence;
-                                          confidence = controller.accuracy.value;
-                                          // Check confidence
-                                          if (confidence >= 0.5) {
-                                            await Get.to(const DiseaseDetailsScreen())!.then((output) {
-                                              disease = Disease(
-                                                name: output[0]['label'], 
-                                                imagePath: controller.image.value.toString(),
-                                              );
-                                            });
-                          
-                                            // Set disease for Disease Controller
-                                            diseaseController.setDiseaseValue(disease);
-                          
-                                            // Save disease
-                                            hiveService.addDisease(disease);
-                                          } else {
-                                            // Display unsure message
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(
-                                                content: Text('Unable to identify with sufficient confidence.'),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                        child: Text(
-                                          'Result: ${controller.output[0]['label']}',
-                                          style: Theme.of(context).textTheme.headlineSmall,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
-                                        style: const TextStyle(
-                                          color: TColors.black,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  )
+                                  children: [
+                                    Text(
+                                      'Result: ${controller.output[0]['label']}',
+                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      textAlign: TextAlign.center, // Center the text
+                                    ),
+                                    Text(
+                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
+                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      textAlign: TextAlign.center, // Center the text
+                                    ),
+                                  ],
+                                )
                               else if (!controller.isLoading.value) // Show 'can't identify' only after loading is done
                                 const Center(
                                   child: Text(

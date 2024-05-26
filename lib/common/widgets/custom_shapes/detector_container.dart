@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../features/kilimo/screens/diagnosis/survey_screen.dart';
+import '../../../features/kilimo/screens/detector/detector_screen.dart';
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/sizes.dart';
 
-class DiagnosisContainer extends StatelessWidget {
-  const DiagnosisContainer({super.key});
+class DetectorContainer extends StatelessWidget {
+  const DetectorContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class DiagnosisContainer extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                  'Crop diagnosis',
+                  'Crop Diseases Detector',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ],
@@ -40,7 +40,7 @@ class DiagnosisContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Identify your crop's issues in a\nfew seconds",
+                  "Identify your crop's diseases in a\nfew seconds",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -54,7 +54,7 @@ class DiagnosisContainer extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Get.to(() => const SurveyScreen()),
+                onPressed: () => Get.to(() => const DetectorScreen()),
                 child: const Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +68,7 @@ class DiagnosisContainer extends StatelessWidget {
                         )
                       ),
                       SizedBox(width: 5),
-                      Text('Diagnose'),
+                      Text('Detector'),
                     ],
                   ),
                 ),

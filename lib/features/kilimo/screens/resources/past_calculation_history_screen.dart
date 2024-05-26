@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
@@ -34,25 +35,36 @@ class PastCalculationsScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Obx(() {
-            if (controller.calculationHistory.isEmpty) {
-              return const Center(
-                child: Center(
-                  child: Text('No calculations found.'),
-                ),
-              );
-            } else {
-              return ListView.builder(
-                itemCount: controller.calculationHistory.length,
-                itemBuilder: (context, index) {
-                  final calculation = controller.calculationHistory[index];
-                  return ListTile(
-                    title: Text('Crop: ${calculation.cropType}'),
-                    subtitle: Text('Fertilizer Needed: ${calculation.totalFertilizer.toStringAsFixed(2)} kg\n'
-                      'Date: ${calculation.date.toLocal()}'),
-                  );
-                },
-              );
+            // Handle potential loading state or errors
+            if (controller.calculationHistory.isEmpty && controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (controller.calculationHistory.isEmpty) {
+              return Center(child: Text('Error: ${controller.error.value}'));
             }
+
+            // Display calculations
+            return ListView.builder(
+              itemCount: controller.calculationHistory.length,
+              itemBuilder: (context, index) {
+                final calculation = controller.calculationHistory[index];
+                return Card( // Add a Card for visual separation
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  child: ListTile(
+                    title: Text(
+                      'Crop: ${calculation.cropType}', 
+                      style: const TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Fertilizer Needed: ${calculation.totalFertilizer.toStringAsFixed(2)} kg'),
+                        Text('Date: ${DateFormat('yyyy-MM-dd HH:mm').format(calculation.date.toLocal())}'), // Nicer date format
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
           }),
         ),
       ),

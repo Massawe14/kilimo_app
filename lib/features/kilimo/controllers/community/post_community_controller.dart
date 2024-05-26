@@ -78,8 +78,9 @@ class PostCommunityController extends GetxController {
   }
 
   Future<void> submitPost() async {
+    // Form validation (combined into one condition for brevity)
     if (imageFile.value == null || selectedCrop.value.isEmpty || problemTitle.value.isEmpty || problemDescription.value.isEmpty) {
-      TLoaders.warningSnackBar(
+      TLoaders.errorSnackBar(
         title: 'Error',
         message: 'Please fill in all fields and select an image.',
       );
@@ -114,39 +115,33 @@ class PostCommunityController extends GetxController {
       // Upload the image to Firebase Storage
       String imageUrl = await uploadImageToFirebase('Posts/Images/', imageFile.value!);
       
-      // Check if user data is loaded
-      if (user.id.isEmpty) {
-        // Map Data
-        final newPost = PostModal(
-          id: uid,
-          cropType: selectedCrop.value,
-          problemTitle: problemTitle.value,
-          problemDescription: problemDescription.value,
-          cropImage: imageUrl,
-          userId: user.id,
-          userName: user.username,
-          userLocation: location.value,
-          date: DateTime.now(),
-        );
+      // Create and Save Post with User Information
+      final newPost = PostModal(
+        id: uid,
+        cropType: selectedCrop.value,
+        problemTitle: problemTitle.value,
+        problemDescription: problemDescription.value,
+        cropImage: imageUrl,
+        userId: user.id,
+        userName: user.username,
+        userLocation: location.value,
+        date: DateTime.now(),
+      );
 
-        // Save user data to Firestore
-        await postRepository.savePostRecord(newPost);
+      // Save user data to Firestore
+      await postRepository.savePostRecord(newPost);
 
-        // Reset image
-        imageFile.value = null;
-        isImageUploaded.value = false;
+      // Reset image
+      imageFile.value = null;
+      isImageUploaded.value = false;
 
-        // Remove Loader
-        TFullScreenLoader.stopLoading();
+      // Remove Loader
+      TFullScreenLoader.stopLoading();
 
-        TLoaders.successSnackBar(
-          title: 'Success',
-          message: 'Post submitted successfully!',
-        );
-      } else {
-        // Handle the case where user details couldn't be fetched
-        TLoaders.errorSnackBar(title: 'Oh Snap', message: 'Failed to get user details');
-      }
+      TLoaders.successSnackBar(
+        title: 'Success',
+        message: 'Post submitted successfully!',
+      );
     } catch (e) {
       // Remove Loader
       TFullScreenLoader.stopLoading();

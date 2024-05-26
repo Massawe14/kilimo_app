@@ -8,14 +8,14 @@ import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import '../../controllers/diseases/beans/beans_controller.dart';
+import '../../controllers/diseases/cassava/cassava_controller.dart';
 
-class BeansDiagnosisScreen extends StatelessWidget {
-  const BeansDiagnosisScreen({super.key});
+class CassavaDetectorScreen extends StatelessWidget {
+  const CassavaDetectorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BeansDiagnosisController());
+    final controller = Get.put(CassavaDetectorController());
     final darkMode = THelperFunctions.isDarkMode(context);
 
     Future<void> captureImage(ImageSource source) async {
@@ -54,7 +54,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Beans Disease Detector'),
+        title: const Text('Cassava Disease Detector'),
         actions: [
           IconButton(
             icon: const Icon(
@@ -117,7 +117,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Result: ${controller.output[0]['label']}',
-                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      style: const TextStyle(color: Color.fromARGB(255, 157, 73, 73), fontSize: 20),
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                     Text(

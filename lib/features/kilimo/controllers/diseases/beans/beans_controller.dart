@@ -7,7 +7,7 @@ import 'package:http_parser/http_parser.dart'; // For MediaType
 
 import '../../../../../util/constants/api_constants.dart';
 
-class BeansDiagnosisController extends GetxController {
+class BeansDetectorController extends GetxController {
   var isLoading = true.obs;
   final image = Rx<File?>(null);
   var output = <dynamic>[].obs; // Ensure output is always initialized as a list

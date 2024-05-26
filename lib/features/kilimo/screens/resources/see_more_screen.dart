@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets/custom_shapes/diagnosis_container.dart';
+import '../../../../common/widgets/custom_shapes/detector_container.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
@@ -65,7 +65,7 @@ class SeeMoreScreen extends StatelessWidget {
                   }
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const DiagnosisContainer(),
+                const DetectorContainer(),
               ],
             ),
           ),

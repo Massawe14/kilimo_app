@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../util/popups/loaders.dart';
 import '../../models/fertilizer/calculation_modal.dart';
 
 class FertilizerController extends GetxController {
@@ -18,19 +19,24 @@ class FertilizerController extends GetxController {
   var user = Rx<User?>(null);
   var calculationHistory = <CalculationModal>[].obs;
 
+  // Add these properties
+  RxBool isLoading = false.obs;
+  RxString error = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
     user.bindStream(FirebaseAuth.instance.authStateChanges());
+    ever(user, (_) => fetchCalculationHistory()); // Fetch history whenever user changes
   }
 
   @override
   void dispose() {
     super.dispose();
-    plotSizeController.dispose();
-    nitrogenController.dispose();
-    phosphorusController.dispose();
-    potassiumController.dispose();
+    plotSizeController.clear();
+    nitrogenController.clear();
+    phosphorusController.clear();
+    potassiumController.clear();
   }
 
   void calculateFertilizer() {
@@ -49,11 +55,17 @@ class FertilizerController extends GetxController {
 
     fertilizerNeeded.value = totalFertilizer;
 
-    // Fetch user details
-    fetchUserDetailsAndSave(plotSize, nitrogen, phosphorus, potassium, totalFertilizer);
+    try {
+      fetchUserDetailsAndSave(plotSize, nitrogen, phosphorus, potassium, totalFertilizer);
+    } catch (e) {
+      TLoaders.errorSnackBar(
+        title: 'Error', 
+        message: 'Failed to save calculation'
+      );
+    }
   }
 
-  void fetchUserDetailsAndSave(double plotSize, double nitrogen, double phosphorus, double potassium, double totalFertilizer) async {
+  Future<void> fetchUserDetailsAndSave(double plotSize, double nitrogen, double phosphorus, double potassium, double totalFertilizer) async {
     String userId = user.value!.uid;
 
     // Fetch user details from Firestore (assuming user details are stored in a collection 'users')
@@ -79,19 +91,29 @@ class FertilizerController extends GetxController {
     FirebaseFirestore.instance.collection('fertilizer_calculations').add(calculation.toJson());
   }
 
-  void fetchCalculationHistory() async {
+  Future<void> fetchCalculationHistory() async {
     if (user.value == null) return;
 
-    String userId = user.value!.uid;
+    try {
+      String userId = user.value!.uid;
 
-    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
-      .collection('fertilizer_calculations')
-      .where('UserId', isEqualTo: userId)
-      .orderBy('Date', descending: true)
-      .get();
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+        .collection('fertilizer_calculations')
+        .where('UserId', isEqualTo: userId)
+        .orderBy('Date', descending: true)
+        .get();
 
-    calculationHistory.value = snapshot.docs
-      .map((doc) => CalculationModal.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>))
-      .toList();
+      calculationHistory.value = snapshot.docs
+        .map((doc) => CalculationModal.fromSnapshot(doc))
+        .toList();
+
+      debugPrint('Fetched ${calculationHistory.length} calculations');
+    } catch (e) {
+      debugPrint('Error fetching calculation history: $e');
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Failed to fetch calculation history',
+      );
+    }
   }
 }
