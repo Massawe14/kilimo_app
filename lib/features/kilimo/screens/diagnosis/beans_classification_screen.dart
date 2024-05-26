@@ -18,38 +18,37 @@ class BeansDiagnosisScreen extends StatelessWidget {
     final controller = Get.put(BeansDiagnosisController());
     final darkMode = THelperFunctions.isDarkMode(context);
 
-    captureImage() async {
+    Future<void> captureImage(ImageSource source) async {
       final ImagePicker picker = ImagePicker();
       // Pick an image
-      final XFile? pickedImage = await picker.pickImage(source: ImageSource.camera);
+      final XFile? pickedImage = await picker.pickImage(source: source);
       if (pickedImage != null) {
         File image = File(pickedImage.path);
         // Call the classifyImage function from the controller with the picked image
         controller.classifyImage(image);
+        // Update the image in the controller
+        controller.image.value = image; 
       } else {
         // Handle case where the user canceled image selection
         debugPrint('No image selected');
       }
     }
 
-    pickGalleryImage() async {
-      final ImagePicker picker = ImagePicker();
-      // Pick an image
-      final XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery);
-      if (pickedImage != null) {
-        File image = File(pickedImage.path);
-        // Call the classifyImage function from the controller with the picked image
-        controller.classifyImage(image);
-      } else {
-        // Handle case where the user canceled image selection
-        debugPrint('No image selected');
-      }
+    // Clear output when the screen is closed
+    void clearOutputOnClose() {
+      controller.isLoading.value = true;
+      controller.output.clear();
+      controller.image.value = null; 
+      controller.accuracy.value = 0.0;
     }
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () {
+            clearOutputOnClose(); 
+            Get.back();
+          },
           icon: Icon(
             Iconsax.arrow_left, 
             color: darkMode ? TColors.white : TColors.black,
@@ -85,7 +84,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
               children: [
                 Obx(
                   () => Center(
-                    child: controller.isLoading.value
+                    child: controller.isLoading.value 
                       ? SizedBox(
                           width: 260,
                           child: Padding(
@@ -102,41 +101,39 @@ class BeansDiagnosisScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: TSizes.spaceBtwSections),
                               ],
                             ),
                           ),
                         )
                       : SizedBox(
+                          width: double.infinity, // Make the container take the full width
                           child: Column(
                             children: [
-                              SizedBox(
-                                height: 250,
-                                child: Image.file(controller.image.value!),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              controller.output.isNotEmpty
-                                ? Column(
-                                    children: [
-                                      Text(
-                                        'Result: ${controller.output[0]['label']}',
-                                        style: const TextStyle(
-                                          color: TColors.black,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
-                                        style: const TextStyle(
-                                          color: TColors.black,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
+                              if (controller.image.value != null)
+                                Image.file(controller.image.value!),
+                              const SizedBox(height: TSizes.spaceBtwSections),
+                              if (controller.output.isNotEmpty)
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Result: ${controller.output[0]['label']}',
+                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      textAlign: TextAlign.center, // Center the text
+                                    ),
+                                    Text(
+                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
+                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      textAlign: TextAlign.center, // Center the text
+                                    ),
+                                  ],
+                                )
+                              else if (!controller.isLoading.value) // Show 'can't identify' only after loading is done
+                                const Center(
+                                  child: Text(
+                                    "Can't identify", 
+                                    style: TextStyle(fontSize: 30),
                                   )
-                                : const Center(child: Text("Can't identify", style: TextStyle(fontSize: 30))),
+                                ),
                             ],
                           ),
                         ),
@@ -152,7 +149,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      captureImage();
+                      captureImage(ImageSource.camera);
                     },
                     child: const Text(
                       'Take A Photo',
@@ -172,7 +169,7 @@ class BeansDiagnosisScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      pickGalleryImage();
+                      captureImage(ImageSource.gallery);
                     },
                     child: const Text(
                       'Pick from Gallery',

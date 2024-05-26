@@ -8,7 +8,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app.dart';
 import 'data/repositories/authentication/authentication_repository.dart';
-import 'features/kilimo/models/fertilizer/fertilizer_calculation.dart';
 import 'features/personalization/controllers/theme_controller.dart';
 import 'features/kilimo/models/disease/disease.dart';
 import 'firebase_options.dart';
@@ -28,31 +27,19 @@ Future<void> main() async {
 
   // Initialize App Check
   await FirebaseAppCheck.instance.activate(
+    // Set appleProvider to `AppleProvider.debug`
     androidProvider: AndroidProvider.debug,
   );
 
   // Initialize Hive
   await Hive.initFlutter();
-  Hive
-    ..registerAdapter(DiseaseAdapter())
-    ..registerAdapter(FertilizerCalculationAdapter());
+  Hive.registerAdapter(DiseaseAdapter());
   
   // Open Hive boxes
   await Future.wait([
     Hive.openBox<Disease>('plant_diseases'),
     Hive.openBox('calculations')
   ]);
-
-  // // Register HiveAdapter for Disease class
-  // Hive.registerAdapter(DiseaseAdapter());
-
-  // // Open the box
-  // await Hive.openBox<Disease>('plant_diseases');
-  
-  // // Register HiveAdapter for FertilizerCalculation class
-  // Hive.registerAdapter(FertilizerCalculationAdapter());
-
-  // await Hive.openBox('calculations');
   
   // Initialize theme controller
   Get.put(ThemeController());

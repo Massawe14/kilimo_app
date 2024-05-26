@@ -1,170 +1,97 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+
+import '../../models/fertilizer/calculation_modal.dart';
 
 class FertilizerController extends GetxController {
   // Rx variables for reactive updates
   RxString selectedCrop = ''.obs;
-  RxString selectedUnit = 'Hector'.obs;
-  final nController = TextEditingController();
-  final kController = TextEditingController();
-  final pController = TextEditingController();
+  
   final plotSizeController = TextEditingController();
-  final results = <String, double>{}.obs;
-  final isFormValid = false.obs;
+  final nitrogenController = TextEditingController();
+  final phosphorusController = TextEditingController();
+  final potassiumController = TextEditingController();
 
-  // Temporary nutrient storage
-  final tempN = 0.0.obs;
-  final tempP = 0.0.obs;
-  final tempK = 0.0.obs;
-
-  // Crop Nutrient and Fertilizer Data (Initialized in the constructor)
-  late final Map<String, Map<String, double>> cropNutrientRequirements;
-  late final Map<String, double> fertilizerNutrientContent;
+  var fertilizerNeeded = 0.0.obs;
+  var user = Rx<User?>(null);
+  var calculationHistory = <CalculationModal>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Initialize text controllers and listeners
-    nController.addListener(checkFormValidity);
-    kController.addListener(checkFormValidity);
-    pController.addListener(checkFormValidity);
-    plotSizeController.addListener(checkFormValidity);
-
-    // Initialize data
-    cropNutrientRequirements = {
-      'Maize': {'N': 120, 'P': 60, 'K': 80},
-      'Rice': {'N': 100, 'P': 50, 'K': 70},
-      'Beans': {'N': 80, 'P': 40, 'K': 60},
-      // Add more crops and their NPK requirements
-    };
-    fertilizerNutrientContent = {
-      'MOP': 0.6, // 60% K20
-      'SSP': 0.16, // 16% P205
-      'Urea': 0.46, // 46% N
-    };
-
-    selectedCrop.value = cropNutrientRequirements.keys.first;
+    user.bindStream(FirebaseAuth.instance.authStateChanges());
   }
 
   @override
   void dispose() {
-    // Dispose of text controllers
-    nController.dispose();
-    kController.dispose();
-    pController.dispose();
-    plotSizeController.dispose();
     super.dispose();
+    plotSizeController.dispose();
+    nitrogenController.dispose();
+    phosphorusController.dispose();
+    potassiumController.dispose();
   }
 
-  // Fertilizer calculation function
-  Map<String, double> calculationFertilizerAmounts(
-      String crop, double n, double p, double k, String unit, double plotSize) {
-    // Fetch nutrient requirements for the selected crop
-    final cropRequirements = cropNutrientRequirements[crop];
-    if (cropRequirements == null) {
-      throw ArgumentError('Invalid crop selected');
+  void calculateFertilizer() {
+    if (user.value == null) {
+      Get.snackbar("Error", "User not authenticated");
+      return;
     }
 
-    // Calculate fertilizer amounts based on nutrient and plot size
-    final mopAmount = (k * plotSize) / (fertilizerNutrientContent['MOP']! * 10); // kg/ha to kg
-    final sspAmount = (p * plotSize) / (fertilizerNutrientContent['SSP']! * 10);
-    final ureaAmount = (n * plotSize) / (fertilizerNutrientContent['Urea']! * 10);
+    double plotSize = double.parse(plotSizeController.text);
+    double nitrogen = double.parse(nitrogenController.text);
+    double phosphorus = double.parse(phosphorusController.text);
+    double potassium = double.parse(potassiumController.text);
 
-    return {
-      'MOP': mopAmount,
-      'SSP': sspAmount,
-      'Urea': ureaAmount,
-    };
+    // Simple formula to calculate fertilizer needed
+    double totalFertilizer = (nitrogen + phosphorus + potassium) * (plotSize / 10000);
+
+    fertilizerNeeded.value = totalFertilizer;
+
+    // Fetch user details
+    fetchUserDetailsAndSave(plotSize, nitrogen, phosphorus, potassium, totalFertilizer);
   }
 
-  // Form Validation
-  void checkFormValidity() {
-    isFormValid.value = nController.text.isNotEmpty &&
-        pController.text.isNotEmpty &&
-        kController.text.isNotEmpty &&
-        plotSizeController.text.isNotEmpty;
-  }
+  void fetchUserDetailsAndSave(double plotSize, double nitrogen, double phosphorus, double potassium, double totalFertilizer) async {
+    String userId = user.value!.uid;
 
-  // Function to save temporary nutrients
-  void saveTemporaryNutrients() {
-    tempN.value = double.tryParse(nController.text) ?? 0.0;
-    tempP.value = double.tryParse(pController.text) ?? 0.0;
-    tempK.value = double.tryParse(kController.text) ?? 0.0;
-  }
+    // Fetch user details from Firestore (assuming user details are stored in a collection 'users')
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
 
-  // Calculate and Save
-  Future<void> calculateAndSave() async {
-    if (isFormValid.value) {
-      final n = tempN.value != 0.0 ? tempN.value : double.parse(nController.text);
-      final p = tempP.value != 0.0 ? tempP.value : double.parse(pController.text);
-      final k = tempK.value != 0.0 ? tempK.value : double.parse(kController.text);
+    String userName = userDoc['UserName'];
 
-      results.value = calculationFertilizerAmounts(
-        selectedCrop.value,
-        n,
-        p,
-        k,
-        selectedUnit.value,
-        double.parse(plotSizeController.text),
-      );
-      await _saveData();
-
-      // Clear temporary values after calculation
-      tempN.value = 0.0;
-      tempP.value = 0.0;
-      tempK.value = 0.0;
-    }
-  }
-
-  // Save Data to SQLite
-  Future<void> _saveData() async {
-    final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'fertilizer_data.db');
-
-    final database = await openDatabase(
-      path,
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE IF NOT EXISTS fertilizer_calculations (id INTEGER PRIMARY KEY AUTOINCREMENT, crop TEXT, n REAL, p REAL, k REAL, unit TEXT, plotSize REAL, mop REAL, ssp REAL, urea REAL, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)',
-        );
-      },
-      version: 1,
+    // Create a CalculationModal instance
+    CalculationModal calculation = CalculationModal(
+      id: '',
+      cropType: selectedCrop.value,
+      nitrogen: nitrogen,
+      phosphorus: phosphorus,
+      potassium: potassium,
+      plotSize: plotSize,
+      userId: userId,
+      userName: userName,
+      totalFertilizer: totalFertilizer,
+      date: DateTime.now(),
     );
 
-    await database.insert('fertilizer_calculations', {
-      'crop': selectedCrop.value,
-      'n': double.parse(nController.text),
-      'p': double.parse(pController.text),
-      'k': double.parse(kController.text),
-      'unit': selectedUnit.value,
-      'plotSize': double.parse(plotSizeController.text),
-      'mop': results['MOP'],
-      'ssp': results['SSP'],
-      'urea': results['Urea'],
-    });
+    // Save the calculation to Firestore
+    FirebaseFirestore.instance.collection('fertilizer_calculations').add(calculation.toJson());
   }
 
-  // Reset nutrient values
-  void resetNutrients() {
-    nController.clear();
-    pController.clear();
-    kController.clear();
-  }
+  void fetchCalculationHistory() async {
+    if (user.value == null) return;
 
-  // Increment plot size
-  void incrementPlotSize() {
-    final currentSize = double.tryParse(plotSizeController.text) ?? 0.0;
-    plotSizeController.text = (currentSize + 1.0).toStringAsFixed(2); // Increment by 0.1
-  }
+    String userId = user.value!.uid;
 
-  // Decrement plot size
-  void decrementPlotSize() {
-    final currentSize = double.tryParse(plotSizeController.text) ?? 0.0;
-    if (currentSize > 0.1) {
-      // Ensure plot size doesn't go below 0.1
-      plotSizeController.text = (currentSize - 1.0).toStringAsFixed(2);
-    }
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+      .collection('fertilizer_calculations')
+      .where('UserId', isEqualTo: userId)
+      .orderBy('Date', descending: true)
+      .get();
+
+    calculationHistory.value = snapshot.docs
+      .map((doc) => CalculationModal.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>))
+      .toList();
   }
 }

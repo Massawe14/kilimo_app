@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../data/repositories/post/post_repository.dart';
 import '../../../../data/repositories/user/user_repository.dart';
 import '../../../../util/constants/image_strings.dart';
@@ -67,16 +66,12 @@ class PostCommunityController extends GetxController {
     }
   }
 
-  Future<String?> uploadImageToFirebase(String path, File image) async {
+  Future<String> uploadImageToFirebase(String path, File image) async {
     try {
-      final ref = FirebaseStorage.instance
-        .ref()
-        .child(path)
-        .child(AuthenticationRepository.instance.authUser!.uid);
-      UploadTask uploadTask = ref.putFile(image);
-      TaskSnapshot snapshot = await uploadTask;
-      String downloadUrl = await snapshot.ref.getDownloadURL();
-      return downloadUrl;
+      final ref = FirebaseStorage.instance.ref(path).child(image.toString());
+      await ref.putFile(File(image.path));
+      final url = await ref.getDownloadURL();
+      return url;
     } catch (e) {
       throw Exception('Error uploading image: $e');
     }
@@ -117,11 +112,7 @@ class PostCommunityController extends GetxController {
       }
       
       // Upload the image to Firebase Storage
-      String? imageUrl = await uploadImageToFirebase('Posts/Images/', imageFile.value!);
-
-      if (imageUrl == null) {
-        return TLoaders.errorSnackBar(title: 'Oh Snap', message: 'Failed to upload image');
-      }
+      String imageUrl = await uploadImageToFirebase('Posts/Images/', imageFile.value!);
       
       // Check if user data is loaded
       if (user.id.isEmpty) {
@@ -161,8 +152,9 @@ class PostCommunityController extends GetxController {
       TFullScreenLoader.stopLoading();
       TLoaders.warningSnackBar(
         title: 'Post not sent',
-        message: 'Something went wrong posting your problem. You can re-post your post in your community',
+        message: 'Something went wrong posting your problem: $e',
       );
+      debugPrint('Error: $e');
     } finally {
       isLoading.value = false; // Hide loading indicator
     }

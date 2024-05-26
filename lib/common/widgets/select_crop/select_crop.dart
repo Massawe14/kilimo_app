@@ -5,7 +5,6 @@ import '../../../features/kilimo/controllers/fertilizer_calculator/fertilizer_co
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/image_strings.dart';
 import '../../../util/constants/sizes.dart';
-import '../../../util/helpers/helper_functions.dart';
 import '../custom_shapes/search_container.dart';
 import '../image_text_widget/vertical_image_text.dart';
 import '../texts/section_heading.dart';
@@ -13,14 +12,12 @@ import '../texts/section_heading.dart';
 selectCrop(BuildContext context) {
   // Instantiate Controller
   final controller = Get.put(FertilizerController());
-  final darkMode = THelperFunctions.isDarkMode(context);
   return showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text('Select your crop', style: Theme.of(context).textTheme.titleMedium),
-        content: Container(
-          color: darkMode ? TColors.dark : TColors.white,
+        content: SizedBox(
           width: double.maxFinite,
           child: ListView(
             shrinkWrap: true,
