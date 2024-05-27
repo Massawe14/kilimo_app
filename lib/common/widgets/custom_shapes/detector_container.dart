@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../features/kilimo/screens/detector/detector_screen.dart';
+import '../../../features/kilimo/screens/detector/real_time_detector_screen.dart';
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/sizes.dart';
 
@@ -30,7 +30,7 @@ class DetectorContainer extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                  'Crop Diseases Detector',
+                  'Crop Disease Detector',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ],
@@ -45,7 +45,7 @@ class DetectorContainer extends StatelessWidget {
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Text(
-                  'Quickly identify the exact problem\nwith your crop.',
+                  'Quickly identify the exact problem\nwithin your crop.',
                   style: Theme.of(context).textTheme.bodySmall
                 ),
               ],
@@ -54,7 +54,7 @@ class DetectorContainer extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Get.to(() => const DetectorScreen()),
+                onPressed: () => Get.to(() => const RealTimeDetectorScreen()),
                 child: const Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +68,7 @@ class DetectorContainer extends StatelessWidget {
                         )
                       ),
                       SizedBox(width: 5),
-                      Text('Detector'),
+                      Text('Real Time Detector'),
                     ],
                   ),
                 ),

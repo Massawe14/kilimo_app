@@ -143,7 +143,7 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => PastCalculationsScreen()),
+                    onPressed: () => Get.to(() => const CalculationsHistoryScreen()),
                     child: const Text('View History'),
                   ),
                 ),

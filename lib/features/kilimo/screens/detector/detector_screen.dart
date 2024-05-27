@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../common/widgets/custom_shapes/detector_container.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../common/widgets/drawer/drawer.dart';
@@ -89,6 +90,8 @@ class DetectorScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                const DetectorContainer(),
               ],
             ),
           ),

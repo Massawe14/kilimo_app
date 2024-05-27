@@ -180,15 +180,20 @@ class MaizeDetectorScreen extends StatelessWidget {
                                         },
                                         child: Text(
                                           'Result: ${controller.output[0]['label']}',
-                                          style: Theme.of(context).textTheme.headlineSmall,
+                                          style: const TextStyle(
+                                            color: TColors.black, 
+                                            fontSize: 20,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                       Text(
                                         'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
                                         style: const TextStyle(
-                                          color: TColors.black,
-                                          fontSize: 20,
+                                          color: TColors.black, 
+                                          fontSize: 20
                                         ),
+                                        textAlign: TextAlign.center,
                                       ),
                                     ],
                                   )

@@ -117,12 +117,18 @@ class BeansDetectorScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Result: ${controller.output[0]['label']}',
-                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      style: const TextStyle(
+                                        color: TColors.black, 
+                                        fontSize: 20,
+                                      ),
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                     Text(
                                       'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
-                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      style: const TextStyle(
+                                        color: TColors.black, 
+                                        fontSize: 20
+                                      ),
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                   ],

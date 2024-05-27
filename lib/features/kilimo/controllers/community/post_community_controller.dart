@@ -1,37 +1,38 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../../data/repositories/post/post_repository.dart';
-import '../../../../data/repositories/user/user_repository.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/helpers/network_manager.dart';
 import '../../../../util/popups/full_screen_loader.dart';
 import '../../../../util/popups/loaders.dart';
-import '../../../personalization/models/user_modal.dart';
 import '../../models/community/post_modal.dart';
 
 class PostCommunityController extends GetxController {
   static PostCommunityController get instance => Get.find();
 
-  final userRepository = Get.put(UserRepository());
   final postRepository = Get.put(PostRepository());
   
-  final selectedCrop = ''.obs;
+  // Rx variables for reactive updates
+  RxString selectedCrop = ''.obs;
+  
   final problemTitle = ''.obs;
   final problemDescription = ''.obs;
   final location = ''.obs;
-  final uid = const Uuid().v4();
 
   final problemTitleController = TextEditingController();
   final problemDescriptionController = TextEditingController();
   final locationController = TextEditingController();
 
   final imageFile = Rxn<File>(); // Use Rxn for better null handling
+  var user = Rx<User?>(null);
+  var postsHistory = <PostModal>[].obs;
   final isImageUploaded = false.obs;
   final isLoading = false.obs; // For loading indicator
 
@@ -47,14 +48,16 @@ class PostCommunityController extends GetxController {
     locationController.addListener(() {
       location.value = locationController.text.trim();
     });
+    user.bindStream(FirebaseAuth.instance.authStateChanges());
+    fetchPostsHistory();
   }
 
   @override
-  void onClose() {
+  void dispose() {
     problemTitleController.dispose();
     problemDescriptionController.dispose();
     locationController.dispose();
-    super.onClose();
+    super.dispose();
   }
 
   Future<void> pickImage() async {
@@ -87,6 +90,14 @@ class PostCommunityController extends GetxController {
       return;
     }
 
+    if (user.value == null) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'User not authenticated',
+      );
+      return;
+    }
+
     try {
       // Start Loading
       isLoading.value = true; // Show loading indicator
@@ -99,9 +110,13 @@ class PostCommunityController extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
+
+      String userId = user.value!.uid;
       
-      // Fetch user details
-      UserModal user = await userRepository.fetchUserDetails();
+      // Fetch user details from Firestore (assuming user details are stored in a collection 'users')
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+
+      String userName = userDoc['UserName'];
 
       // Check if the image is uploaded
       if (imageFile.value == null) {
@@ -117,19 +132,19 @@ class PostCommunityController extends GetxController {
       
       // Create and Save Post with User Information
       final newPost = PostModal(
-        id: uid,
+        id: '',
         cropType: selectedCrop.value,
         problemTitle: problemTitle.value,
         problemDescription: problemDescription.value,
         cropImage: imageUrl,
-        userId: user.id,
-        userName: user.username,
+        userId: userId,
+        userName: userName,
         userLocation: location.value,
         date: DateTime.now(),
       );
 
-      // Save user data to Firestore
-      await postRepository.savePostRecord(newPost);
+      // Save post data to Firestore
+      FirebaseFirestore.instance.collection('Posts').add(newPost.toJson());
 
       // Reset image
       imageFile.value = null;
@@ -152,6 +167,27 @@ class PostCommunityController extends GetxController {
       debugPrint('Error: $e');
     } finally {
       isLoading.value = false; // Hide loading indicator
+    }
+  }
+
+  Future<void> fetchPostsHistory() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+        .collection('Posts')
+        .orderBy('Date', descending: true)
+        .get();
+
+      postsHistory.value = snapshot.docs
+        .map((doc) => PostModal.fromSnapshot(doc))
+        .toList();
+
+      debugPrint('Fetched ${postsHistory.length} posts');
+    } catch (e) {
+      debugPrint('Error fetching posts history: $e');
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Failed to fetch posts history',
+      );
     }
   }
 }

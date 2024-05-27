@@ -70,12 +70,12 @@ class CalculationModal {
       id: document.id,
       cropType: data['CropType'] ?? '',
       nitrogen: data['Nitrogen'] ?? 0.0,
-      phosphorus: data['Prosphorus'] ?? 0.0,
+      phosphorus: data['Phosphorus'] ?? 0.0,
       potassium: data['Potassium'] ?? 0.0,
       plotSize: data['PlotSize'] ?? 0.0,
       userId: data['UserId'] ?? '',
       userName: data['UserName'] ?? '',
-      totalFertilizer: data[''] ?? 0.0,
+      totalFertilizer: data['TotalFertilizer'] ?? 0.0,
       // Parse date from Firestore Timestamp or use current time
       date: (data['Date'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );

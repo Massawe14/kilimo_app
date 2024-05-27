@@ -27,21 +27,24 @@ class FertilizerController extends GetxController {
   void onInit() {
     super.onInit();
     user.bindStream(FirebaseAuth.instance.authStateChanges());
-    ever(user, (_) => fetchCalculationHistory()); // Fetch history whenever user changes
+    fetchCalculationHistory();
   }
 
   @override
   void dispose() {
-    super.dispose();
     plotSizeController.clear();
     nitrogenController.clear();
     phosphorusController.clear();
     potassiumController.clear();
+    super.dispose();
   }
 
   void calculateFertilizer() {
     if (user.value == null) {
-      Get.snackbar("Error", "User not authenticated");
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'User not authenticated',
+      );
       return;
     }
 
@@ -52,7 +55,6 @@ class FertilizerController extends GetxController {
 
     // Simple formula to calculate fertilizer needed
     double totalFertilizer = (nitrogen + phosphorus + potassium) * (plotSize / 10000);
-
     fertilizerNeeded.value = totalFertilizer;
 
     try {

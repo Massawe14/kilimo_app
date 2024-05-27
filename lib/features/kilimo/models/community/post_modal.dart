@@ -25,9 +25,6 @@ class PostModal {
     required this.date,
   });
 
-  // Add a calculated searchIndex field
-  List<String> get searchIndex => [cropType.toLowerCase(), userLocation.toLowerCase()];
-
   // static function to create an empty post modal
   static PostModal empty() => PostModal(
     id: '',

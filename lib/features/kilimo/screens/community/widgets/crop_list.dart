@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,16 +16,22 @@ class TCropList extends StatelessWidget {
   final String filter;
   final String searchQuery;
 
+  Future<QuerySnapshot<Map<String, dynamic>>> getPostsQuery() {
+    final PostRepository postRepository = Get.find<PostRepository>();
+
+    if (filter == 'All' && searchQuery.isEmpty) {
+      return postRepository.fetchAllPosts();
+    } else if (filter == 'All') {
+      return postRepository.fetchPostsByLocation(searchQuery);
+    } else {
+      return postRepository.fetchFilteredPosts(filter, searchQuery);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final PostRepository postRepository = Get.put(PostRepository()); // Get the existing instance
-
-    return StreamBuilder<List<PostModal>>(
-      stream: filter == 'All' && searchQuery.isEmpty 
-        ? postRepository.fetchAllPosts() 
-        : filter == 'All' 
-          ? postRepository.fetchPostsByLocation(searchQuery)
-          : postRepository.fetchFilteredPosts(filter, searchQuery),
+    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      future: getPostsQuery(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SliverToBoxAdapter(
@@ -33,29 +40,27 @@ class TCropList extends StatelessWidget {
             ),
           );
         } else if (snapshot.hasError) {
+          debugPrint('Error: ${snapshot.error}');
           return SliverToBoxAdapter(
             child: Center(
               child: Text('Error: ${snapshot.error}'),
             ),
           );
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          debugPrint('No data: ${snapshot.data}');
           return const SliverToBoxAdapter(
             child: Center(
               child: Text('No community posts available')
             ),
           );
         } else {
-          final posts = snapshot.data!;
-          final filteredPosts = posts.where((post) {
-            final matchesCrop = filter == 'All' || post.cropType == filter;
-            final matchesLocation = searchQuery.isEmpty || post.userLocation.toLowerCase().contains(searchQuery.toLowerCase());
-            return matchesCrop && matchesLocation;
-          }).toList();
-
+          final posts = snapshot.data!.docs
+            .map((doc) => PostModal.fromSnapshot(doc))
+            .toList();
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final post = filteredPosts[index]; // Use the filtered list
+                final post = posts[index]; // Use the filtered list
                 return TQuestionCard(
                   image: post.cropImage, // Assuming cropImage is the field name
                   username: post.userName,
@@ -66,7 +71,7 @@ class TCropList extends StatelessWidget {
                   description: post.problemDescription,
                 );
               },
-              childCount: filteredPosts.length,
+              childCount: posts.length,
             ),
           );
         }

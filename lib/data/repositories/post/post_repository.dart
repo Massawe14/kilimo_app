@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../features/kilimo/models/community/post_modal.dart';
@@ -9,15 +10,10 @@ class PostRepository extends GetxController {
 
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  final posts = <PostModal>[].obs; // Observables list for UI updates
-  List<String> get cropTypes => posts.map((post) => post.cropType).toSet().toList();
-
   @override
   void onInit() {
     super.onInit();
-    fetchAllPosts().listen((posts) { // Listen to changes and update list
-      this.posts.value = posts;
-    });
+    fetchAllPosts();
   }
 
   // Save Post Record
@@ -33,52 +29,44 @@ class PostRepository extends GetxController {
     }
   }
 
-  // Fetch Posts By User ID (Stream)
-  Stream<List<PostModal>> fetchPostsByUserId(String userId) {
-    return _db.collection("Posts")
-      .where('userId', isEqualTo: userId)
-      .orderBy('date', descending: true)
-      .snapshots()
-      .map((snapshot) =>
-        snapshot.docs.map((doc) => PostModal.fromSnapshot(doc)).toList());
+  // Fetch Posts By User ID (QuerySnapshot)
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchPostsByUserId(String userId) async {
+    return await _db.collection("Posts")
+      .where('UserId', isEqualTo: userId)
+      .orderBy('Date', descending: true)
+      .get();
   }
 
-  // Fetch Posts By Location (Stream)
-  Stream<List<PostModal>> fetchPostsByLocation(String location) {
-    return _db.collection("Posts")
-      .where('userLocation', isEqualTo: location)
-      .orderBy('date', descending: true) // Sort by date (newest first)
-      .snapshots()
-      .map((snapshot) =>
-        snapshot.docs.map((doc) => PostModal.fromSnapshot(doc)).toList());
+  // Fetch Posts By Location (QuerySnapshot)
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchPostsByLocation(String location) async {
+    return await _db.collection("Posts")
+      .where('UserLocation', isEqualTo: location)
+      .orderBy('Date', descending: true)
+      .get();
   }
 
-  // Fetch Filtered Posts (Stream)
-  Stream<List<PostModal>> fetchFilteredPosts(String filter, String location) {
+  // Fetch Filtered Posts (QuerySnapshot)
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchFilteredPosts(String filter, String location) async {
     Query<Map<String, dynamic>> query = _db.collection("Posts");
 
     if (filter != 'All') {
-      query = query.where('cropType', isEqualTo: filter);
+      query = query.where('CropType', isEqualTo: filter);
     }
 
     if (location.isNotEmpty) {
-      query = query.where('userLocation', isEqualTo: location);
+      query = query.where('UserLocation', isEqualTo: location);
     }
 
-    return query
-      .orderBy('date', descending: true) // Sort by date (newest first)
-      .snapshots()
-      .map((snapshot) =>
-        snapshot.docs.map((doc) => PostModal.fromSnapshot(doc)).toList());
+    return await query
+      .orderBy('Date', descending: true)
+      .get();
   }
 
-  // Fetch All Posts (Stream)
-  Stream<List<PostModal>> fetchAllPosts() {
-    return _db.collection("Posts")
-      .orderBy('date', descending: true)
-      .snapshots()
-      .map((snapshot) =>
-        snapshot.docs.map((doc) => PostModal.fromSnapshot(doc)).toList());
+  // Fetch All Posts (QuerySnapshot)
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchAllPosts() async {
+    return await _db.collection("Posts")
+      .orderBy('Date', descending: true)
+      .get();
   }
 
   // Delete Post by ID
@@ -95,6 +83,8 @@ class PostRepository extends GetxController {
     final snapshot = await _db.collection("Posts")
       .where('searchIndex', arrayContains: query.toLowerCase())
       .get();
-    return snapshot.docs.map((doc) => PostModal.fromSnapshot(doc)).toList();
+    final posts = snapshot.docs.map((doc) => PostModal.fromSnapshot(doc)).toList();
+    debugPrint('Searched posts with query ($query): $posts');
+    return posts;
   }
 }

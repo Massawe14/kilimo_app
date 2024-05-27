@@ -106,6 +106,7 @@ dependencies:
   flutter_typeahead: ^5.2.0
   timeago: ^3.6.1
   http_parser: ^4.0.2
+  camera: ^0.11.0
 
 #---------------- ./ PACKAGES END -------------------------------#
 
@@ -129,7 +130,6 @@ flutter:
     - assets/images/categories/
     - assets/images/profile/
     - assets/images/weather/
-    - assets/model/
     - assets/icons/
     - assets/logos/
     - assets/language/

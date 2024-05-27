@@ -61,9 +61,12 @@ class TQuestionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profile Image
-                const CircleAvatar(
-                  backgroundImage: AssetImage(TImages.profileImage),
-                  radius: 24,
+                Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage(TImages.profileImage),
+                    radius: 24,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 // User Information
@@ -72,7 +75,7 @@ class TQuestionCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             username,
