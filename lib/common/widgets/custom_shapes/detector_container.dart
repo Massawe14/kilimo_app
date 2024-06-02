@@ -83,7 +83,7 @@ class DetectorContainer extends StatelessWidget {
                           )
                         ),
                         SizedBox(width: 5),
-                        Text('Real Time Detector'),
+                        Text('Start Diagnosis'),
                       ],
                     ),
                   ),
