@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:kilimo_app/util/constants/colors.dart';
+
+import '../../../../util/constants/sizes.dart';
+import '../../../../util/helpers/helper_functions.dart';
+
+class FeedBackScreen extends StatelessWidget {
+  const FeedBackScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Iconsax.arrow_left, 
+            color: darkMode ? TColors.white : TColors.black,
+          ),
+        ),
+        title: const Text('FeedBack'),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(TSizes.defaultSpace),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Heading
+                Text(
+                  'We will appreciate to receive your feedback for our App improvements.',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+                const SizedBox(height: TSizes.spaceBtwSections),
+                // Text field and Button
+                Column(
+                  children: [
+                    TextFormField(
+                      expands: false,
+                      decoration: const InputDecoration(
+                        labelText: 'FeedBack',
+                        hintText: 'Write your feedback...',
+                        prefixIcon: Icon(Iconsax.message_question),
+                      ),
+                    ),
+                  ],
+                ),
+                // Save Button
+                const SizedBox(height: TSizes.spaceBtwSections),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Send'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

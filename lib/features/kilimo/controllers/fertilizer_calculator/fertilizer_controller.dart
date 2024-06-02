@@ -54,7 +54,7 @@ class FertilizerController extends GetxController {
     double potassium = double.parse(potassiumController.text);
 
     // Simple formula to calculate fertilizer needed
-    double totalFertilizer = (nitrogen + phosphorus + potassium) * (plotSize / 10000);
+    double totalFertilizer = (nitrogen + phosphorus + potassium) * (plotSize / 10);
     fertilizerNeeded.value = totalFertilizer;
 
     try {
@@ -116,6 +116,15 @@ class FertilizerController extends GetxController {
         title: 'Error',
         message: 'Failed to fetch calculation history',
       );
+    }
+  }
+
+  // Delete Post by ID
+  Future<void> deleteCalculationHistory(String postId) async {
+    try {
+      await FirebaseFirestore.instance.collection("fertilizer_calculations").doc(postId).delete();
+    } catch (e) {
+      throw Exception('Error deleting post: $e');
     }
   }
 }

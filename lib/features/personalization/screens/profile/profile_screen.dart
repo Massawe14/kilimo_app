@@ -59,8 +59,17 @@ class ProfileScreen extends StatelessWidget {
                       final networkImage = controller.user.value.profilePicture;
                       final image = networkImage.isNotEmpty ? networkImage : TImages.profileImage;
                       return controller.imageUploading.value
-                        ? const TShimmerEffect(width: 80, height: 80, radius: 80)
-                        : TCircularImage(image: image, width: 100, height: 100, isNetworkImage: networkImage.isNotEmpty);
+                        ? const TShimmerEffect(
+                            width: 80, 
+                            height: 80, 
+                            radius: 80
+                          )
+                        : TCircularImage(
+                            image: image, 
+                            width: 100, 
+                            height: 100, 
+                            isNetworkImage: networkImage.isNotEmpty,
+                          );
                     }),
                     Positioned(
                       bottom: 0,
@@ -97,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                 TProfileMenu(
                   title: 'Username', 
                   value: controller.user.value.username, 
-                  onPressed: () => Get.to(() => const ChangeName()),
+                  onPressed: () {},
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 const Divider(color: TColors.grey),
@@ -114,7 +123,7 @@ class ProfileScreen extends StatelessWidget {
                 TProfileMenu(
                   title: 'E-mail', 
                   value: controller.user.value.email, 
-                  onPressed: () {}
+                  onPressed: () {},
                 ),
                 TProfileMenu(
                   title: 'Phone Number', 
@@ -126,7 +135,12 @@ class ProfileScreen extends StatelessWidget {
                 Center(
                   child: TextButton(
                     onPressed: () => controller.deleteAccountWarningPopup(),
-                    child: const Text('Delete Account', style: TextStyle(color: Colors.red)),
+                    child: const Text(
+                      'Delete Account', 
+                      style: TextStyle(
+                        color: TColors.error,
+                      ),
+                    ),
                   ),
                 ),
               ],

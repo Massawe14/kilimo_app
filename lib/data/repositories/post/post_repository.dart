@@ -29,6 +29,13 @@ class PostRepository extends GetxController {
     }
   }
 
+  // Fetch Posts By ID (QuerySnapshot)
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchPostsByPostId(String postId) async {
+    return await _db.collection("Posts")
+      .where('UserId', isEqualTo: postId)
+      .get();
+  }
+
   // Fetch Posts By User ID (QuerySnapshot)
   Future<QuerySnapshot<Map<String, dynamic>>> fetchPostsByUserId(String userId) async {
     return await _db.collection("Posts")

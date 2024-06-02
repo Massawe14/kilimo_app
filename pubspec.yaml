@@ -69,7 +69,7 @@ dependencies:
   latlong2: ^0.9.0
   google_sign_in: ^6.1.6
   url_launcher: ^6.0.0-nullsafety
-  permission_handler: ^11.0.1
+  permission_handler: ^11.3.1
   animated_text_kit: ^4.2.1
   country_picker: ^2.0.8
   uuid: ^4.0.0
@@ -134,6 +134,7 @@ flutter:
     - assets/logos/
     - assets/language/
     - assets/legal/
+    - assets/models/
 
   #-------------------- LOCAL FONTS ------------------------------#
   # fonts:

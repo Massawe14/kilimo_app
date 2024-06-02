@@ -29,46 +29,48 @@ class SettingsScreen extends StatelessWidget {
     return showDialog(
       context: context, 
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('choose_a_language'.tr, style: Theme.of(context).textTheme.titleMedium),
-          content: Container(
-            color: darkMode ? TColors.dark : TColors.white,
-            width: double.maxFinite,
-            child: ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      debugPrint(locale[index]['name']);
-                      updateLanguage(locale[index]['locale']);
-                    },
-                    child: Text(locale[index]['name']),
-                  ),
-                );
-              }, 
-              separatorBuilder: (context, index) {
-                return const Divider(
-                  color: TColors.grey,
-                );
-              }, 
-              itemCount: locale.length,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                'Cancel'.tr, 
-                style: const TextStyle(
-                  color: TColors.info,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+        return Container(
+          color: darkMode ? TColors.white : TColors.dark,
+          child: AlertDialog(
+            title: Text('choose_a_language'.tr, style: Theme.of(context).textTheme.titleMedium),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        debugPrint(locale[index]['name']);
+                        updateLanguage(locale[index]['locale']);
+                      },
+                      child: Text(locale[index]['name']),
+                    ),
+                  );
+                }, 
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    color: TColors.grey,
+                  );
+                }, 
+                itemCount: locale.length,
               ),
             ),
-          ],
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  'Cancel'.tr, 
+                  style: const TextStyle(
+                    color: TColors.info,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       }
     );

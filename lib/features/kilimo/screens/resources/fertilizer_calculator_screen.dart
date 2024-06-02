@@ -8,7 +8,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/fertilizer_calculator/fertilizer_controller.dart';
-import 'past_calculation_history_screen.dart';
+import 'widgets/fertilization/past_calculation_history_screen.dart';
 
 class FertilizerCalculatorScreen extends StatelessWidget {
   FertilizerCalculatorScreen({super.key});
@@ -52,7 +52,9 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                         children: [
                           Obx(
                             () => Text(
-                              controller.selectedCrop.value,
+                              controller.selectedCrop.value.isEmpty
+                                ? 'Select Crop'
+                                : controller.selectedCrop.value,
                               style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ),

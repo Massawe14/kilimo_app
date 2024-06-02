@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets/custom_shapes/detector_container.dart';
-import '../../../../util/constants/colors.dart';
-import '../../../../util/constants/sizes.dart';
-import '../../../../util/helpers/helper_functions.dart';
-import '../../../personalization/screens/settings/widgets/section_heading.dart';
-import 'widgets/pestsAndDiseases/pests_and_diseases_menu_tile.dart';
+import '../../../../../../common/widgets/custom_shapes/detector_container.dart';
+import '../../../../../../util/constants/colors.dart';
+import '../../../../../../util/constants/sizes.dart';
+import '../../../../../../util/helpers/helper_functions.dart';
+import '../../../../../personalization/screens/settings/widgets/section_heading.dart';
+import 'pests_and_diseases_menu_tile.dart';
 
 class SeeMoreScreen extends StatelessWidget {
   const SeeMoreScreen({

@@ -6,6 +6,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../../personalization/screens/settings/widgets/section_heading.dart';
+import 'widgets/pestsAndDiseaseAlert/pests_and_disease_alert_details_screen.dart';
 
 class PestsAndDiseaseAlert extends StatelessWidget {
   const PestsAndDiseaseAlert({super.key});
@@ -91,7 +92,7 @@ class PestsAndDiseaseAlert extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {}, 
+                    onPressed: () => Get.to(const PestsAndDiseaseAlertDetailsScreen()), 
                     child: const Center(
                       child: Text('Learn More'),
                     ),

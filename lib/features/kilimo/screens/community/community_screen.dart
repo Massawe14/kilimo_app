@@ -12,7 +12,7 @@ import '../../../../util/constants/sizes.dart';
 import '../../models/community/post_modal.dart';
 import 'ask_community_screen.dart';
 import 'widgets/crop_categories.dart';
-import 'widgets/crop_list.dart';
+import 'widgets/post_list.dart';
 
 class CommunityScreen extends StatelessWidget {
   CommunityScreen({super.key});
@@ -59,7 +59,7 @@ class CommunityScreen extends StatelessWidget {
                       ),
                       onChanged: (value) {
                         // Trigger filtering whenever the search text changes
-                        _selectedFilter.value = 'All';
+                        _selectedFilter.value = value;
                       },
                     );
                   },
@@ -137,11 +137,11 @@ class CommunityScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Crop List Section
+            // Post Section
             SliverPadding(
               padding: const EdgeInsets.all(5),
               sliver: Obx(
-                () => TCropList(
+                () => TPostList(
                   filter: _selectedFilter.value,
                   searchQuery: _searchController.text,
                 ),

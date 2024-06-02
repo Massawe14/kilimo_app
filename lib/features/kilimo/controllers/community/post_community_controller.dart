@@ -17,7 +17,7 @@ import '../../models/community/post_modal.dart';
 class PostCommunityController extends GetxController {
   static PostCommunityController get instance => Get.find();
 
-  final postRepository = Get.put(PostRepository());
+  final PostRepository postRepository = Get.find<PostRepository>();
   
   // Rx variables for reactive updates
   RxString selectedCrop = ''.obs;
@@ -32,7 +32,7 @@ class PostCommunityController extends GetxController {
 
   final imageFile = Rxn<File>(); // Use Rxn for better null handling
   var user = Rx<User?>(null);
-  var postsHistory = <PostModal>[].obs;
+  Rx<PostModal> selectedPost = PostModal.empty().obs;
   final isImageUploaded = false.obs;
   final isLoading = false.obs; // For loading indicator
 
@@ -49,7 +49,6 @@ class PostCommunityController extends GetxController {
       location.value = locationController.text.trim();
     });
     user.bindStream(FirebaseAuth.instance.authStateChanges());
-    fetchPostsHistory();
   }
 
   @override
@@ -170,24 +169,12 @@ class PostCommunityController extends GetxController {
     }
   }
 
-  Future<void> fetchPostsHistory() async {
+  void fetchPostDetails(String postId) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
-        .collection('Posts')
-        .orderBy('Date', descending: true)
-        .get();
-
-      postsHistory.value = snapshot.docs
-        .map((doc) => PostModal.fromSnapshot(doc))
-        .toList();
-
-      debugPrint('Fetched ${postsHistory.length} posts');
+      QuerySnapshot<Map<String, dynamic>> post = await postRepository.fetchPostsByPostId(postId);
+      selectedPost.value = post as PostModal;
     } catch (e) {
-      debugPrint('Error fetching posts history: $e');
-      TLoaders.errorSnackBar(
-        title: 'Error',
-        message: 'Failed to fetch posts history',
-      );
+      // Handle error
     }
   }
 }

@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 
 import '../../../../../data/repositories/post/post_repository.dart';
 import '../../../models/community/post_modal.dart';
+import '../reply_community_screen.dart';
 import 'question_card.dart';
 
-class TCropList extends StatelessWidget {
-  const TCropList({
+class TPostList extends StatelessWidget {
+  const TPostList({
     super.key,
     required this.filter, 
     required this.searchQuery,
@@ -61,14 +62,17 @@ class TCropList extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final post = posts[index]; // Use the filtered list
-                return TQuestionCard(
-                  image: post.cropImage, // Assuming cropImage is the field name
-                  username: post.userName,
-                  location: post.userLocation,
-                  crop: post.cropType,
-                  date: post.date,
-                  title: post.problemTitle,
-                  description: post.problemDescription,
+                return GestureDetector(
+                  onTap: () => Get.to(ReplyCommunityScreen(postId: post.id)),
+                  child: TQuestionCard(
+                    image: post.cropImage, // Assuming cropImage is the field name
+                    username: post.userName,
+                    location: post.userLocation,
+                    crop: post.cropType,
+                    date: post.date,
+                    title: post.problemTitle,
+                    description: post.problemDescription,
+                  ),
                 );
               },
               childCount: posts.length,
