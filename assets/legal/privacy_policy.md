@@ -1,65 +1,87 @@
-**Privacy Policy**
+# Kilimo App - Privacy Policy
 
-Robert Brunhage built the Terms of service app app as a Free app. This SERVICE is provided by Robert Brunhage at no cost and is intended for use as is.
+**Effective Date: June 2, 2024**
 
-This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
+Kilimo App ("we", "us", "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the Kilimo App ("App"). By using the App, you agree to the collection and use of information in accordance with this policy.
 
-If you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy.
+## 1. Information We Collect
 
-The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at Terms of service app unless otherwise defined in this Privacy Policy.
+### 1.1 Personal Information
 
-**Information Collection and Use**
+When you create an account or use certain features of the App, we may collect personal information, including but not limited to:
 
-For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information. The information that I request will be retained on your device and is not collected by me in any way.
+- Name
+- Email address
+- Phone number
+- Location data
 
-The app does use third party services that may collect information used to identify you.
+### 1.2 Usage Data
 
-Link to privacy policy of third party service providers used by the app
+We may also collect information on how the App is accessed and used. This may include:
 
-*   [Google Play Services](https://www.google.com/policies/privacy/)
-*   [Google Analytics for Firebase](https://firebase.google.com/policies/analytics)
+- Device type and model
+- Operating system
+- App version
+- IP address
+- Pages visited within the App
+- Time and date of use
 
-**Log Data**
+### 1.3 Diagnostic Data
 
-I want to inform you that whenever you use my Service, in a case of an error in the app I collect data and information (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my Service, the time and date of your use of the Service, and other statistics.
+To improve the performance of the App, we may collect diagnostic data, such as crash reports and performance metrics.
 
-**Cookies**
+## 2. How We Use Your Information
 
-Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.
+We may use the information we collect for various purposes, including:
 
-This Service does not use these “cookies” explicitly. However, the app may use third party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.
+- To provide and maintain the App
+- To notify you about changes or updates to the App
+- To provide customer support
+- To gather analysis or valuable information to improve the App
+- To monitor the usage of the App
+- To detect, prevent, and address technical issues
 
-**Service Providers**
+## 3. Sharing Your Information
 
-I may employ third-party companies and individuals due to the following reasons:
+We do not sell or rent your personal information to third parties. We may share your information in the following circumstances:
 
-*   To facilitate our Service;
-*   To provide the Service on our behalf;
-*   To perform Service-related services; or
-*   To assist us in analyzing how our Service is used.
+- **With Service Providers:** We may share information with third-party service providers to help us operate and improve the App.
+- **For Legal Reasons:** We may disclose your information if required by law or in response to valid requests by public authorities.
 
-I want to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.
+## 4. Security of Your Information
 
-**Security**
+We use commercially reasonable security measures to protect your information. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
 
-I value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and I cannot guarantee its absolute security.
+## 5. Your Data Protection Rights
 
-**Links to Other Sites**
+Depending on your location, you may have the following rights regarding your personal information:
 
-This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by me. Therefore, I strongly advise you to review the Privacy Policy of these websites. I have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+- **Access:** You can request a copy of your personal data.
+- **Rectification:** You can request correction of inaccurate or incomplete data.
+- **Erasure:** You can request deletion of your personal data, subject to certain conditions.
+- **Restriction:** You can request restriction of processing of your personal data.
+- **Objection:** You can object to processing of your personal data.
+- **Data Portability:** You can request transfer of your personal data to another entity.
 
-**Children’s Privacy**
+To exercise these rights, please contact us at <support@kilimoapp.com>.
 
-These Services do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13\. In the case I discover that a child under 13 has provided me with personal information, I immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me so that I will be able to do necessary actions.
+## 6. Third-Party Links
 
-**Changes to This Privacy Policy**
+The App may contain links to third-party websites or services that are not owned or controlled by us. We are not responsible for the privacy practices of these third parties.
 
-I may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page.
+## 7. Children's Privacy
 
-This policy is effective as of 2020-06-08
+The App is not intended for use by children under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that we have collected personal information from a child under 13, we will take steps to delete such information.
 
-**Contact Us**
+## 8. Changes to This Privacy Policy
 
-If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at asdflkjasdf@gmail.com.
+We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy within the App. Changes are effective immediately upon posting.
 
-This privacy policy page was created at [privacypolicytemplate.net](https://privacypolicytemplate.net) and modified/generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.firebaseapp.com/)
+## 9. Contact Us
+
+If you have any questions about this Privacy Policy, please contact us at:
+
+**Email:** <support@kilimoapp.com>  
+**Address:** Kilimo App, 123 Agriculture Lane, Farmville, Country
+
+By using Kilimo App, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy.

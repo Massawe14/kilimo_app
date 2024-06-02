@@ -1,36 +1,67 @@
-**Terms & Conditions**
+# Kilimo App - Terms and Conditions
 
-By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app. You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to Robert Brunhage.
+**Effective Date: June 2, 2024**
 
-Robert Brunhage is committed to ensuring that the app is as useful and efficient as possible. For that reason, we reserve the right to make changes to the app or to charge for its services, at any time and for any reason. We will never charge you for the app or its services without making it very clear to you exactly what you’re paying for.
+Welcome to Kilimo App! These Terms and Conditions ("Terms") govern your use of the Kilimo App ("App"), developed to help farmers simplify the process of crop or plant disease classification and detection. By using the App, you agree to comply with and be bound by these Terms. Please read them carefully.
 
-The Terms of service app app stores and processes personal data that you have provided to us, in order to provide my Service. It’s your responsibility to keep your phone and access to the app secure. We therefore recommend that you do not jailbreak or root your phone, which is the process of removing software restrictions and limitations imposed by the official operating system of your device. It could make your phone vulnerable to malware/viruses/malicious programs, compromise your phone’s security features and it could mean that the Terms of service app app won’t work properly or at all.
+By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app. You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to Kilimo App.
 
-The app does use third party services that declare their own Terms and Conditions.
+## 1. Acceptance of Terms
 
-Link to Terms and Conditions of third party service providers used by the app
+By accessing or using Kilimo App, you agree to these Terms. If you do not agree with any part of these Terms, you must not use the App.
 
-*   [Google Play Services](https://policies.google.com/terms)
-*   [Google Analytics for Firebase](https://firebase.google.com/terms/analytics)
+## 2. Changes to Terms
 
-You should be aware that there are certain things that Robert Brunhage will not take responsibility for. Certain functions of the app will require the app to have an active internet connection. The connection can be Wi-Fi, or provided by your mobile network provider, but Robert Brunhage cannot take responsibility for the app not working at full functionality if you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
+We reserve the right to modify these Terms at any time. Any changes will be effective immediately upon posting within the App. Your continued use of the App following the posting of revised Terms signifies your acceptance of the changes.
 
-If you’re using the app outside of an area with Wi-Fi, you should remember that your terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third party charges. In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.
+## 3. Description of the App
 
-Along the same lines, Robert Brunhage cannot always take responsibility for the way you use the app i.e. You need to make sure that your device stays charged – if it runs out of battery and you can’t turn it on to avail the Service, Robert Brunhage cannot accept responsibility.
+Kilimo App is designed to assist farmers in identifying and classifying crop or plant diseases using advanced detection algorithms. The App provides guidance and information to help improve crop health and productivity.
 
-With respect to Robert Brunhage’s responsibility for your use of the app, when you’re using the app, it’s important to bear in mind that although we endeavour to ensure that it is updated and correct at all times, we do rely on third parties to provide information to us so that we can make it available to you. Robert Brunhage accepts no liability for any loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app.
+## 4. User Accounts
 
-At some point, we may wish to update the app. The app is currently available on Android & iOS – the requirements for both systems(and for any additional systems we decide to extend the availability of the app to) may change, and you’ll need to download the updates if you want to keep using the app. Robert Brunhage does not promise that it will always update the app so that it is relevant to you and/or works with the Android & iOS version that you have installed on your device. However, you promise to always accept updates to the application when offered to you, We may also wish to stop providing the app, and may terminate use of it at any time without giving notice of termination to you. Unless we tell you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.
+To access certain features of the App, you may need to create an account. You agree to provide accurate and complete information when creating your account and to update your information as necessary.
 
-**Changes to This Terms and Conditions**
+## 5. Privacy Policy
 
-I may update our Terms and Conditions from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Terms and Conditions on this page.
+Your use of the App is also governed by our Privacy Policy, which can be found [here](#). By using the App, you consent to the practices described in the Privacy Policy.
 
-These terms and conditions are effective as of 2020-06-08
+## 6. Use of the App
 
-**Contact Us**
+- You must use the App only for lawful purposes and in accordance with these Terms.
+- You agree not to use the App in any way that could harm the App, its users, or any third party.
+- You must not attempt to gain unauthorized access to any part of the App, other users' accounts, or any systems or networks connected to the App.
 
-If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at asdflkjasdf@gmail.com.
+## 7. Intellectual Property
 
-This Terms and Conditions page was generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.firebaseapp.com/)
+All content, features, and functionality of the App, including but not limited to text, graphics, logos, and software, are the exclusive property of Kilimo App and are protected by copyright, trademark, and other intellectual property laws. You may not use any of this content without our prior written permission.
+
+## 8. Disclaimers
+
+- The App is provided on an "as is" and "as available" basis. We make no warranties, express or implied, regarding the operation or availability of the App.
+- We do not guarantee the accuracy, completeness, or usefulness of any information provided by the App. You use the App at your own risk.
+
+## 9. Limitation of Liability
+
+To the fullest extent permitted by law, Kilimo App and its affiliates, directors, officers, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of or inability to use the App.
+
+## 10. Indemnification
+
+You agree to indemnify and hold Kilimo App and its affiliates harmless from any claims, losses, damages, liabilities, including legal fees, arising out of your use or misuse of the App, your violation of these Terms, or your violation of any rights of a third party.
+
+## 11. Termination
+
+We may terminate or suspend your access to the App at any time, without prior notice or liability, for any reason, including if you breach these Terms.
+
+## 12. Governing Law
+
+These Terms are governed by and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law principles. You agree to submit to the exclusive jurisdiction of the courts located in [Your Country/State] for the resolution of any disputes.
+
+## 13. Contact Us
+
+If you have any questions about these Terms, please contact us at:
+
+**Email:** <support@kilimoapp.com>  
+**Address:** Kilimo App, 123 Agriculture Lane, Farmville, Country
+
+By using Kilimo App, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
