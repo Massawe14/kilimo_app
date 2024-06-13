@@ -13,6 +13,7 @@ class LocalString extends Translations {
       "send": "Send",
       "upload_image": "Upload image",
     },
+    
     // SWAHILI LANGUAGE
     'sw_TZ': {
       "select_your_language": "Chagua lugha yako",

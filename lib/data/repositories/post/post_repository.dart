@@ -16,7 +16,7 @@ class PostRepository extends GetxController {
     fetchAllPosts();
   }
 
-  // Save Post Record
+  // Saves a post record to Firestore.
   Future<void> savePostRecord(PostModal post) async {
     try {
       await _db.collection("Posts").doc(post.id).set(post.toJson());
@@ -29,7 +29,7 @@ class PostRepository extends GetxController {
     }
   }
 
-  // Fetch Posts By ID (QuerySnapshot)
+  // Fetches a post by its ID.
   Future<QuerySnapshot<Map<String, dynamic>>> fetchPostsByPostId(String postId) async {
     return await _db.collection("Posts")
       .where('UserId', isEqualTo: postId)
@@ -48,7 +48,6 @@ class PostRepository extends GetxController {
   Future<QuerySnapshot<Map<String, dynamic>>> fetchPostsByLocation(String location) async {
     return await _db.collection("Posts")
       .where('UserLocation', isEqualTo: location)
-      .orderBy('Date', descending: true)
       .get();
   }
 

@@ -177,4 +177,33 @@ class PostCommunityController extends GetxController {
       // Handle error
     }
   }
+
+  Future<void> addReply(String postId, String replyText) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw Exception('User not authenticated');
+      }
+
+      final replyData = {
+        'replyText': replyText,
+        'userId': user.uid,
+        'userName': user.displayName ?? 'Anonymous',
+        'timestamp': FieldValue.serverTimestamp(),
+      };
+
+      await FirebaseFirestore.instance
+        .collection('Posts')
+        .doc(postId)
+        .collection('Replies')
+        .add(replyData);
+
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to add reply: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
 }

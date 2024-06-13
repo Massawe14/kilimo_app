@@ -5,6 +5,8 @@ import 'package:kilimo_app/util/constants/colors.dart';
 
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
+import '../../../../util/validators/validation.dart';
+import '../../controllers/feedback_controller.dart';
 
 class FeedBackScreen extends StatelessWidget {
   const FeedBackScreen({super.key});
@@ -12,6 +14,7 @@ class FeedBackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
+    final controller = Get.put(FeedBackController());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,24 +40,29 @@ class FeedBackScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 // Text field and Button
-                Column(
-                  children: [
-                    TextFormField(
-                      expands: false,
-                      decoration: const InputDecoration(
-                        labelText: 'FeedBack',
-                        hintText: 'Write your feedback...',
-                        prefixIcon: Icon(Iconsax.message_question),
+                Form(
+                  key: controller.feedbackFormKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: controller.feedback,
+                        validator: (value) => TValidator.validateEmptyText('FeedBack', value),
+                        expands: false,
+                        decoration: const InputDecoration(
+                          labelText: 'FeedBack',
+                          hintText: 'Write your feedback...',
+                          prefixIcon: Icon(Iconsax.message_question),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 // Save Button
                 const SizedBox(height: TSizes.spaceBtwSections),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => controller.sendFeedback(),
                     child: const Text('Send'),
                   ),
                 ),

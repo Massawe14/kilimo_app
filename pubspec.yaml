@@ -91,14 +91,12 @@ dependencies:
   connectivity_plus: ^5.0.2
   flutter_rating_bar: ^4.0.1
   readmore: ^2.2.0
-  hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_settings_screens: ^0.3.3-null-safety+2
   shimmer: ^3.0.0
   localize_and_translate: ^5.1.2
   flutter_translate: ^4.0.4
   weather_icons: ^3.0.0
-  realm: ^2.1.0
   flutter_markdown: ^0.7.1
   sqflite: ^2.3.3+1
   path: ^1.9.0

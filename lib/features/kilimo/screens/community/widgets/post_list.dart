@@ -8,7 +8,7 @@ import '../reply_community_screen.dart';
 import 'question_card.dart';
 
 class TPostList extends StatelessWidget {
-  const TPostList({
+  TPostList({
     super.key,
     required this.filter, 
     required this.searchQuery,
@@ -17,9 +17,9 @@ class TPostList extends StatelessWidget {
   final String filter;
   final String searchQuery;
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getPostsQuery() {
-    final PostRepository postRepository = Get.find<PostRepository>();
+  final PostRepository postRepository = Get.put(PostRepository());
 
+  Future<QuerySnapshot<Map<String, dynamic>>> getPostsQuery() {
     if (filter == 'All' && searchQuery.isEmpty) {
       return postRepository.fetchAllPosts();
     } else if (filter == 'All') {
@@ -63,7 +63,10 @@ class TPostList extends StatelessWidget {
               (context, index) {
                 final post = posts[index]; // Use the filtered list
                 return GestureDetector(
-                  onTap: () => Get.to(ReplyCommunityScreen(postId: post.id)),
+                  onTap: () async {
+                    await postRepository.fetchPostsByPostId(post.id);
+                    Get.to(() => ReplyCommunityScreen(postId: post.id));
+                  },
                   child: TQuestionCard(
                     image: post.cropImage, // Assuming cropImage is the field name
                     username: post.userName,
