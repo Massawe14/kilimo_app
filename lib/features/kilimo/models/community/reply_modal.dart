@@ -1,28 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FeedBackModal {
+class ReplyModal {
   // Keep those values final which you do not want to update
   final String id;
-  final String feedBack;
+  final String replyText;
   final String userId;
   final String userName;
+  final String profileImage;
   final DateTime date;
 
-  // Constructor for FeedBackModal
-  FeedBackModal({
+  // Constructor for ReplyModal
+  ReplyModal({
     required this.id,
-    required this.feedBack,
+    required this.replyText,
     required this.userId,
     required this.userName,
+    required this.profileImage,
     required this.date,
   });
 
-  // static function to create an empty post modal
-  static FeedBackModal empty() => FeedBackModal(
+  // static function to create an empty reply modal
+  static ReplyModal empty() => ReplyModal(
     id: '',
-    feedBack: '',
+    replyText: '',
     userId: '',
     userName: '',
+    profileImage: '',
     date: DateTime.now(),
   );
 
@@ -30,28 +33,30 @@ class FeedBackModal {
   // toJson() - For Firestore serialization (No change needed)
   Map<String, dynamic> toJson() {
     return {
-      'FeedBack': feedBack,
+      'ReplyText': replyText,
       'UserId': userId,
       'UserName': userName,
+      'ProfileImage': profileImage,
       'Date': date,
     };
   }
 
-  // Factory method to create a FeedBackModal from a Firebase document snapshot
+  // Factory method to create a ReplyModal from a Firebase document snapshot
   // fromSnapshot() - Now handles potential nulls more gracefully
-  factory FeedBackModal.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  factory ReplyModal.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     if (!document.exists) {
-      // Document doesn't exist, return empty FeedBackModal
-      return FeedBackModal.empty();
+      // Document doesn't exist, return empty PostModal
+      return ReplyModal.empty();
     }
 
     final data = document.data()!;
 
-    return FeedBackModal(
+    return ReplyModal(
       id: document.id,
-      feedBack: data['FeedBack'] ?? '',
+      replyText: data['ReplyText'] ?? '',
       userId: data['UserId'] ?? '',
       userName: data['UserName'] ?? '',
+      profileImage: data['ProfileImage'] ?? '',
       // Parse date from Firestore Timestamp or use current time
       date: (data['Date'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );

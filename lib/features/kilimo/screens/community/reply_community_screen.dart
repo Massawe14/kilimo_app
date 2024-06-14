@@ -10,6 +10,7 @@ import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../personalization/controllers/user_controller.dart';
 import '../../controllers/community/post_community_controller.dart';
+import 'widgets/reply_card.dart';
 import 'widgets/reply_community_appbar.dart';
 
 class ReplyCommunityScreen extends StatelessWidget {
@@ -143,7 +144,7 @@ class ReplyCommunityScreen extends StatelessWidget {
                         ),
                       ),
                       const Divider(color: TColors.grey),
-                      const SizedBox(height: TSizes.spaceBtwItems),
+                      const SizedBox(height: 3),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -161,6 +162,12 @@ class ReplyCommunityScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const Divider(color: TColors.grey),
+                      // Display the Replies here
+                      TReplyCard(
+                        postController: postController, 
+                        postId: postId
+                      ),
                     ],
                   ),
                 ),
@@ -173,31 +180,17 @@ class ReplyCommunityScreen extends StatelessWidget {
         padding: const EdgeInsets.only(left: TSizes.defaultSpace, right: TSizes.defaultSpace),
         child: TextField(
           expands: false,
+          controller: postController.replyController,
           decoration: InputDecoration(
             hintText: 'Reply...',
             labelText: 'Write your reply',
+            prefixIcon: IconButton(
+              icon: const Icon(Iconsax.attach_circle),
+              onPressed: () {},
+            ),
             suffixIcon: IconButton(
               icon: const Icon(Iconsax.send_1),
-              onPressed: () async {
-                final replyText = TextEditingController().text.trim();
-                if (replyText.isNotEmpty) {
-                  await postController.addReply(postId, replyText);
-                  TextEditingController().clear();
-                  // Optionally show a success message
-                  Get.snackbar(
-                    'Success',
-                    'Reply added successfully',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                } else {
-                  // Show an error if the reply text is empty
-                  Get.snackbar(
-                    'Error',
-                    'Reply cannot be empty',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                }
-              },
+              onPressed: () => postController.addReply(postId),
             ),
           ),
           maxLength: 1200,

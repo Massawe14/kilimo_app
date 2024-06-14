@@ -19,20 +19,22 @@ class TPostList extends StatelessWidget {
 
   final PostRepository postRepository = Get.put(PostRepository());
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getPostsQuery() {
+  Future<List<PostModal>> getPosts() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot;
     if (filter == 'All' && searchQuery.isEmpty) {
-      return postRepository.fetchAllPosts();
+      snapshot = await postRepository.fetchAllPosts();
     } else if (filter == 'All') {
-      return postRepository.fetchPostsByLocation(searchQuery);
+      snapshot = await postRepository.fetchPostsByLocation(searchQuery);
     } else {
-      return postRepository.fetchFilteredPosts(filter, searchQuery);
+      snapshot = await postRepository.fetchFilteredPosts(filter, searchQuery);
     }
+    return snapshot.docs.map((doc) => PostModal.fromSnapshot(doc)).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      future: getPostsQuery(),
+    return FutureBuilder<List<PostModal>>(
+      future: getPosts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SliverToBoxAdapter(
@@ -47,7 +49,7 @@ class TPostList extends StatelessWidget {
               child: Text('Error: ${snapshot.error}'),
             ),
           );
-        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           debugPrint('No data: ${snapshot.data}');
           return const SliverToBoxAdapter(
             child: Center(
@@ -55,16 +57,13 @@ class TPostList extends StatelessWidget {
             ),
           );
         } else {
-          final posts = snapshot.data!.docs
-            .map((doc) => PostModal.fromSnapshot(doc))
-            .toList();
+          final posts = snapshot.data!;
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final post = posts[index]; // Use the filtered list
                 return GestureDetector(
-                  onTap: () async {
-                    await postRepository.fetchPostsByPostId(post.id);
+                  onTap: () {
                     Get.to(() => ReplyCommunityScreen(postId: post.id));
                   },
                   child: TQuestionCard(

@@ -13,6 +13,7 @@ import '../../../../util/helpers/network_manager.dart';
 import '../../../../util/popups/full_screen_loader.dart';
 import '../../../../util/popups/loaders.dart';
 import '../../models/community/post_modal.dart';
+import '../../models/community/reply_modal.dart';
 
 class PostCommunityController extends GetxController {
   static PostCommunityController get instance => Get.find();
@@ -25,10 +26,12 @@ class PostCommunityController extends GetxController {
   final problemTitle = ''.obs;
   final problemDescription = ''.obs;
   final location = ''.obs;
+  final replyMessage = ''.obs;
 
   final problemTitleController = TextEditingController();
   final problemDescriptionController = TextEditingController();
   final locationController = TextEditingController();
+  final replyController = TextEditingController();
 
   final imageFile = Rxn<File>(); // Use Rxn for better null handling
   var user = Rx<User?>(null);
@@ -48,6 +51,9 @@ class PostCommunityController extends GetxController {
     locationController.addListener(() {
       location.value = locationController.text.trim();
     });
+    replyController.addListener(() {
+      replyMessage.value = replyController.text.trim();
+    });
     user.bindStream(FirebaseAuth.instance.authStateChanges());
   }
 
@@ -56,6 +62,7 @@ class PostCommunityController extends GetxController {
     problemTitleController.dispose();
     problemDescriptionController.dispose();
     locationController.dispose();
+    replyController.dispose();
     super.dispose();
   }
 
@@ -171,39 +178,98 @@ class PostCommunityController extends GetxController {
 
   void fetchPostDetails(String postId) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> post = await postRepository.fetchPostsByPostId(postId);
-      selectedPost.value = post as PostModal;
+      DocumentSnapshot<Map<String, dynamic>> postDoc = await FirebaseFirestore.instance.collection('Posts').doc(postId).get();
+      if (postDoc.exists) {
+        selectedPost.value = PostModal.fromSnapshot(postDoc);
+      }
     } catch (e) {
-      // Handle error
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Failed to fetch post details: $e',
+      );
     }
   }
 
-  Future<void> addReply(String postId, String replyText) async {
+  Future<void> addReply(String postId) async {
+    // Form validation (combined into one condition for brevity)
+    if (replyMessage.value.isEmpty) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Please fill in all fields..',
+      );
+      return;
+    }
+
+    if (user.value == null) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'User not authenticated',
+      );
+      return;
+    }
+
     try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) {
-        throw Exception('User not authenticated');
+      // Start Loading
+      isLoading.value = true; // Show loading indicator
+      TFullScreenLoader.openLoadingDialog('We are processing your information', TImages.docerAnimation);
+
+      // Check internet Connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        // Remove Loader
+        TFullScreenLoader.stopLoading();
+        return;
       }
 
-      final replyData = {
-        'replyText': replyText,
-        'userId': user.uid,
-        'userName': user.displayName ?? 'Anonymous',
-        'timestamp': FieldValue.serverTimestamp(),
-      };
+      String userId = user.value!.uid;
+      
+      // Fetch user details from Firestore (assuming user details are stored in a collection 'users')
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+
+      String userName = userDoc['UserName'];
+      String profileImage = userDoc['ProfilePicture'];
+
+      // Create and Save Post with User Information
+      final reply = ReplyModal(
+        id: postId,
+        replyText: replyMessage.value,
+        userId: userId,
+        userName: userName,
+        profileImage: profileImage,
+        date: DateTime.now(),
+      );
 
       await FirebaseFirestore.instance
         .collection('Posts')
         .doc(postId)
         .collection('Replies')
-        .add(replyData);
+        .add(reply.toJson());
+      
+      // Clear the reply text field
+      replyController.clear();
 
+      // Remove Loader
+      TFullScreenLoader.stopLoading();
+
+      TLoaders.successSnackBar(
+        title: 'Success',
+        message: 'Reply added successfully',
+      );
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to add reply: $e',
-        snackPosition: SnackPosition.BOTTOM,
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Failed to add reply: $e',
       );
     }
+  }
+
+  // Method to fetch the stream of replies for a specific post
+  Stream<QuerySnapshot> getRepliesStream(String postId) {
+    return FirebaseFirestore.instance
+      .collection('Posts')
+      .doc(postId)
+      .collection('Replies')
+      .orderBy('Date', descending: true)
+      .snapshots();
   }
 }

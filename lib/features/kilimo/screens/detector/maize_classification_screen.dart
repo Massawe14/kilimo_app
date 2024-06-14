@@ -9,6 +9,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/maize/maize_controller.dart';
+import 'disease_details_screen.dart';
 
 class MaizeDetectorScreen extends StatelessWidget {
   const MaizeDetectorScreen({super.key});
@@ -130,6 +131,15 @@ class MaizeDetectorScreen extends StatelessWidget {
                                         fontSize: 20
                                       ),
                                       textAlign: TextAlign.center, // Center the text
+                                    ),
+                                    const SizedBox(height: TSizes.spaceBtwSections),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Get.to(() => const DiseaseDetailsScreen(), arguments: {
+                                          'diseaseName': controller.output[0]['label'],
+                                        });
+                                      },
+                                      child: const Text('View Recommendations'),
                                     ),
                                   ],
                                 )

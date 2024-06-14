@@ -1,0 +1,85 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
+import '../../../../../util/constants/image_strings.dart';
+import '../../../../../util/constants/sizes.dart';
+import '../../../controllers/community/post_community_controller.dart';
+import '../../../models/community/reply_modal.dart';
+
+class TReplyCard extends StatelessWidget {
+  const TReplyCard({
+    super.key,
+    required this.postController,
+    required this.postId,
+  });
+
+  final PostCommunityController postController;
+  final String postId;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: postController.getRepliesStream(postId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text('Something went wrong'),
+          );
+        }
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return const Center(
+            child: Text('No replies found'),
+          );
+        }
+    
+        List<ReplyModal> replies = snapshot.data!.docs.map((doc) {
+          return ReplyModal.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>);
+        }).toList();
+    
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: replies.length,
+          itemBuilder: (context, index) {
+            final reply = replies[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: reply.profileImage.isNotEmpty 
+                        ? NetworkImage(reply.profileImage) 
+                        : const AssetImage(TImages.profileImage) as ImageProvider,
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(reply.userName),
+                        const SizedBox(height: 3),
+                        Text(timeago.format(reply.date)),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  reply.replyText, 
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+}

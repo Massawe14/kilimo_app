@@ -13,11 +13,7 @@ class ScanController extends GetxController {
   var cameraCount = 0;
   var isModelRunning = false.obs;
 
-  var x = 0.0;
-  var y = 0.0;
-  var w = 0.0;
-  var h = 0.0;
-  var label = "";
+  var results = <dynamic>[].obs;
 
   @override
   void onInit() {
@@ -47,7 +43,7 @@ class ScanController extends GetxController {
           cameraCount++;
           if (cameraCount % 10 == 0 && !isModelRunning.value) {
             cameraCount = 0;
-            objectDetector(image);
+            runModelOnFrame(image);
           }
           update();
         });
@@ -61,59 +57,41 @@ class ScanController extends GetxController {
 
   initTFLite() async {
     await Tflite.loadModel(
-      model: "assets/models/yolov2_tiny.tflite",
-      labels: "assets/models/yolov2_tiny.txt",
+      model: "assets/models/model16.tflite",
+      labels: "assets/models/labels.txt",
       isAsset: true,
       numThreads: 1,
       useGpuDelegate: false,
     );
   }
 
-  objectDetector(CameraImage image) async {
-    if (isModelRunning.value) return;
-    isModelRunning.value = true;
-
+  Future<List<dynamic>?> runModelOnFrame(CameraImage image) async {
+    isModelRunning(true);
+    List<dynamic>? detectedResults;
     try {
-      var results = await Tflite.runModelOnFrame(
-        bytesList: image.planes.map((e) => e.bytes).toList(),
-        asynch: true,
+      detectedResults = await Tflite.detectObjectOnFrame(
+        bytesList: image.planes.map((plane) {
+          return plane.bytes;
+        }).toList(),
+        model: "YOLO",
         imageHeight: image.height,
         imageWidth: image.width,
-        imageMean: 127.5,
-        imageStd: 127.5,
-        numResults: 1,
-        rotation: 90,
-        threshold: 0.4,
+        imageMean: 0,
+        imageStd: 255.0,
+        threshold: 0.2,
+        numResultsPerClass: 1,
       );
 
-      if (results != null && results.isNotEmpty) {
-        var detectedObject = results.first;
-
-        // Assume the detectedObject contains the required data
-        // Extract relevant data
-        if (detectedObject is Map<String, dynamic> && detectedObject.containsKey('rect')) {
-          var rect = detectedObject['rect'];
-          if (rect is Map<String, dynamic> && rect.containsKey('x') && rect.containsKey('y') && rect.containsKey('w') && rect.containsKey('h')) {
-            label = detectedObject['detectedClass'].toString();
-            h = rect['h'];
-            w = rect['w'];
-            x = rect['x'];
-            y = rect['y'];
-            debugPrint("Detection: $detectedObject");
-          } else {
-            debugPrint("Unexpected shape: $detectedObject");
-          }
-        } else {
-          debugPrint("Unexpected shape: $detectedObject");
-        }
+      if (detectedResults != null && detectedResults.isNotEmpty) {
+        results.value = detectedResults;
       } else {
-        debugPrint("No detection results.");
+        results.clear();
       }
     } on PlatformException catch (e) {
       debugPrint("Failed to run model: ${e.message}");
     } finally {
-      isModelRunning.value = false;
-      update();
+      isModelRunning(false);
     }
+    return detectedResults;
   }
 }

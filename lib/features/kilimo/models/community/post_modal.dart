@@ -12,7 +12,7 @@ class PostModal {
   final String userLocation;
   final DateTime date;
 
-  // Constructor for PostModel
+  // Constructor for PostModal
   PostModal({
     required this.id,
     required this.cropType,

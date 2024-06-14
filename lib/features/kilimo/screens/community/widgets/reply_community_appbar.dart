@@ -20,6 +20,7 @@ class ReplyCommunityAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
+    final validImage = image.isNotEmpty;
     return SliverAppBar(
       systemOverlayStyle: const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
       expandedHeight: 275.0,
@@ -28,13 +29,25 @@ class ReplyCommunityAppBar extends StatelessWidget {
       pinned: true,
       stretch: true,
       flexibleSpace: FlexibleSpaceBar(
-        background: CachedNetworkImage(
-          imageUrl: image,
-          errorWidget: (context, url, error) => const Icon(Icons.error), // Error icon
-          height: 150,
-          width: double.infinity,
-          fit: BoxFit.cover,
-        ),
+        background: validImage 
+        ? CachedNetworkImage(
+            imageUrl: image,
+            errorWidget: (context, url, error) => const Icon(Icons.error), // Error icon
+            height: 150,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          )
+        : Container(
+            color: TColors.grey,
+            height: 150,
+            width: double.infinity,
+            child: const Center(
+              child: Icon(
+                Icons.error,
+                color: TColors.white,
+              ),
+            ),
+          ),
         stretchModes: const [
           StretchMode.blurBackground,
           StretchMode.zoomBackground,

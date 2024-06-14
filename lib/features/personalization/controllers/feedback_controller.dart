@@ -15,23 +15,41 @@ class FeedBackController extends GetxController {
   final feedback = TextEditingController();
   var user = Rx<User?>(null);
   GlobalKey<FormState> feedbackFormKey = GlobalKey<FormState>();
+  final isLoading = false.obs; // For loading indicator
+
+  @override
+  void onInit() {
+    super.onInit();
+    user.bindStream(FirebaseAuth.instance.authStateChanges());
+  }
 
   // feeedback
   void sendFeedback() async {
+    // Form Validation
+    if (!feedbackFormKey.currentState!.validate()) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Please fill in all fields..',
+      );
+      return;
+    }
+
+    if (user.value == null) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'User not authenticated',
+      );
+      return;
+    }
+
     try {
       // Start Loading
+      isLoading.value = true; // Show loading indicator
       TFullScreenLoader.openLoadingDialog('We are processing your information', TImages.docerAnimation);
 
       // Check internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        // Remove Loader
-        TFullScreenLoader.stopLoading();
-        return;
-      }
-
-      // Form Validation
-      if (!feedbackFormKey.currentState!.validate()) {
         // Remove Loader
         TFullScreenLoader.stopLoading();
         return;
@@ -47,7 +65,7 @@ class FeedBackController extends GetxController {
       // Create and Save Post with User Information
       final newFeedBack = FeedBackModal(
         id: '',
-        feedback: feedback.text.trim(),
+        feedBack: feedback.text.trim(),
         userId: userId,
         userName: userName,
         date: DateTime.now(),
@@ -55,6 +73,9 @@ class FeedBackController extends GetxController {
 
       // Save post data to Firestore
       FirebaseFirestore.instance.collection('Feedbacks').add(newFeedBack.toJson());
+
+      // Clear the feedback text field
+      feedback.clear();
 
       // Remove Loader
       TFullScreenLoader.stopLoading();
