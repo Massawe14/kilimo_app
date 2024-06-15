@@ -4,10 +4,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 import 'package:kilimo_app/util/helpers/helper_functions.dart';
 
-import 'features/kilimo/screens/community/community.dart';
-import 'features/kilimo/screens/diagnosis/survey_screen.dart';
-import 'features/kilimo/screens/home/home.dart';
-import 'features/kilimo/screens/resources/resources.dart';
+import 'features/kilimo/screens/community/community_screen.dart';
+import 'features/kilimo/screens/detector/detector_screen.dart';
+import 'features/kilimo/screens/home/home_screen.dart';
+import 'features/kilimo/screens/resources/resources_screen.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -25,10 +25,10 @@ class NavigationMenu extends StatelessWidget {
           selectedIndex: controller.selectedIndex.value,
           onDestinationSelected: (index) => controller.selectedIndex.value = index,
           backgroundColor: darkMode ? TColors.black : TColors.white,
-          indicatorColor: darkMode ? TColors.white.withOpacity(0.1) : TColors.primary.withOpacity(0.1),
+          indicatorColor: darkMode ? TColors.white.withOpacity(0.1) : TColors.buttonSecondary,
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home),  label: 'Home'),
-            NavigationDestination(icon: Icon(Iconsax.layer),  label: 'Surveys'),
+            NavigationDestination(icon: Icon(Iconsax.layer),  label: 'Detector'),
             NavigationDestination(icon: Icon(Iconsax.messages),  label: 'Community'),
             NavigationDestination(icon: Icon(Iconsax.more_2),  label: 'Resources'),
           ],
@@ -43,8 +43,8 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final screens = [
     const HomeScreen(),
-    const SurveyScreen(),
-    const CommunityScreen(),
+    const DetectorScreen(),
+    CommunityScreen(),
     const ResourcesScreen(),
   ];
 }

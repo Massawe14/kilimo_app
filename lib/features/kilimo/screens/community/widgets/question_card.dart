@@ -1,23 +1,36 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../../../common/widgets/image_text_widget/t_circular_image.dart';
+import '../../../../../common/widgets/loaders/shimmer.dart';
 import '../../../../../util/constants/colors.dart';
+import '../../../../../util/constants/image_strings.dart';
 import '../../../../../util/constants/sizes.dart';
+import '../../../../personalization/controllers/user_controller.dart';
 
 class TQuestionCard extends StatelessWidget {
   const TQuestionCard({
     super.key,
     required this.image,
+    required this.username,
+    required this.location,
+    required this.crop,
     required this.title,
     required this.description,
+    required this.date,
   });
 
-  final String image;
+  final String image, username, location, crop;
   final String title;
   final String description;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return Container(
       width: 350,
       decoration: BoxDecoration(
@@ -32,49 +45,110 @@ class TQuestionCard extends StatelessWidget {
         ],
       ),
       child: Card(
-        elevation: 0, // Set elevation to 0 to remove default card shadow
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
-              child: Image.asset(
-                image,
-                height: 150,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            // Image (Using CachedNetworkImage)
+            CachedNetworkImage(
+              imageUrl: image,
+              errorWidget: (context, url, error) => const Icon(Icons.error), // Error icon
+              height: 150,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
-            const Row(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://via.placeholder.com/150'),
-                  radius: 24,
+                // Profile Image
+                Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Obx(() {
+                    final networkImage = controller.user.value.profilePicture;
+                    final image = networkImage.isNotEmpty ? networkImage : TImages.profileImage;
+                    return controller.imageUploading.value
+                      ? const TShimmerEffect(
+                          width: 70, 
+                          height: 70, 
+                          radius: 70,
+                        )
+                      : TCircularImage(
+                          image: image, 
+                          width: 70, 
+                          height: 70, 
+                          isNetworkImage: networkImage.isNotEmpty,
+                        );
+                  }),
                 ),
-                SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Username',
-                      style: TextStyle(
-                        color: TColors.green,
-                        fontSize: TSizes.fontSizeMd,
-                        fontWeight: FontWeight.bold
+                const SizedBox(width: 12),
+                // User Information
+                Expanded( // Make the column take available space
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            username,
+                            style: const TextStyle(
+                              color: TColors.accent,
+                              fontSize: TSizes.fontSizeMd,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          // Location & Date
+                          const SizedBox(width: 5),
+                          const Text(
+                            '.',
+                            style: TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            location,
+                            style: const TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      'Location',
-                      style: TextStyle(
-                        color: TColors.grey,
-                        fontSize: TSizes.fontSizeSm,
+                      Row(
+                        children: [
+                          Text(
+                            timeago.format(date),
+                            style: const TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          const Text(
+                            '.',
+                            style: TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            crop,
+                            style: const TextStyle(
+                              color: TColors.darkGrey,
+                              fontSize: TSizes.fontSizeSm,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

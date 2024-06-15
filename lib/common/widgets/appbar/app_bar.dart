@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kilimo_app/util/constants/sizes.dart';
 
+import '../../../util/device/device_utility.dart';
+
 class TAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TAppBar({
     super.key, 
@@ -37,5 +39,5 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
   
   @override
-  Size get preferredSize => throw UnimplementedError();
+  Size get preferredSize => Size.fromHeight(TDeviceUtils.getAppBarHeight());
 }

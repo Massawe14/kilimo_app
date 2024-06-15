@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "653462887527",
-    "project_id": "kilimo-app-b5270",
-    "storage_bucket": "kilimo-app-b5270.appspot.com"
+    "project_number": "904681071274",
+    "project_id": "kilimoapp-107fb",
+    "storage_bucket": "kilimoapp-107fb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:653462887527:android:0b5b695336eaa8a55c48c2",
+        "mobilesdk_app_id": "1:904681071274:android:a4893f64740c24e11466d3",
         "android_client_info": {
           "package_name": "com.example.kilimo_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "653462887527-1t04c0hnqvgh86ofnc162223pchkfslh.apps.googleusercontent.com",
+          "client_id": "904681071274-akj25u712e7vu98sg6dtjs6d5k36h34a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.kilimo_app",
@@ -22,24 +22,24 @@
           }
         },
         {
-          "client_id": "653462887527-ns0ig6av7fj4ctl97vjg4cp4er344amg.apps.googleusercontent.com",
+          "client_id": "904681071274-v2pouau8m13demne4hcfav8hucqhfiob.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBcjKHdpnrkoI8N6xSuZ0jsxCOn25R-yiI"
+          "current_key": "AIzaSyBs-imtqQgHO9itBsix5rVh9eR4xRdAUng"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "653462887527-ns0ig6av7fj4ctl97vjg4cp4er344amg.apps.googleusercontent.com",
+              "client_id": "904681071274-v2pouau8m13demne4hcfav8hucqhfiob.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "653462887527-311jfboeuas5o1skspr95lgfakdh9c7m.apps.googleusercontent.com",
+              "client_id": "904681071274-m2b6tun3n5pqa43hfe1c4qk1vs5rpgjm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.kilimoApp"

@@ -29,11 +29,20 @@ class TAnimationLoaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(child: Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8)), // Display Lottie animation
+        // Display Lottie animation
+        Flexible(
+          fit: FlexFit.loose,
+          child: Lottie.asset(
+            animation, 
+            width: MediaQuery.of(context).size.width * 0.8
+          ),
+        ),
         const SizedBox(height: TSizes.defaultSpace),
-        Expanded(
+        Flexible(
+          fit: FlexFit.loose,
           child: Text(
             text,
             style: Theme.of(context).textTheme.bodyMedium,
@@ -42,7 +51,8 @@ class TAnimationLoaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.defaultSpace),
         showAction
-          ? Expanded(
+          ? Flexible(
+            fit: FlexFit.loose,
             child: SizedBox(
               width: 250,
               child: OutlinedButton(

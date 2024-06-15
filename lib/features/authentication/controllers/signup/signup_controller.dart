@@ -8,7 +8,7 @@ import 'package:kilimo_app/util/constants/image_strings.dart';
 import '../../../../util/helpers/network_manager.dart';
 import '../../../../util/popups/full_screen_loader.dart';
 import '../../../../util/popups/loaders.dart';
-import '../../../personalization/models/userModal.dart';
+import '../../../personalization/models/user_modal.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
@@ -58,7 +58,7 @@ class SignupController extends GetxController {
       final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Save Authenticated user data in the Firebase Firestore
-      final newUser = UserModel(
+      final newUser = UserModal(
         id: userCredential.user!.uid,
         firstName: firstname.text.trim(),
         lastName: lastname.text.trim(),

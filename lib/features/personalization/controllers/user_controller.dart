@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kilimo_app/data/repositories/user/user_repository.dart';
-import 'package:kilimo_app/features/personalization/models/userModal.dart';
+import 'package:kilimo_app/features/personalization/models/user_modal.dart';
 import 'package:kilimo_app/util/popups/loaders.dart';
 
 import '../../../data/repositories/authentication/authentication_repository.dart';
@@ -18,7 +18,7 @@ class UserController extends GetxController {
   static UserController get instance => Get.find();
   
   final profileLoading = false.obs;
-  Rx<UserModel> user = UserModel.empty().obs;
+  Rx<UserModal> user = UserModal.empty().obs;
 
   final hidePassword = false.obs;
   final imageUploading = false.obs;
@@ -40,7 +40,7 @@ class UserController extends GetxController {
       final user = await userRepository.fetchUserDetails();
       this.user(user);
     } catch (e) {
-      user(UserModel.empty());
+      user(UserModal.empty());
     } finally {
       profileLoading.value = false;
     }
@@ -56,11 +56,11 @@ class UserController extends GetxController {
       if (user.value.id.isEmpty) {
         if (userCredentials != null) {
           // Convert Name to First and Last Name
-          final nameParts = UserModel.nameParts(userCredentials.user!.displayName ?? '');
-          final username = UserModel.generateUsername(userCredentials.user!.displayName ?? '');
+          final nameParts = UserModal.nameParts(userCredentials.user!.displayName ?? '');
+          final username = UserModal.generateUsername(userCredentials.user!.displayName ?? '');
 
           // Map Data
-          final user = UserModel(
+          final user = UserModal(
             id: userCredentials.user!.uid,
             firstName: nameParts[0],
             lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',

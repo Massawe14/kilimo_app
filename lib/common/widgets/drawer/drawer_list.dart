@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../features/kilimo/screens/legal/privacy_policy_screen.dart';
+import '../../../features/kilimo/screens/legal/terms_and_conditions_screen.dart';
+import '../../../features/personalization/screens/feedback/feedback_screen.dart';
 import '../../../features/personalization/screens/profile/profile_screen.dart';
-import '../../../features/personalization/screens/settings/settings.dart';
+import '../../../features/personalization/screens/settings/settings_screen.dart';
 import '../../../navigation_menu.dart';
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/sizes.dart';
@@ -40,30 +43,6 @@ class MyDrawerList extends StatelessWidget {
             );
           },
         ),
-        ListTile(
-          leading: const Icon(Iconsax.translate),
-          title: const Text(TTexts.tMenu3),
-          onTap: () {
-            // Close navigation drawer before
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Iconsax.notification),
-          title: const Text(TTexts.tMenu4),
-          onTap: () {
-            // Close navigation drawer before
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Iconsax.messages_2),
-          title: const Text(TTexts.tMenu5),
-          onTap: () {
-            // Close navigation drawer before
-            Navigator.pop(context);
-          },
-        ),
         const Divider(color: TColors.grey),
         ListTile(
           leading: const Icon(Iconsax.setting_2),
@@ -72,7 +51,7 @@ class MyDrawerList extends StatelessWidget {
             // Close navigation drawer before
             Navigator.pop(context);
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const SettingsScreen())
+              builder: (context) => SettingsScreen())
             );
           },
         ),
@@ -82,6 +61,9 @@ class MyDrawerList extends StatelessWidget {
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const PrivacyPolicyScreen())
+            );
           },
         ),
         ListTile(
@@ -90,6 +72,9 @@ class MyDrawerList extends StatelessWidget {
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const TermsAndConditionsScreen())
+            );
           },
         ),
         ListTile(
@@ -98,6 +83,9 @@ class MyDrawerList extends StatelessWidget {
           onTap: () {
             // Close navigation drawer before
             Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const FeedBackScreen())
+            );
           },
         ),
         const SizedBox(height: TSizes.spaceBtwSections),

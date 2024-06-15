@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../features/kilimo/screens/resources/widgets/fertilization/past_calculation_history_screen.dart';
+
 // Function to show the popup menu
-void showPopupMenu(BuildContext context) {
+showPopupMenu(BuildContext context) {
   showMenu(
     context: context,
     position: const RelativeRect.fromLTRB(50, 50, 0, 0),
@@ -55,7 +58,7 @@ void showPopupMenu(BuildContext context) {
     } else if (value == 'share') {
       // Handle share action
     } else if (value == 'history') {
-      // Handle history action
+      Get.to(() => const CalculationsHistoryScreen());
     }
   });
 }

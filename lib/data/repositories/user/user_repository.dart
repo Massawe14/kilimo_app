@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../features/personalization/models/userModal.dart';
+import '../../../features/personalization/models/user_modal.dart';
 import '../../../util/exceptions/firebase_exceptions.dart';
 import '../../../util/exceptions/format_exceptions.dart';
 import '../../../util/exceptions/platform_exceptions.dart';
@@ -19,7 +19,7 @@ class UserRepository extends GetxController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Function to save user data to Firestore
-  Future<void> saveUserRecord(UserModel user) async {
+  Future<void> saveUserRecord(UserModal user) async {
     try {
       await _db.collection("Users").doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
@@ -34,13 +34,13 @@ class UserRepository extends GetxController {
   }
 
   // Function to fetch user details based on user ID.
-  Future<UserModel> fetchUserDetails() async {
+  Future<UserModal> fetchUserDetails() async {
     try {
       final documentSnapshot = await _db.collection("Users").doc(AuthenticationRepository.instance.authUser?.uid).get();
       if (documentSnapshot.exists) {
-        return UserModel.fromSnapshot(documentSnapshot);
+        return UserModal.fromSnapshot(documentSnapshot);
       } else {
-        return UserModel.empty();
+        return UserModal.empty();
       }
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
@@ -54,7 +54,7 @@ class UserRepository extends GetxController {
   }
 
   // Function to update user data in Firestore.
-  Future<void> updateUserDetails(UserModel updateUser) async {
+  Future<void> updateUserDetails(UserModal updateUser) async {
     try {
       await _db.collection("Users").doc(updateUser.id).update(updateUser.toJson());
     } on FirebaseException catch (e) {
