@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,9 +11,7 @@ class ScanController extends GetxController {
   late List<CameraDescription> cameras;
 
   var isCameraInitialized = false.obs;
-  var cameraCount = 0;
   var isModelRunning = false.obs;
-
   var results = <dynamic>[].obs;
 
   @override
@@ -29,7 +28,7 @@ class ScanController extends GetxController {
     super.dispose();
   }
 
-  initCamera() async {
+  void initCamera() async {
     if (await Permission.camera.request().isGranted) {
       cameras = await availableCameras();
 
@@ -38,26 +37,28 @@ class ScanController extends GetxController {
         ResolutionPreset.max,
         imageFormatGroup: ImageFormatGroup.yuv420,
       );
-      await cameraController.initialize().then((value) {
-        cameraController.startImageStream((image) {
-          cameraCount++;
-          if (cameraCount % 10 == 0 && !isModelRunning.value) {
-            cameraCount = 0;
-            runModelOnFrame(image);
+
+      cameraController.addListener(() {
+        if (cameraController.value.isInitialized && !isModelRunning.value) {
+          isCameraInitialized.value = true;
+        }
+      });
+
+      await cameraController.initialize().then((_) {
+        cameraController.startImageStream((CameraImage image) {
+          if (!isModelRunning.value) {
+            detectDisease(image);
           }
-          update();
         });
       });
-      isCameraInitialized(true);
-      update();
     } else {
       debugPrint("Permission denied");
     }
   }
 
-  initTFLite() async {
+  void initTFLite() async {
     await Tflite.loadModel(
-      model: "assets/models/model16.tflite",
+      model: "assets/models/model32.tflite",
       labels: "assets/models/labels.txt",
       isAsset: true,
       numThreads: 1,
@@ -65,33 +66,57 @@ class ScanController extends GetxController {
     );
   }
 
-  Future<List<dynamic>?> runModelOnFrame(CameraImage image) async {
-    isModelRunning(true);
-    List<dynamic>? detectedResults;
+  Future<void> detectDisease(CameraImage image) async {
+    isModelRunning.value = true;
+
     try {
-      detectedResults = await Tflite.detectObjectOnFrame(
-        bytesList: image.planes.map((plane) {
-          return plane.bytes;
-        }).toList(),
-        model: "YOLO",
+      var input = preprocessImage(image);
+
+      var output = await Tflite.runModelOnFrame(
+        bytesList: input,
         imageHeight: image.height,
         imageWidth: image.width,
         imageMean: 0,
         imageStd: 255.0,
-        threshold: 0.2,
-        numResultsPerClass: 1,
+        numResults: 1,
       );
 
-      if (detectedResults != null && detectedResults.isNotEmpty) {
-        results.value = detectedResults;
+      if (output != null && output.isNotEmpty) {
+        results.assignAll(output);
       } else {
         results.clear();
       }
     } on PlatformException catch (e) {
       debugPrint("Failed to run model: ${e.message}");
     } finally {
-      isModelRunning(false);
+      isModelRunning.value = false;
     }
-    return detectedResults;
+  }
+
+  List<Uint8List> preprocessImage(CameraImage image) {
+    List<double> normalizedImage = normalizeImage(image);
+    List<Uint8List> reshapedImage = reshapeImage(normalizedImage);
+    return reshapedImage;
+  }
+
+  List<double> normalizeImage(CameraImage image) {
+    List<double> normalized = [];
+    final int width = image.width;
+    final int height = image.height;
+
+    // Accessing Y-plane (luminance) only for grayscale conversion
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int pixel = image.planes[0].bytes[y * width + x];
+        double grayscale = pixel / 255.0; // Normalize to [0, 1]
+        normalized.add(grayscale);
+      }
+    }
+    return normalized;
+  }
+
+  List<Uint8List> reshapeImage(List<double> image) {
+    Float32List floatList = Float32List.fromList(image);
+    return [floatList.buffer.asUint8List()];
   }
 }

@@ -1,7 +1,7 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:camera/camera.dart';
 
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
 import '../../../../util/constants/colors.dart';
@@ -15,16 +15,18 @@ class CameraViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
+    final ScanController scanController = Get.put(ScanController());
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: Icon(
-            Iconsax.arrow_left, 
+            Iconsax.arrow_left,
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Reat-Time Disease Detector'),
+        title: const Text('Real-Time Disease Detector'),
         actions: [
           IconButton(
             icon: const Icon(
@@ -45,25 +47,24 @@ class CameraViewScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: GetBuilder<ScanController>(
-        init: ScanController(),
-        builder: (controller) {
-          return controller.isCameraInitialized.value 
-            ? Stack(
-              children: [
-                CameraPreview(controller.cameraController),
-                Obx(() => CustomPaint(
-                    painter: BoundingBoxPainter(controller.results),
-                    child: Container(),
-                  ),
-                ),
-              ],
-            ) 
-            : const Center(
-                child: Text("Loading Preview..."),
-              );
+      body: Obx(() {
+        // Use Obx only to listen to isCameraInitialized.value
+        if (scanController.isCameraInitialized.value) {
+          return Stack(
+            children: [
+              CameraPreview(scanController.cameraController),
+              CustomPaint(
+                painter: BoundingBoxPainter(scanController.results),
+                child: Container(),
+              ),
+            ],
+          );
+        } else {
+          return const Center(
+            child: Text("Loading Preview..."),
+          );
         }
-      ),
+      }),
     );
   }
 }
