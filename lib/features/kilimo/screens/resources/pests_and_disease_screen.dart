@@ -72,11 +72,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                 const SizedBox(height: TSizes.spaceBtwSections),
                 const TSectionHeading(title: 'Seeding Stage', showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const Row(
-                  children: [
-                    TPestsAndDiseasesList(),
-                  ],
-                ),
+                const TPestsAndDiseasesList(),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
                 SizedBox(
                   width: double.infinity,

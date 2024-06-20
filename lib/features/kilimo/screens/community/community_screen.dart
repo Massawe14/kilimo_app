@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -9,7 +8,6 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../data/repositories/post/post_repository.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
-import '../../models/community/post_modal.dart';
 import 'ask_community_screen.dart';
 import 'widgets/crop_categories.dart';
 import 'widgets/post_list.dart';
@@ -46,38 +44,13 @@ class CommunityScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             // Search Section
-            SliverPadding(
-              padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+            const SliverPadding(
+              padding: EdgeInsets.all(TSizes.spaceBtwItems),
               sliver: SliverToBoxAdapter(
-                child: TypeAheadField<PostModal>(
-                  builder: (context, controller, focusNode) {
-                    return TextField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(
-                        labelText: 'Search by crop type or location',
-                        prefixIcon: Icon(Icons.search),
-                      ),
-                      onChanged: (value) {
-                        // Trigger filtering whenever the search text changes
-                        _selectedFilter.value = value;
-                      },
-                    );
-                  },
-                  suggestionsCallback: (pattern) async {
-                    if (pattern.isEmpty) return [];
-                    return await postRepository.searchPosts(pattern);
-                  },
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      title: Text(suggestion.problemTitle), // Show post title
-                      subtitle: Text(suggestion.cropType),   // Show crop type
-                    );
-                  },
-                  onSelected: (suggestion) {
-                    _searchController.text = suggestion.problemTitle; // Set the title as search text
-                  },
-                  emptyBuilder: (context) => const ListTile(
-                    title: Text('No results found'),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Search by crop type or location',
+                    prefixIcon: Icon(Icons.search),
                   ),
                 ),
               ),

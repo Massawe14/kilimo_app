@@ -82,6 +82,7 @@ class WeatherScreenState extends State<WeatherScreen> {
   
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return Center(
       // ignore: unnecessary_null_comparison
       child: _currentPosition == null
@@ -90,7 +91,9 @@ class WeatherScreenState extends State<WeatherScreen> {
             future: wf.currentWeatherByLocation(_currentPosition.latitude, _currentPosition.longitude), 
             builder: (context, AsyncSnapshot<Weather> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return CircularProgressIndicator(
+                  color: darkMode ? TColors.white : TColors.black,
+                );
               } else if (snapshot.hasError) {
                 return const Text('Network problem');
               } else {

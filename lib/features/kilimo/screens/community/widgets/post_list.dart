@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../data/repositories/post/post_repository.dart';
+import '../../../../../util/constants/colors.dart';
+import '../../../../../util/helpers/helper_functions.dart';
 import '../../../models/community/post_modal.dart';
 import '../reply_community_screen.dart';
 import 'question_card.dart';
@@ -33,13 +35,16 @@ class TPostList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return FutureBuilder<List<PostModal>>(
       future: getPosts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SliverToBoxAdapter(
+          return SliverToBoxAdapter(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: darkMode ? TColors.white : TColors.black,
+              ),
             ),
           );
         } else if (snapshot.hasError) {

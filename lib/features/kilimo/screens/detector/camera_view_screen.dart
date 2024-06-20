@@ -47,24 +47,42 @@ class CameraViewScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Obx(() {
-        // Use Obx only to listen to isCameraInitialized.value
-        if (scanController.isCameraInitialized.value) {
-          return Stack(
-            children: [
-              CameraPreview(scanController.cameraController),
-              CustomPaint(
-                painter: BoundingBoxPainter(scanController.results),
-                child: Container(),
+      body: Stack(
+        children: [
+          Obx(() {
+            if (scanController.isCameraInitialized.value) {
+              return Stack(
+                children: [
+                  CameraPreview(scanController.cameraController),
+                  CustomPaint(
+                    painter: BoundingBoxPainter(scanController.results),
+                    child: Container(),
+                  ),
+                ],
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: darkMode ? TColors.white : TColors.black,
+                ),
+              );
+            }
+          }),
+          // Error message overlay (optional)
+          Obx(() => Visibility(
+            visible: scanController.cameraController.value.hasError,
+            child: Center(
+              child: Text(
+                "Camera Error: ${scanController.cameraController.value.errorDescription}",
+                style: const TextStyle(
+                  color: TColors.error, 
+                  fontSize: 16.0
+                ),
               ),
-            ],
-          );
-        } else {
-          return const Center(
-            child: Text("Loading Preview..."),
-          );
-        }
-      }),
+            ),
+          )),
+        ],
+      ),
     );
   }
 }

@@ -3,57 +3,44 @@ import 'package:flutter/material.dart';
 import '../../../../../util/constants/colors.dart';
 
 class BoundingBoxPainter extends CustomPainter {
-  final List<dynamic>? results;
+  final List<dynamic> results;
 
   BoundingBoxPainter(this.results);
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (results == null || results!.isEmpty) {
-      return;
-    }
-
     final paint = Paint()
       ..color = TColors.error
-      ..strokeWidth = 3.0
+      ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    final textPainter = TextPainter(
-      textAlign: TextAlign.left,
-      textDirection: TextDirection.ltr,
-    );
+    for (var result in results) {
+      final rect = Rect.fromLTWH(
+        result["rect"]["x"] * size.width,
+        result["rect"]["y"] * size.height,
+        result["rect"]["w"] * size.width,
+        result["rect"]["h"] * size.height,
+      );
 
-    for (var result in results!) {
-      if (result is Map<String, dynamic>) {
-        final rect = result['rect'] as Map<String, dynamic>;
-        final detectedClass = result['detectedClass'].toString();
+      canvas.drawRect(rect, paint);
 
-        final left = rect['x'] * size.width;
-        final top = rect['y'] * size.height;
-        final right = left + rect['w'] * size.width;
-        final bottom = top + rect['h'] * size.height;
-
-        final rectToDraw = Rect.fromLTRB(left, top, right, bottom);
-        canvas.drawRect(rectToDraw, paint);
-
-        // Draw label background
-        final backgroundPaint = Paint()
-          ..color = TColors.error
-          ..style = PaintingStyle.fill;
-        final labelRect = Rect.fromLTWH(left, top - 20, rect['w'] * size.width, 20);
-        canvas.drawRect(labelRect, backgroundPaint);
-
-        // Draw text
-        textPainter.text = TextSpan(
-          text: detectedClass,
+      final textPainter = TextPainter(
+        text: TextSpan(
+          text: "${result["detectedClass"]} ${(result["confidenceInClass"] * 100).toStringAsFixed(0)}%",
           style: const TextStyle(
-            color: TColors.white, 
-            fontSize: 16,
+            color: TColors.error,
+            fontSize: 14,
           ),
-        );
-        textPainter.layout();
-        textPainter.paint(canvas, Offset(left, top - 20));
-      }
+        ),
+        textDirection: TextDirection.ltr,
+      );
+
+      textPainter.layout(
+        minWidth: 0,
+        maxWidth: size.width,
+      );
+
+      textPainter.paint(canvas, Offset(rect.left, rect.top));
     }
   }
 

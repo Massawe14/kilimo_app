@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
+import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/disease_controller.dart';
 
 class DiseaseDetailsScreen extends StatelessWidget {
@@ -9,6 +11,7 @@ class DiseaseDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     final DiseaseController controller = Get.put(DiseaseController());
     final String diseaseName = Get.arguments['diseaseName'];
 
@@ -21,8 +24,10 @@ class DiseaseDetailsScreen extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator()
+          return Center(
+            child: CircularProgressIndicator(
+              color: darkMode ? TColors.white : TColors.black,
+            )
           );
         }
 

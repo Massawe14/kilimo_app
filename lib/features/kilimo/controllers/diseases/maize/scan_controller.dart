@@ -11,7 +11,9 @@ class ScanController extends GetxController {
   late List<CameraDescription> cameras;
 
   var isCameraInitialized = false.obs;
+  var cameraCount = 0;
   var isModelRunning = false.obs;
+
   var results = <dynamic>[].obs;
 
   @override
@@ -44,19 +46,22 @@ class ScanController extends GetxController {
         }
       });
 
-      await cameraController.initialize().then((_) {
-        cameraController.startImageStream((CameraImage image) {
-          if (!isModelRunning.value) {
+      await cameraController.initialize().then((value) {
+        cameraController.startImageStream((image) {
+          cameraCount++;
+          if (cameraCount % 10 == 0 && !isModelRunning.value) {
+            cameraCount = 0;
             detectDisease(image);
           }
         });
+        isCameraInitialized(true);
       });
     } else {
       debugPrint("Permission denied");
     }
   }
 
-  void initTFLite() async {
+  initTFLite() async {
     await Tflite.loadModel(
       model: "assets/models/model32.tflite",
       labels: "assets/models/labels.txt",
@@ -67,56 +72,69 @@ class ScanController extends GetxController {
   }
 
   Future<void> detectDisease(CameraImage image) async {
-    isModelRunning.value = true;
+    if (isModelRunning.value) return;
+
+    isModelRunning(true);
 
     try {
       var input = preprocessImage(image);
 
       var output = await Tflite.runModelOnFrame(
         bytesList: input,
-        imageHeight: image.height,
-        imageWidth: image.width,
-        imageMean: 0,
-        imageStd: 255.0,
-        numResults: 1,
+        imageHeight: 320,
+        imageWidth: 320,
+        imageMean: 127.5,
+        imageStd: 127.5,
+        rotation: 90,
+        numResults: 5,
+        threshold: 0.3,
       );
 
       if (output != null && output.isNotEmpty) {
-        results.assignAll(output);
+        results.value = output;
       } else {
         results.clear();
       }
     } on PlatformException catch (e) {
       debugPrint("Failed to run model: ${e.message}");
     } finally {
-      isModelRunning.value = false;
+      isModelRunning(false);
     }
   }
 
   List<Uint8List> preprocessImage(CameraImage image) {
-    List<double> normalizedImage = normalizeImage(image);
-    List<Uint8List> reshapedImage = reshapeImage(normalizedImage);
-    return reshapedImage;
-  }
+    // Prepare input buffer for the model
+    var input = Float32List(320 * 320 * 3);
+    int pixelIndex = 0;
 
-  List<double> normalizeImage(CameraImage image) {
-    List<double> normalized = [];
     final int width = image.width;
     final int height = image.height;
 
-    // Accessing Y-plane (luminance) only for grayscale conversion
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int pixel = image.planes[0].bytes[y * width + x];
-        double grayscale = pixel / 255.0; // Normalize to [0, 1]
-        normalized.add(grayscale);
+    // Convert YUV420 image to RGB888 and normalize
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        int pixel = _getYUV420Pixel(image, j, i);
+        input[pixelIndex++] = ((pixel >> 16 & 0xFF) - 127.5) / 127.5;
+        input[pixelIndex++] = ((pixel >> 8 & 0xFF) - 127.5) / 127.5;
+        input[pixelIndex++] = ((pixel & 0xFF) - 127.5) / 127.5;
       }
     }
-    return normalized;
+
+    return [input.buffer.asUint8List()];
   }
 
-  List<Uint8List> reshapeImage(List<double> image) {
-    Float32List floatList = Float32List.fromList(image);
-    return [floatList.buffer.asUint8List()];
+  int _getYUV420Pixel(CameraImage image, int x, int y) {
+    final int uvIndex = image.width * (y ~/ 2) + (x ~/ 2) * 2;
+    final int yp = image.planes[0].bytes[y * image.width + x];
+    final int up = image.planes[1].bytes[uvIndex];
+    final int vp = image.planes[2].bytes[uvIndex];
+    return _convertYUV2RGB(yp, up, vp);
+  }
+
+  int _convertYUV2RGB(int yp, int up, int vp) {
+    int r = ((yp + vp * 1436 / 1024 - 179).clamp(0, 255)).toInt();
+    int g = ((yp - up * 46549 / 131072 + 44 - vp * 93604 / 131072 + 91).clamp(0, 255)).toInt();
+    int b = ((yp + up * 1814 / 1024 - 227).clamp(0, 255)).toInt();
+    return (r << 16) | (g << 8) | b;
   }
 }

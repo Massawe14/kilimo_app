@@ -86,25 +86,30 @@ class MaizeDetectorScreen extends StatelessWidget {
                 Obx(
                   () => Center(
                     child: controller.isLoading.value 
-                      ? SizedBox(
-                          width: 260,
-                          child: Padding(
-                            padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 150,
-                                  height: 150,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/icons/crop_image.png'),
-                                      fit: BoxFit.cover,
+                      ? (controller.image.value != null
+                        ? CircularProgressIndicator(
+                            color: darkMode ? TColors.white : TColors.black,
+                          )
+                        : SizedBox(
+                            width: 260,
+                            child: Padding(
+                              padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    height: 150,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/icons/crop_image.png'),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                          )
                         )
                       : SizedBox(
                           width: double.infinity, // Make the container take the full width
