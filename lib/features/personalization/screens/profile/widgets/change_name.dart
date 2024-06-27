@@ -26,7 +26,10 @@ class ChangeName extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: Text('Change Name', style: Theme.of(context).textTheme.headlineSmall),
+        title: Text(
+          'change_name'.tr, 
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,7 +40,7 @@ class ChangeName extends StatelessWidget {
               children: [
                 // Heading
                 Text(
-                  'Use real name for easy verification. This name will appear on several pages.',
+                  'change_name_heading'.tr,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
@@ -50,9 +53,9 @@ class ChangeName extends StatelessWidget {
                         controller: controller.firstName,
                         validator: (value) => TValidator.validateEmptyText('First Name', value),
                         expands: false,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: TTexts.firstname,
-                          prefixIcon: Icon(Iconsax.user),
+                          prefixIcon: const Icon(Iconsax.user),
                         ),
                       ),
                       const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -60,9 +63,9 @@ class ChangeName extends StatelessWidget {
                         controller: controller.lastName,
                         validator: (value) => TValidator.validateEmptyText('Last Name', value),
                         expands: false,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: TTexts.lastname,
-                          prefixIcon: Icon(Iconsax.user),
+                          prefixIcon: const Icon(Iconsax.user),
                         ),
                       ),
                     ],
@@ -75,7 +78,7 @@ class ChangeName extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => controller.updateUserName(),
-                    child: const Text('Save'),
+                    child: Text('save'.tr),
                   ),
                 ),
               ],

@@ -45,7 +45,7 @@ class DetectorContainer extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    'Crop Disease Detector',
+                    'crop_disease_detector'.tr,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
@@ -55,12 +55,12 @@ class DetectorContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Identify your crop's diseases in a\nfew seconds",
+                    "detector_title".tr,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
                   Text(
-                    'Quickly identify the exact problem\nwithin your crop.',
+                    'detector_sub_title'.tr,
                     style: Theme.of(context).textTheme.bodySmall
                   ),
                 ],
@@ -70,11 +70,11 @@ class DetectorContainer extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () => Get.to(() => const CameraViewScreen()),
-                  child: const Center(
+                  child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 25,
                           height: 25,
                           child: Image(
@@ -82,8 +82,8 @@ class DetectorContainer extends StatelessWidget {
                             color: TColors.white,
                           )
                         ),
-                        SizedBox(width: 5),
-                        Text('Start Diagnosis'),
+                        const SizedBox(width: 5),
+                        Text('start_diagnosis'.tr),
                       ],
                     ),
                   ),

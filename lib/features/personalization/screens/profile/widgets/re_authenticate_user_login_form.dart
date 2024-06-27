@@ -27,8 +27,8 @@ class ReAuthLoginForm extends StatelessWidget {
                 TextFormField(
                   controller: controller.verifyEmail,
                   validator: TValidator.validateEmail,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Iconsax.direct_right),
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Iconsax.direct_right),
                     labelText: TTexts.email,
                   ),
                 ),

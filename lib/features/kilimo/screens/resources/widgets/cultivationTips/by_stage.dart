@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../util/constants/sizes.dart';
@@ -29,19 +30,19 @@ class ByStage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: TSizes.spaceBtwSections),
-                      const Center(
-                        child: Text('Choose the date your sowing was done or planned.')
+                      Center(
+                        child: Text('by_stage_title'.tr),
                       ),
                       const SizedBox(height: TSizes.spaceBtwSections),
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
                           onPressed: () {},
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Icon(Iconsax.add),
-                              Text('Add sowing date to start'),
+                              const Icon(Iconsax.add),
+                              Text('add_sowing_date_to_start'.tr),
                             ],
                           ),
                         ),

@@ -38,7 +38,7 @@ class TPostList extends StatelessWidget {
     final darkMode = THelperFunctions.isDarkMode(context);
     return FutureBuilder<List<PostModal>>(
       future: getPosts(),
-      builder: (context, snapshot) {
+      builder: (context, AsyncSnapshot<List<PostModal>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SliverToBoxAdapter(
             child: Center(
@@ -51,14 +51,14 @@ class TPostList extends StatelessWidget {
           debugPrint('Error: ${snapshot.error}');
           return SliverToBoxAdapter(
             child: Center(
-              child: Text('Error: ${snapshot.error}'),
+              child: Text('error: ${snapshot.error}'.tr),
             ),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           debugPrint('No data: ${snapshot.data}');
-          return const SliverToBoxAdapter(
+          return SliverToBoxAdapter(
             child: Center(
-              child: Text('No community posts available')
+              child: Text('no_data'.tr)
             ),
           );
         } else {
@@ -74,6 +74,7 @@ class TPostList extends StatelessWidget {
                   child: TQuestionCard(
                     image: post.cropImage, // Assuming cropImage is the field name
                     username: post.userName,
+                    userId: post.userId,
                     location: post.userLocation,
                     crop: post.cropType,
                     date: post.date,

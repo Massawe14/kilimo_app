@@ -54,7 +54,7 @@ class CassavaDetectorScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Cassava Disease Detector'),
+        title: Text('cassava_disease_detector'.tr),
         actions: [
           IconButton(
             icon: const Icon(
@@ -121,22 +121,22 @@ class CassavaDetectorScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      'Result: ${controller.output[0]['label']}',
+                                      'result: ${controller.output[0]['label']}'.tr,
                                       style: const TextStyle(color: Color.fromARGB(255, 157, 73, 73), fontSize: 20),
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                     Text(
-                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
+                                      'accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
                                       style: const TextStyle(color: TColors.black, fontSize: 20),
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                   ],
                                 )
                               else if (!controller.isLoading.value) // Show 'can't identify' only after loading is done
-                                const Center(
+                                Center(
                                   child: Text(
-                                    "Can't identify", 
-                                    style: TextStyle(fontSize: 30),
+                                    "can't_identify".tr, 
+                                    style: const TextStyle(fontSize: 30),
                                   )
                                 ),
                             ],
@@ -156,9 +156,9 @@ class CassavaDetectorScreen extends StatelessWidget {
                     onPressed: () {
                       captureImage(ImageSource.camera);
                     },
-                    child: const Text(
-                      'Take A Photo',
-                      style: TextStyle(
+                    child: Text(
+                      'take_a_photo'.tr,
+                      style: const TextStyle(
                         color: TColors.white,
                       ),
                     ),
@@ -176,9 +176,9 @@ class CassavaDetectorScreen extends StatelessWidget {
                     onPressed: () {
                       captureImage(ImageSource.gallery);
                     },
-                    child: const Text(
-                      'Pick from Gallery',
-                      style: TextStyle(
+                    child: Text(
+                      'pick_from_gallery'.tr,
+                      style: const TextStyle(
                         color: TColors.white,
                       ),
                     ),

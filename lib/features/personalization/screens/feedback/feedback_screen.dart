@@ -24,7 +24,7 @@ class FeedBackScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('FeedBack'),
+        title: Text('feedback'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -35,7 +35,7 @@ class FeedBackScreen extends StatelessWidget {
               children: [
                 // Heading
                 Text(
-                  'We will appreciate to receive your feedback for our App improvements.',
+                  'feedback_heading'.tr,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
@@ -48,10 +48,10 @@ class FeedBackScreen extends StatelessWidget {
                         controller: controller.feedback,
                         validator: (value) => TValidator.validateEmptyText('FeedBack', value),
                         expands: false,
-                        decoration: const InputDecoration(
-                          labelText: 'FeedBack',
+                        decoration: InputDecoration(
+                          labelText: 'feedback'.tr,
                           hintText: 'Write your feedback...',
-                          prefixIcon: Icon(Iconsax.message_question),
+                          prefixIcon: const Icon(Iconsax.message_question),
                         ),
                       ),
                     ],
@@ -63,7 +63,7 @@ class FeedBackScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => controller.sendFeedback(),
-                    child: const Text('Send'),
+                    child: Text('send'.tr),
                   ),
                 ),
               ],

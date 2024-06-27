@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../common/widgets/image_text_widget/vertical_image_text.dart';
 import '../../../../../util/constants/image_strings.dart';
@@ -19,22 +20,22 @@ class CropCategories extends StatelessWidget {
             children: [
               TVerticalImageText(
                 image: TImages.beanCategory,
-                title: 'Beans',
+                title: 'beans'.tr,
                 onTap: () {},
               ),
               TVerticalImageText(
                 image: TImages.maizeCategory,
-                title: 'Maize',
+                title: 'maize'.tr,
                 onTap: () {},
               ),
               TVerticalImageText(
                 image: TImages.cassavaCategory,
-                title: 'Cassava',
+                title: 'cassava'.tr,
                 onTap: () {},
               ),
               TVerticalImageText(
                 image: TImages.riceCategory,
-                title: 'Rice',
+                title: 'rice'.tr,
                 onTap: () {},
               ),
             ],

@@ -28,7 +28,7 @@ class FertilizerCalculatorScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Fertilizer Calculator'),
+        title: Text('fertilizer_calculator'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -53,7 +53,7 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                           Obx(
                             () => Text(
                               controller.selectedCrop.value.isEmpty
-                                ? 'Select Crop'
+                                ? 'select_crop'.tr
                                 : controller.selectedCrop.value,
                               style: Theme.of(context).textTheme.labelMedium,
                             ),

@@ -32,9 +32,9 @@ class ForgotPassword extends StatelessWidget {
                 child: TextFormField(
                   controller: controller.email,
                   validator: TValidator.validateEmail,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: TTexts.email,
-                    prefixIcon: Icon(Iconsax.direct_right),
+                    prefixIcon: const Icon(Iconsax.direct_right),
                   ),
                 ),
               ),
@@ -44,7 +44,7 @@ class ForgotPassword extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () => controller.sendPasswordResetEmail(), 
-                  child: const Text(TTexts.submit),
+                  child: Text(TTexts.submit),
                 ),
               ),
             ],

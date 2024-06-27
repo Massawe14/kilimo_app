@@ -27,7 +27,7 @@ class CultivationTipsScreen extends StatelessWidget {
               color: darkMode ? TColors.white : TColors.black,
             ),
           ),
-          title: const Text('Cultivation Tips'),
+          title: Text('cultivation_tips'.tr),
         ),
         body: SafeArea(
           child: NestedScrollView(
@@ -54,7 +54,7 @@ class CultivationTipsScreen extends StatelessWidget {
                               children: [
                                 // Heading
                                 Text(
-                                  'See relavant information on', 
+                                  'see_relavant_information_on'.tr, 
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 OutlinedButton(
@@ -64,7 +64,7 @@ class CultivationTipsScreen extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Text(
-                                        'Select crop',
+                                        'select_crop'.tr,
                                         style: Theme.of(context).textTheme.labelMedium,
                                       ),
                                       const Icon(Iconsax.arrow_down_1, size: 16),
@@ -86,10 +86,10 @@ class CultivationTipsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  bottom: const TTabBar(
+                  bottom: TTabBar(
                     tabs: [
-                      Tab(child: Text('By Task')),
-                      Tab(child: Text('By Stage')),
+                      Tab(child: Text('by_task'.tr)),
+                      Tab(child: Text('by_stage'.tr)),
                     ],
                   ),
                 ),

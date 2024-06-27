@@ -7,11 +7,13 @@ import 'package:kilimo_app/features/personalization/models/user_modal.dart';
 import 'package:kilimo_app/util/popups/loaders.dart';
 
 import '../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../data/repositories/post/post_repository.dart';
 import '../../../util/constants/image_strings.dart';
 import '../../../util/constants/sizes.dart';
 import '../../../util/helpers/network_manager.dart';
 import '../../../util/popups/full_screen_loader.dart';
 import '../../authentication/screens/login/login.dart';
+import '../../kilimo/models/community/post_modal.dart';
 import '../screens/profile/widgets/re_authenticate_user_login_form.dart';
 
 class UserController extends GetxController {
@@ -19,12 +21,15 @@ class UserController extends GetxController {
   
   final profileLoading = false.obs;
   Rx<UserModal> user = UserModal.empty().obs;
+  final Rx<UserModal> fetchedUser = UserModal.empty().obs;
+  final RxList<PostModal> userPosts = <PostModal>[].obs;
 
   final hidePassword = false.obs;
   final imageUploading = false.obs;
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
   final userRepository = Get.put(UserRepository());
+  final postRepository = Get.put(PostRepository());
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
   @override
@@ -41,6 +46,21 @@ class UserController extends GetxController {
       this.user(user);
     } catch (e) {
       user(UserModal.empty());
+    } finally {
+      profileLoading.value = false;
+    }
+  }
+
+  // Fetch user record by ID
+  Future<void> fetchUserRecordById(String userId) async {
+    try {
+      profileLoading.value = true;
+      final userData = await userRepository.fetchUserDetailsById(userId);
+      fetchedUser.value = userData;
+      final postsData = await postRepository.fetchPostsByUserId(userId);
+      userPosts.value = postsData.docs.map((doc) => PostModal.fromSnapshot(doc)).toList();
+    } catch (e) {
+      fetchedUser.value = UserModal.empty();
     } finally {
       profileLoading.value = false;
     }

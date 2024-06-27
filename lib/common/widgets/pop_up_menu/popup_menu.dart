@@ -10,43 +10,43 @@ showPopupMenu(BuildContext context) {
     context: context,
     position: const RelativeRect.fromLTRB(50, 50, 0, 0),
     items: [
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 'help',
         child: Row(
           children: [
-            Icon(Icons.help),
-            SizedBox(width: 8),
-            Text('Help'),
+            const Icon(Icons.help),
+            const SizedBox(width: 8),
+            Text('help'.tr),
           ],
         ),
       ),
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 'share',
         child: Row(
           children: [
-            Icon(Icons.share),
-            SizedBox(width: 8),
-            Text('Share'),
+            const Icon(Icons.share),
+            const SizedBox(width: 8),
+            Text('share'.tr),
           ],
         ),
       ),
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 'history',
         child: Row(
           children: [
-            Icon(Icons.history),
-            SizedBox(width: 8),
-            Text('History'),
+            const Icon(Icons.history),
+            const SizedBox(width: 8),
+            Text('history'.tr),
           ],
         ),
       ),
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 'aboutUs',
         child: Row(
           children: [
-            Icon(Iconsax.info_circle),
-            SizedBox(width: 8),
-            Text('About Us'),
+            const Icon(Iconsax.info_circle),
+            const SizedBox(width: 8),
+            Text('about_us'.tr),
           ],
         ),
       ),

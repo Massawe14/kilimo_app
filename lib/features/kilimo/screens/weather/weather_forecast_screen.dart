@@ -24,7 +24,7 @@ class WeatherForecastScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Weather Forecast'),
+        title: Text('weather_forecast'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -68,7 +68,7 @@ class WeatherForecastScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: TSizes.spaceBtwItems),
                               Text(
-                                'Wind speed ${controller.weatherData.value.windSpeed} m/s',
+                                'wind_speed ${controller.weatherData.value.windSpeed} m/s'.tr,
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),
                             ],
@@ -116,7 +116,7 @@ class WeatherForecastScreen extends StatelessWidget {
                 const Divider(color: TColors.grey),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Text(
-                  'Next 4 days',
+                  'next_4_days'.tr,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -153,7 +153,7 @@ class WeatherForecastScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 Text(
-                  'Pro-tip',
+                  'pro-tip'.tr,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -171,17 +171,17 @@ class WeatherForecastScreen extends StatelessWidget {
 
   String getWeatherAdvice(String weatherDescription) {
     if (['light rain', 'rain', 'shower rain', 'heavy rain'].contains(weatherDescription.toLowerCase())) {
-      return 'Today would be a bad day for: APPLYING PESTICIDES';
+      return 'bad_day'.tr;
     } else {
-      return 'Today would be a good day for: APPLYING PESTICIDES';
+      return 'good_day'.tr;
     }
   }
 
   String getWeatherAdviceFromNextFourDays(String weatherDescription) {
     if (['light rain', 'rain', 'shower rain', 'heavy rain'].contains(weatherDescription.toLowerCase())) {
-      return 'Raining until tomorrow';
+      return 'raining_until_tomorrow'.tr;
     } else {
-      return 'No rain is forcast this week';
+      return 'no_rain_is_forcast_this_week'.tr;
     }
   }
 }

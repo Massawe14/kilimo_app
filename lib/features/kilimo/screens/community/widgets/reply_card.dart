@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../util/constants/image_strings.dart';
@@ -28,13 +29,13 @@ class TReplyCard extends StatelessWidget {
           );
         }
         if (snapshot.hasError) {
-          return const Center(
-            child: Text('Something went wrong'),
+          return Center(
+            child: Text('something_went_wrong'.tr),
           );
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(
-            child: Text('No replies found'),
+          return Center(
+            child: Text('no_replies_found'.tr),
           );
         }
     

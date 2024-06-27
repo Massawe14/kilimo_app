@@ -67,7 +67,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => controller.checkEmailVerificationStatus(), 
-                    child: const Text(TTexts.tContinue),
+                    child: Text(TTexts.tContinue),
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -75,7 +75,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   width: double.infinity,
                   child: TextButton(
                     onPressed: () => controller.sendEmailVerification(), 
-                    child: const Text(TTexts.resendEmail),
+                    child: Text(TTexts.resendEmail),
                   ),
                 ),
               ],

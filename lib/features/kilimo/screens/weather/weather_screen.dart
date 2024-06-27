@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
 
@@ -95,7 +96,7 @@ class WeatherScreenState extends State<WeatherScreen> {
                   color: darkMode ? TColors.white : TColors.black,
                 );
               } else if (snapshot.hasError) {
-                return const Text('Network problem');
+                return Text('network_problem'.tr);
               } else {
                 Weather weather = snapshot.data!;
                 return _buildWeatherCard(weather);

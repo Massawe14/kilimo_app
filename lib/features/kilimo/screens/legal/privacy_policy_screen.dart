@@ -23,7 +23,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text("Privacy Policy"),
+        title: Text("privacy_policy".tr),
       ),
       body: SafeArea(
         child: FutureBuilder(

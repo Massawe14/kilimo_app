@@ -16,6 +16,7 @@ class TQuestionCard extends StatelessWidget {
     super.key,
     required this.image,
     required this.username,
+    required this.userId,
     required this.location,
     required this.crop,
     required this.title,
@@ -23,7 +24,7 @@ class TQuestionCard extends StatelessWidget {
     required this.date,
   });
 
-  final String image, username, location, crop;
+  final String image, username, userId, location, crop;
   final String title;
   final String description;
   final DateTime date;
@@ -31,6 +32,7 @@ class TQuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UserController());
+    controller.fetchUserRecordById(userId); // Call function here
     return Container(
       width: 350,
       decoration: BoxDecoration(
@@ -68,7 +70,8 @@ class TQuestionCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(left: 10),
                   child: Obx(() {
-                    final networkImage = controller.user.value.profilePicture;
+                    final user = controller.fetchedUser.value;
+                    final networkImage = user.profilePicture;
                     final image = networkImage.isNotEmpty ? networkImage : TImages.profileImage;
                     return controller.imageUploading.value
                       ? const TShimmerEffect(

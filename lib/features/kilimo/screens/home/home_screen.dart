@@ -58,22 +58,22 @@ class HomeScreen extends StatelessWidget {
                   },
                   child: const WeatherScreen()
                 ),
-                const THomeCard(
+                THomeCard(
                   image: 'assets/images/crops/maize.jpeg',
                   title: TTexts.maizeCropTitle,
                   subtitle: TTexts.maizeCropDescription,
                 ),
-                const THomeCard(
+                THomeCard(
                   image: 'assets/images/crops/beans.jpeg',
                   title: TTexts.beansCropTitle,
                   subtitle: TTexts.beansCropDescription,
                 ),
-                const THomeCard(
+                THomeCard(
                   image: 'assets/images/crops/rice.jpeg',
                   title: TTexts.riceCropTitle,
                   subtitle: TTexts.riceCropDescription,
                 ),
-                const THomeCard(
+                THomeCard(
                   image: 'assets/images/crops/cassava.jpeg',
                   title: TTexts.cassavaCropTitle,
                   subtitle: TTexts.cassavaCropDescription,
