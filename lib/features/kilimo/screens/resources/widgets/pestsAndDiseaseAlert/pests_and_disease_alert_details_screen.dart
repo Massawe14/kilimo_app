@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../../util/constants/colors.dart';
 import '../../../../../../util/constants/sizes.dart';
+import '../../../../../../util/helpers/helper_functions.dart';
 import '../../../detector/camera_view_screen.dart';
 import 'pests_and_disease_alert_details_appbar.dart';
 
@@ -10,6 +11,7 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -22,39 +24,40 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 4.0),
                   Text(
-                    'Field Monitoring',
+                    'field_monitoring'.tr,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    'Field monitoring is the most effective practice to detect plant diseases at an early stage. Detecting diseases earlier will give you enough time to prevent them from spreading and further harming your crops.',
+                    'field_monitoring_description'.tr,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   Text(
-                    "Why is monitoring important?",
+                    "why_monitoring".tr,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
                   Text(
-                    "Monitoring your field regularly helps you:",
+                    "monitoring_field_help".tr,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 8.0),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 20,
                         height: 20,
                         child: Image(
-                          image: AssetImage('assets/icons/checked.png'),
+                          image: const AssetImage('assets/icons/checked.png'),
+                          color: darkMode ? TColors.accent : TColors.black,
                         ),
                       ),
                       const SizedBox(width: 5),
                       Expanded(
                         child: Text(
-                          'Save money on expensive treatments',
+                          'help_1'.tr,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
@@ -64,17 +67,18 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 20,
                         height: 20,
                         child: Image(
-                          image: AssetImage('assets/icons/checked.png'),
+                          image: const AssetImage('assets/icons/checked.png'),
+                          color: darkMode ? TColors.accent : TColors.black,
                         ),
                       ),
                       const SizedBox(width: 5),
                       Expanded(
                         child: Text(
-                          'Minimize yield loss',
+                          'help_2'.tr,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
@@ -86,17 +90,18 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           width: 20,
                           height: 20,
                           child: Image(
-                            image: AssetImage('assets/icons/info.png'),
+                            image: const AssetImage('assets/icons/info.png'),
+                            color: darkMode ? TColors.accent : TColors.black,
                           ),
                         ),
                         const SizedBox(width: 5),
                         Expanded(
                           child: Text(
-                            'Farmers who regularly monitor their field achieve up to 50% higher yields.',
+                            'info'.tr,
                             style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -108,7 +113,7 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   Text(
-                    "How to monitor your field:",
+                    "how_to_monitor".tr,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
@@ -119,11 +124,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
+                            SizedBox(
                               width: 25,
                               height: 25,
                               child: Image(
-                                image: AssetImage('assets/icons/number-1.png'),
+                                image: const AssetImage('assets/icons/number-1.png'),
+                                color: darkMode ? TColors.accent : TColors.black,
                               ),
                             ),
                             const SizedBox(width: 5),
@@ -131,12 +137,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Visit your field",
+                                  "visit_your_field".tr,
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 const SizedBox(height: TSizes.spaceBtwItems),
                                 Text(
-                                  "We recommend doing this at least\ntwo times per week.",
+                                  "how_1".tr,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -147,11 +153,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
+                            SizedBox(
                               width: 25,
                               height: 25,
                               child: Image(
-                                image: AssetImage('assets/icons/number-2.png'),
+                                image: const AssetImage('assets/icons/number-2.png'),
+                                color: darkMode ? TColors.accent : TColors.black,
                               ),
                             ),
                             const SizedBox(width: 5),
@@ -159,12 +166,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Check several spots",
+                                  "check_several_spots".tr,
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 const SizedBox(height: TSizes.spaceBtwItems),
                                 Text(
-                                  "Make sure to check at least 5\ndifferent parts of your field, as the\nillustration shows below.",
+                                  "how_2".tr,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -175,11 +182,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
+                            SizedBox(
                               width: 25,
                               height: 25,
                               child: Image(
-                                image: AssetImage('assets/icons/number-3.png'),
+                                image: const AssetImage('assets/icons/number-3.png'),
+                                color: darkMode ? TColors.accent : TColors.black,
                               ),
                             ),
                             const SizedBox(width: 5),
@@ -187,12 +195,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Look for unusual patterns and\nactivities in each of these spots",
+                                  "step_3".tr,
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 const SizedBox(height: TSizes.spaceBtwItems),
                                 Text(
-                                  "Pay attention to discolouration,\ndeformation, feeding damages, and\nother insect activities.",
+                                  "how_3".tr,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -203,11 +211,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
+                            SizedBox(
                               width: 25,
                               height: 25,
                               child: Image(
-                                image: AssetImage('assets/icons/number-4.png'),
+                                image: const AssetImage('assets/icons/number-4.png'),
+                                color: darkMode ? TColors.accent : TColors.black,
                               ),
                             ),
                             const SizedBox(width: 5),
@@ -215,12 +224,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Carefully examine the entire crop",
+                                  "carefully_examine_the_entire_crop".tr,
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 const SizedBox(height: TSizes.spaceBtwItems),
                                 Text(
-                                  "Don't forget to check the leaves\nfrom both sides, the stems, buds,\nfruits, and shoots.",
+                                  "how_4".tr,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -232,12 +241,12 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   Text(
-                    "Take action if you spot something",
+                    "take_action_if_you_spot_something".tr,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   Text(
-                    "When you find signs of an infestation, make sure to use our crop diagnosis feature to identify the disease and treat it efficiently.",
+                    "take_action_subtitle".tr,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
@@ -245,11 +254,11 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () => Get.to(() => const CameraViewScreen()),
-                      child: const Center(
+                      child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 25,
                               height: 25,
                               child: Image(
@@ -257,8 +266,8 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                                 color: TColors.white,
                               )
                             ),
-                            SizedBox(width: 5),
-                            Text('Start Diagnosis'),
+                            const SizedBox(width: 5),
+                            Text('start_diagnosis'.tr),
                           ],
                         ),
                       ),
@@ -266,7 +275,7 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   Text(
-                    'For addition support, reach out to the Kilimo App Community or consult your trusted local advisor.',
+                    'addition_description'.tr,
                     style: Theme.of(context)
                       .textTheme
                       .bodySmall!

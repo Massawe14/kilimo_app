@@ -41,7 +41,7 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                   children: [
                     // Heading
                     Text(
-                      'See relavant information on', 
+                      'see_relevant_information_on'.tr, 
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     OutlinedButton(
@@ -65,7 +65,7 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Nutrient quantities', showActionButton: false),
+                TSectionHeading(title: 'nutrient_quantities'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -75,8 +75,8 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         controller: controller.nitrogenController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nitrogen (N) in kg/ha',
+                        decoration: InputDecoration(
+                          labelText: 'nitrogen'.tr,
                         ),
                         keyboardType: TextInputType.number,
                       ),
@@ -87,8 +87,8 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         controller: controller.phosphorusController,
-                        decoration: const InputDecoration(
-                          labelText: 'Phosphorus (P) in kg/ha',
+                        decoration: InputDecoration(
+                          labelText: 'phosphorus'.tr,
                         ),
                         keyboardType: TextInputType.number,
                       ),
@@ -99,8 +99,8 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         controller: controller.potassiumController,
-                        decoration: const InputDecoration(
-                          labelText: 'Potassium (K) in kg/ha',
+                        decoration: InputDecoration(
+                          labelText: 'potassium'.tr,
                         ),
                         keyboardType: TextInputType.number,
                       ),
@@ -108,13 +108,13 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Plot size', showActionButton: false),
+                TSectionHeading(title: 'plot_size'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Sizes smaller than one unit are expressed as 0.\nExample: half acre = 0.5', 
+                      'fertilizer_subtitle'.tr, 
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -122,8 +122,8 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                 const SizedBox(height: TSizes.spaceBtwSections),
                 TextField(
                   controller: controller.plotSizeController,
-                  decoration: const InputDecoration(
-                    labelText: 'Plot Size (hectares)',
+                  decoration: InputDecoration(
+                    labelText: 'plot_size_label'.tr,
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -132,7 +132,7 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: controller.calculateFertilizer, // Call the calculate method  
-                    child: const Text('Calculate'),
+                    child: Text('calculate'.tr),
                   ),
                 ),
                 // Output display area
@@ -146,7 +146,7 @@ class FertilizerCalculatorScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => Get.to(() => const CalculationsHistoryScreen()),
-                    child: const Text('View History'),
+                    child: Text('view_history'.tr),
                   ),
                 ),
               ],

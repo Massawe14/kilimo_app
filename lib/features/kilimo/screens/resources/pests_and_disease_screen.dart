@@ -25,7 +25,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Pests & diseases'),
+        title: Text('pest_and_diseases'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -38,7 +38,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   children: [
                     // Heading
                     Text(
-                      'See relavant information on', 
+                      'see_relavant_information_on'.tr, 
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     OutlinedButton(
@@ -48,7 +48,7 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            'Select crop',
+                            'select_crop'.tr,
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                           const Icon(Iconsax.arrow_down_1, size: 16),
@@ -58,19 +58,19 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Disease By Stage', showActionButton: false),
+                TSectionHeading(title: 'disease_by_stage'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'All pests and diseases that might appear in\nyour crop at different stages', 
+                      'disease_subtitle'.tr, 
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Seeding Stage', showActionButton: false),
+                TSectionHeading(title: 'seeding_stage'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 const TPestsAndDiseasesList(),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -78,13 +78,13 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {}, 
-                    child: const Center(
-                      child: Text('See More'),
+                    child: Center(
+                      child: Text('see_more'.tr),
                     ),
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Vegetative Stage', showActionButton: false),
+                TSectionHeading(title: 'vegetative_stage'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 const TPestsAndDiseasesList(),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -92,13 +92,13 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {}, 
-                    child: const Center(
-                      child: Text('See More'),
+                    child: Center(
+                      child: Text('see_more'.tr),
                     ),
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Flowering Stage', showActionButton: false),
+                TSectionHeading(title: 'flowering_stage'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 const TPestsAndDiseasesList(),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -106,13 +106,13 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {}, 
-                    child: const Center(
-                      child: Text('See More'),
+                    child: Center(
+                      child: Text('see_more'.tr),
                     ),
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Fruiting Stage', showActionButton: false),
+                TSectionHeading(title: 'fruiting_stage'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 const TPestsAndDiseasesList(),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -120,13 +120,13 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {}, 
-                    child: const Center(
-                      child: Text('See More'),
+                    child: Center(
+                      child: Text('see_more'.tr),
                     ),
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Harvesting Stage', showActionButton: false),
+                TSectionHeading(title: 'harvesting_stage'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 const TPestsAndDiseasesList(),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -134,8 +134,8 @@ class PestsAndDiseasesScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {}, 
-                    child: const Center(
-                      child: Text('See More'),
+                    child: Center(
+                      child: Text('see_more'.tr),
                     ),
                   ),
                 ),

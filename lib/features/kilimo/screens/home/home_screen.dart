@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 import 'package:kilimo_app/util/constants/text_strings.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          TTexts.appName,
+          TTexts.appName.tr,
           style: TextStyle(
             color: darkMode ? TColors.white : TColors.black,
           ),
@@ -60,23 +61,23 @@ class HomeScreen extends StatelessWidget {
                 ),
                 THomeCard(
                   image: 'assets/images/crops/maize.jpeg',
-                  title: TTexts.maizeCropTitle,
-                  subtitle: TTexts.maizeCropDescription,
+                  title: TTexts.maizeCropTitle.tr,
+                  subtitle: TTexts.maizeCropDescription.tr,
                 ),
                 THomeCard(
                   image: 'assets/images/crops/beans.jpeg',
-                  title: TTexts.beansCropTitle,
-                  subtitle: TTexts.beansCropDescription,
+                  title: TTexts.beansCropTitle.tr,
+                  subtitle: TTexts.beansCropDescription.tr,
                 ),
                 THomeCard(
                   image: 'assets/images/crops/rice.jpeg',
-                  title: TTexts.riceCropTitle,
-                  subtitle: TTexts.riceCropDescription,
+                  title: TTexts.riceCropTitle.tr,
+                  subtitle: TTexts.riceCropDescription.tr,
                 ),
                 THomeCard(
                   image: 'assets/images/crops/cassava.jpeg',
-                  title: TTexts.cassavaCropTitle,
-                  subtitle: TTexts.cassavaCropDescription,
+                  title: TTexts.cassavaCropTitle.tr,
+                  subtitle: TTexts.cassavaCropDescription.tr,
                 ),
               ],
             ),

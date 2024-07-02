@@ -68,7 +68,7 @@ class WeatherForecastScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: TSizes.spaceBtwItems),
                               Text(
-                                'wind_speed ${controller.weatherData.value.windSpeed} m/s'.tr,
+                                'Wind speed ${controller.weatherData.value.windSpeed} m/s'.tr,
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),
                             ],
@@ -181,7 +181,7 @@ class WeatherForecastScreen extends StatelessWidget {
     if (['light rain', 'rain', 'shower rain', 'heavy rain'].contains(weatherDescription.toLowerCase())) {
       return 'raining_until_tomorrow'.tr;
     } else {
-      return 'no_rain_is_forcast_this_week'.tr;
+      return 'no_rain_is_forecast_this_week'.tr;
     }
   }
 }

@@ -129,6 +129,7 @@ flutter:
     - assets/images/categories/
     - assets/images/profile/
     - assets/images/weather/
+    - assets/images/camera/
     - assets/icons/
     - assets/logos/
     - assets/language/

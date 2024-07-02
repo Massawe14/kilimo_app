@@ -37,6 +37,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -63,11 +68,6 @@ android {
         release {
             signingConfig signingConfigs.debug
         }
-    }
-
-    aaptOptions {
-        noCompress 'tflite'
-        noCompress 'lite'
     }
 }
 

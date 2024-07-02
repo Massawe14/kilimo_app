@@ -1,4 +1,4 @@
-Cercospora leaf spot Gray leaf spot
-Common rust
-Northern leaf blight
-healthy
+Blight
+Common_Rust
+Gray_Leaf_Spot
+Healthy

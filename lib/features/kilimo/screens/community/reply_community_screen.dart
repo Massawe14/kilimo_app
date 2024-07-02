@@ -182,8 +182,8 @@ class ReplyCommunityScreen extends StatelessWidget {
           expands: false,
           controller: postController.replyController,
           decoration: InputDecoration(
-            hintText: 'Reply...',
-            labelText: 'Write your reply',
+            hintText: 'reply_hint'.tr,
+            labelText: 'reply_label'.tr,
             prefixIcon: IconButton(
               icon: const Icon(Iconsax.attach_circle),
               onPressed: () {},

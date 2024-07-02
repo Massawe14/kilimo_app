@@ -1,46 +1,47 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../util/constants/colors.dart';
-
 class BoundingBoxPainter extends CustomPainter {
-  final List<dynamic> results;
+  final List<dynamic> recognitions;
+  final double imageWidth;
+  final double imageHeight;
 
-  BoundingBoxPainter(this.results);
+  BoundingBoxPainter(this.recognitions, this.imageWidth, this.imageHeight);
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (recognitions.isEmpty) return;
+
     final paint = Paint()
-      ..color = TColors.error
+      ..color = Colors.red
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    for (var result in results) {
-      final rect = Rect.fromLTWH(
-        result["rect"]["x"] * size.width,
-        result["rect"]["y"] * size.height,
-        result["rect"]["w"] * size.width,
-        result["rect"]["h"] * size.height,
+    for (var recognition in recognitions) {
+      Rect rect = recognition['rect'];
+      canvas.drawRect(
+        Rect.fromLTRB(
+          rect.left,
+          rect.top,
+          rect.right,
+          rect.bottom,
+        ),
+        paint,
       );
 
-      canvas.drawRect(rect, paint);
-
-      final textPainter = TextPainter(
-        text: TextSpan(
-          text: "${result["detectedClass"]} ${(result["confidenceInClass"] * 100).toStringAsFixed(0)}%",
-          style: const TextStyle(
-            color: TColors.error,
-            fontSize: 14,
-          ),
+      TextSpan span = TextSpan(
+        style: const TextStyle(
+          color: Colors.red,
+          fontSize: 12.0,
         ),
+        text: '${recognition['label']} ${(recognition['score'] * 100).toStringAsFixed(2)}%',
+      );
+      TextPainter tp = TextPainter(
+        text: span,
+        textAlign: TextAlign.left,
         textDirection: TextDirection.ltr,
       );
-
-      textPainter.layout(
-        minWidth: 0,
-        maxWidth: size.width,
-      );
-
-      textPainter.paint(canvas, Offset(rect.left, rect.top));
+      tp.layout();
+      tp.paint(canvas, Offset(rect.left, rect.top));
     }
   }
 

@@ -23,7 +23,7 @@ class PestsAndDiseaseAlert extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Pests and Disease Alert'),
+        title: Text('pest_and_disease_alert'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -33,7 +33,7 @@ class PestsAndDiseaseAlert extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Currently, there are no pests or diseases reported in your vicinity.',
+                  'pest_and_disease_alert_subtitle'.tr,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Center(
@@ -63,16 +63,16 @@ class PestsAndDiseaseAlert extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      'Prevention Tip',
+                      'prevention_tips'.tr,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                const TSectionHeading(title: 'Field Monitoring', showActionButton: false),
+                TSectionHeading(title: 'field_monitoring'.tr, showActionButton: false),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Text(
-                  'Catch early and prevent the build-up of fatal pests in your field.',
+                  'field_monitoring_subtitle'.tr,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -93,8 +93,8 @@ class PestsAndDiseaseAlert extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => Get.to(const PestsAndDiseaseAlertDetailsScreen()), 
-                    child: const Center(
-                      child: Text('Learn More'),
+                    child: Center(
+                      child: Text('learn_more'.tr),
                     ),
                   ),
                 ),

@@ -7,7 +7,7 @@ class TTexts {
   static String skip = "skip".tr;
   static String done = "done".tr;
   static String submit = "submit".tr;
-  static String appName = "kilimo_app".tr;
+  static String appName = "kilimo_app";
   static String tContinue = "continue".tr;
   static const String tEditProfile = "Edit Profile";
   static const String tJoined = "Joined ";
@@ -15,16 +15,16 @@ class TTexts {
   static const String tDelete = "Delete";
 
   // Menu Texts
-  static String tMenu1 = "home".tr;
-  static String tMenu2 = "profile".tr;
+  static String tMenu1 = "home";
+  static String tMenu2 = "profile";
   static String tMenu3 = "change_language".tr;
   static String tMenu4 = "notifications".tr;
   static String tMenu5 = "message".tr;
-  static String tMenu6 = "settings".tr;
-  static String tMenu7 = "privacy_policy".tr;
-  static String tMenu8 = "terms_and_conditions".tr;
-  static String tMenu9 = "send_feedback".tr;
-  static String tMenu10 = "logout".tr;
+  static String tMenu6 = "settings";
+  static String tMenu7 = "privacy_policy";
+  static String tMenu8 = "terms_and_conditions";
+  static String tMenu9 = "send_feedback";
+  static String tMenu10 = "logout";
 
   // Profile Texts
   static const String accountSettings = "Account Settings";
@@ -80,15 +80,15 @@ class TTexts {
   static const String homeAppbarSubTitle = "Easy crop diseases detetction";
 
   // Crops Text
-  static String maizeCropTitle = "maize".tr;
-  static String maizeCropDescription = "maize_descriptions".tr;
+  static String maizeCropTitle = "maize";
+  static String maizeCropDescription = "maize_descriptions";
 
-  static String beansCropTitle = "beans".tr;
-  static String beansCropDescription = "beans_descriptions".tr;
+  static String beansCropTitle = "beans";
+  static String beansCropDescription = "beans_descriptions";
 
-  static String riceCropTitle = "rice".tr;
-  static String riceCropDescription = "rice_descriptions".tr;
+  static String riceCropTitle = "rice";
+  static String riceCropDescription = "rice_descriptions";
 
-  static String cassavaCropTitle = "cassava".tr;
-  static String cassavaCropDescription = "cassava_descriptions".tr;
+  static String cassavaCropTitle = "cassava";
+  static String cassavaCropDescription = "cassava_descriptions";
 }
