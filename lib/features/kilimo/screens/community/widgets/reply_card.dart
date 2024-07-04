@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../../../common/widgets/image_text_widget/t_circular_image.dart';
 import '../../../../../util/constants/image_strings.dart';
 import '../../../../../util/constants/sizes.dart';
 import '../../../controllers/community/post_community_controller.dart';
@@ -54,10 +55,11 @@ class TReplyCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      backgroundImage: reply.profileImage.isNotEmpty 
-                        ? NetworkImage(reply.profileImage) 
-                        : const AssetImage(TImages.profileImage) as ImageProvider,
+                    TCircularImage(
+                      image: reply.profileImage.isNotEmpty ? reply.profileImage : TImages.profileImage, 
+                      width: 56, 
+                      height: 56, 
+                      isNetworkImage: reply.profileImage.isNotEmpty,
                     ),
                     const SizedBox(width: 10),
                     Column(

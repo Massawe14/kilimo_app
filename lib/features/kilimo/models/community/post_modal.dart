@@ -9,6 +9,7 @@ class PostModal {
   final String cropImage;
   final String userId;
   final String userName;
+  final String profilePicture;
   final String userLocation;
   final DateTime date;
 
@@ -21,6 +22,7 @@ class PostModal {
     required this.cropImage,
     required this.userId,
     required this.userName,
+    required this.profilePicture,
     required this.userLocation,
     required this.date,
   });
@@ -34,6 +36,7 @@ class PostModal {
     cropImage: '',
     userId: '',
     userName: '',
+    profilePicture: '',
     userLocation: '',
     date: DateTime.now(),
   );
@@ -48,6 +51,7 @@ class PostModal {
       'CropImage': cropImage,
       'UserId': userId,
       'UserName': userName,
+      'ProfilePicture': profilePicture,
       'UserLocation': userLocation,
       'Date': date,
     };
@@ -71,6 +75,7 @@ class PostModal {
       cropImage: data['CropImage'] ?? '',
       userId: data['UserId'] ?? '',
       userName: data['UserName'] ?? '',
+      profilePicture: data['ProfilePicture'] ?? '',
       userLocation: data['UserLocation'] ?? '',
       // Parse date from Firestore Timestamp or use current time
       date: (data['Date'] as Timestamp?)?.toDate() ?? DateTime.now(),

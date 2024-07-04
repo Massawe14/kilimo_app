@@ -181,6 +181,7 @@ class PostCommunityController extends GetxController {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
 
       String userName = userDoc['UserName'];
+      String profilePicture = userDoc['ProfilePicture'];
 
       // Check if the image is uploaded
       if (imageFile.value == null) {
@@ -203,6 +204,7 @@ class PostCommunityController extends GetxController {
         cropImage: imageUrl,
         userId: userId,
         userName: userName,
+        profilePicture: profilePicture,
         userLocation: location.value,
         date: DateTime.now(),
       );

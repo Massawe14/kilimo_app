@@ -1,52 +1,40 @@
 import 'package:flutter/material.dart';
 
-class BoundingBoxPainter extends CustomPainter {
-  final List<dynamic> recognitions;
-  final double imageWidth;
-  final double imageHeight;
+class DetectionPainter extends CustomPainter {
+  final List detectionResults;
 
-  BoundingBoxPainter(this.recognitions, this.imageWidth, this.imageHeight);
+  DetectionPainter(this.detectionResults);
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (recognitions.isEmpty) return;
-
     final paint = Paint()
       ..color = Colors.red
-      ..strokeWidth = 2.0
+      ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
 
-    for (var recognition in recognitions) {
-      Rect rect = recognition['rect'];
-      canvas.drawRect(
-        Rect.fromLTRB(
-          rect.left,
-          rect.top,
-          rect.right,
-          rect.bottom,
-        ),
-        paint,
+    for (var result in detectionResults) {
+      final rect = Rect.fromLTWH(
+        result['x'],
+        result['y'],
+        result['width'],
+        result['height'],
       );
-
+      canvas.drawRect(rect, paint);
       TextSpan span = TextSpan(
-        style: const TextStyle(
-          color: Colors.red,
-          fontSize: 12.0,
-        ),
-        text: '${recognition['label']} ${(recognition['score'] * 100).toStringAsFixed(2)}%',
-      );
+        style: const TextStyle(color: Colors.white), 
+        text: '${result['class_name']} (${result['score'].toStringAsFixed(2)})');
       TextPainter tp = TextPainter(
-        text: span,
-        textAlign: TextAlign.left,
-        textDirection: TextDirection.ltr,
+        text: span, 
+        textAlign: TextAlign.left, 
+        textDirection: TextDirection.ltr
       );
       tp.layout();
-      tp.paint(canvas, Offset(rect.left, rect.top));
+      tp.paint(canvas, Offset(result['x'], result['y']));
     }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+  bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
 }

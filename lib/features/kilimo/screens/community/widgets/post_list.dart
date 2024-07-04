@@ -74,6 +74,7 @@ class TPostList extends StatelessWidget {
                   child: TQuestionCard(
                     image: post.cropImage, // Assuming cropImage is the field name
                     username: post.userName,
+                    profilePicture: post.profilePicture,
                     userId: post.userId,
                     location: post.userLocation,
                     crop: post.cropType,
