@@ -7,5 +7,5 @@ class APIConstants {
   static const String tMaizeAPIModel = "https://www.portal.ai4crophealth.or.tz/maize/predict/";
   static const String tRiceAPIModel = "https://www.portal.ai4crophealth.or.tz/rice/predict/";
   static const String tCassavaAPIModel = "https://www.portal.ai4crophealth.or.tz/cassava/predict/";
-  static const String tMaizeDetectionAPIURL = "https://www.portal.ai4crophealth.or.tz/maize/detect/";
+  static const String tMaizeDetectionAPIURL = "https://portal.ai4crophealth.or.tz/maize/detect/";
 }

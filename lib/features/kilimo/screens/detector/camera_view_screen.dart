@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/maize/mize_scan_controller.dart';
+import 'widgets/bounding_box_painter.dart';
 
 class CameraViewScreen extends StatelessWidget {
   const CameraViewScreen({super.key});
@@ -33,40 +34,16 @@ class CameraViewScreen extends StatelessWidget {
               ? Stack(
                   children: [
                     Center(
-                      child: CameraPreview(controller.cameraController)
+                      child: CameraPreview(controller.cameraController!),
                     ),
-                    if (controller.label.isNotEmpty)
-                      Positioned(
-                        left: controller.x * context.width,
-                        top: controller.y * context.height,
-                        width: controller.w * context.width,
-                        height: controller.h * context.height,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: TColors.accent, width: 2.0),
-                          ),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Container(
-                              color: TColors.accent.withOpacity(0.7),
-                              padding: const EdgeInsets.all(2.0),
-                              child: Text(
-                                controller.label,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    CustomPaint(
+                      painter: ObjectDetectionPainter(controller.detectedObjects),
+                    ),
                   ],
-                ) 
+                )
               : const Center(
-                  child: Text("Loading Preview..."),
-                );
+                child: Text("Loading Preview...."),
+              );
           }
         ),
       ),

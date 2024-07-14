@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../features/kilimo/screens/detector/camera_view_screen.dart';
+import '../../../features/kilimo/screens/detector/maize_camera_view_screen.dart';
 import '../../../util/constants/colors.dart';
 import '../../../util/constants/sizes.dart';
 
@@ -69,7 +69,7 @@ class DetectorContainer extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(() => const CameraViewScreen()),
+                  onPressed: () => Get.to(() => const MaizeCameraView()),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

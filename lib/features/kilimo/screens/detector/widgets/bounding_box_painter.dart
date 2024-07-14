@@ -1,40 +1,47 @@
 import 'package:flutter/material.dart';
 
-class DetectionPainter extends CustomPainter {
-  final List detectionResults;
+class ObjectDetectionPainter extends CustomPainter {
+  final List<dynamic> detectedObjects;
 
-  DetectionPainter(this.detectionResults);
+  ObjectDetectionPainter(this.detectedObjects);
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.red
-      ..strokeWidth = 3.0
-      ..style = PaintingStyle.stroke;
-
-    for (var result in detectionResults) {
-      final rect = Rect.fromLTWH(
-        result['x'],
-        result['y'],
-        result['width'],
-        result['height'],
+    for (var obj in detectedObjects) {
+      var rect = obj['rect'];
+      var paint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0
+        ..color = Colors.red;
+      canvas.drawRect(
+        Rect.fromLTWH(
+          rect['x'] * size.width,
+          rect['y'] * size.height,
+          rect['w'] * size.width,
+          rect['h'] * size.height,
+        ),
+        paint,
       );
-      canvas.drawRect(rect, paint);
-      TextSpan span = TextSpan(
-        style: const TextStyle(color: Colors.white), 
-        text: '${result['class_name']} (${result['score'].toStringAsFixed(2)})');
-      TextPainter tp = TextPainter(
-        text: span, 
-        textAlign: TextAlign.left, 
-        textDirection: TextDirection.ltr
+      var textPainter = TextPainter(
+        text: TextSpan(
+          text: '${obj['detectedClass']} ${(obj['confidenceInClass'] * 100).toStringAsFixed(0)}%',
+          style: const TextStyle(
+            color: Colors.red,
+            fontSize: 14.0,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
       );
-      tp.layout();
-      tp.paint(canvas, Offset(result['x'], result['y']));
+      textPainter.layout();
+      textPainter.paint(
+        canvas,
+        Offset(rect['x'] * size.width, rect['y'] * size.height - 20),
+      );
     }
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
 }

@@ -3,123 +3,89 @@ import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:tflite/tflite.dart';
 
 class MaizeScanController extends GetxController {
-  late CameraController cameraController;
-  late List<CameraDescription> cameras;
-
+  CameraController? cameraController;
+  RxBool isDetecting = false.obs;
   var isCameraInitialized = false.obs;
-  var cameraCount = 0;
-
-  var x = 0.0;
-  var y = 0.0;
-  var h = 0.0;
-  var w = 0.0;
-
-  var label = "";
-  var isProcessing = false.obs;
+  RxList<dynamic> detectedObjects = <dynamic>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    initCamera();
-    initTFliteModel();
+    initializeCamera();
+    loadModel();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    cameraController.dispose();
-    Tflite.close();
+  void initializeCamera() async {
+    final cameras = await availableCameras();
+    cameraController = CameraController(cameras[0], ResolutionPreset.medium);
+    await cameraController!.initialize();
+    cameraController!.startImageStream((image) {
+      if (!isDetecting.value) {
+        isDetecting.value = true;
+        runModelOnFrame(image);
+      }
+    });
+    isCameraInitialized(true);
+    update();
   }
 
-  initCamera() async {
-    if (await Permission.camera.request().isGranted) {
-      cameras = await availableCameras();
-
-      cameraController = CameraController(
-        cameras[0],
-        ResolutionPreset.medium,
-        imageFormatGroup: ImageFormatGroup.yuv420,
+  void loadModel() async {
+    try {
+      await Tflite.loadModel(
+        model: 'assets/models/quantized_maize_2.tflite',
+        labels: 'assets/models/labels.txt',
+        useGpuDelegate: false,
+        numThreads: 1,
+        isAsset: true,
       );
-      await cameraController.initialize().then((_) {
-        cameraController.startImageStream((image) {
-          if (cameraCount % 5 == 0) {
-            cameraCount = 0;
-            if (!isProcessing.value) {
-              isProcessing(true);
-              Future.delayed(const Duration(milliseconds: 100), () {
-                objectDetector(image);
-              });
-            }
-          }
-          cameraCount++;
-          update();
-        });
-      });
-      isCameraInitialized(true);
-      update();
-    } else {
-      debugPrint("Permission denied");
+    } catch (e) {
+      debugPrint('Error loading model: $e');
     }
   }
 
-  initTFliteModel() async {
-    await Tflite.loadModel(
-      model: "assets/models/maize_detection_model.tflite",
-      labels: "assets/models/labels.txt",
-      isAsset: true,
-      numThreads: 1,
-      useGpuDelegate: false,
-    );
-  }
-
-  objectDetector(CameraImage image) async {
+  void runModelOnFrame(CameraImage image) async {
     try {
-      // Convert the CameraImage to a Float32List
-      Float32List input = convertCameraImageToFloat32List(image, 256, 256);
+      // Preprocess camera image
+      Uint8List input = preprocessCameraImage(image, [1, 3, 320, 320]);
 
-      var detector = await Tflite.runModelOnFrame(
-        bytesList: [input.buffer.asUint8List()],
+      // Prepare input data as required by the model
+      var output = await Tflite.runModelOnBinary(
+        binary: input,
+        numResults: 2100,
+        threshold: 0.2,
         asynch: true,
-        imageHeight: 256,
-        imageWidth: 256,
-        imageMean: 127.5,
-        imageStd: 127.5,
-        numResults: 4,
-        rotation: 90,
-        threshold: 0.4,
       );
 
-      if (detector != null && detector.isNotEmpty) {
-        var ourDetectedObject = detector.first;
-        if (ourDetectedObject['confidenceClass'] * 100 > 45) {
-          label = ourDetectedObject['detectedClass'].toString();
-          h = ourDetectedObject['rect']['h'] ?? 0.0;
-          w = ourDetectedObject['rect']['w'] ?? 0.0;
-          x = ourDetectedObject['rect']['x'] ?? 0.0;
-          y = ourDetectedObject['rect']['y'] ?? 0.0;
-        }
-        update();
-        debugPrint("Result is $detector");
+      // Handle recognition results
+      if (output != null && output.isNotEmpty) {
+        // Print or log the recognitions for debugging
+        debugPrint('Recognitions: $output');
+        detectedObjects.value = output;
+      } else {
+        debugPrint('No recognitions found');
+        detectedObjects.clear();
       }
     } catch (e) {
-      debugPrint("Failed to run model: $e");
+      debugPrint('Error running model on frame: $e');
     } finally {
-      isProcessing(false);
+      isDetecting.value = false;
     }
   }
 
-  Float32List convertCameraImageToFloat32List(CameraImage image, int targetWidth, int targetHeight) {
+  Uint8List preprocessCameraImage(CameraImage image, List<int> inputShape) {
     final int width = image.width;
     final int height = image.height;
+    final int targetHeight = inputShape[2];
+    final int targetWidth = inputShape[3];
+    final int channels = inputShape[1];
 
-    // Create a Float32List with the target dimensions
-    Float32List float32List = Float32List(targetWidth * targetHeight * 3);
+    // Create a buffer for the resized RGB image
+    var resizedBytes = Uint8List(targetHeight * targetWidth * channels);
 
-    // Process the YUV420 image data and fill the Float32List
+    // Process YUV420_888 image data and fill resized RGB buffer
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         final int uvIndex = (x ~/ 2) + (y ~/ 2) * (width ~/ 2);
@@ -134,17 +100,36 @@ class MaizeScanController extends GetxController {
         final int g = (yp - up * 0.337633 - vp * 0.698001).clamp(0, 255).toInt();
         final int b = (yp + up * 1.732446).clamp(0, 255).toInt();
 
-        // Normalize the RGB values and add to Float32List
+        // Set RGB values in resizedBytes
         final int targetX = x * targetWidth ~/ width;
         final int targetY = y * targetHeight ~/ height;
-        final int targetIndex = (targetY * targetWidth + targetX) * 3;
+        final int targetIndex = (targetY * targetWidth + targetX) * channels;
 
-        float32List[targetIndex] = (r - 127.5) / 127.5;
-        float32List[targetIndex + 1] = (g - 127.5) / 127.5;
-        float32List[targetIndex + 2] = (b - 127.5) / 127.5;
+        resizedBytes[targetIndex] = r;
+        resizedBytes[targetIndex + 1] = g;
+        resizedBytes[targetIndex + 2] = b;
       }
     }
 
-    return float32List;
+    // Convert to the required input format [1, 3, 320, 320]
+    var inputBuffer = Uint8List(1 * channels * targetHeight * targetWidth);
+    var bufferIndex = 0;
+
+    for (int c = 0; c < channels; c++) {
+      for (int y = 0; y < targetHeight; y++) {
+        for (int x = 0; x < targetWidth; x++) {
+          inputBuffer[bufferIndex++] = resizedBytes[(y * targetWidth + x) * channels + c];
+        }
+      }
+    }
+
+    return inputBuffer;
+  }
+
+  @override
+  void onClose() {
+    cameraController?.dispose();
+    Tflite.close();
+    super.onClose();
   }
 }
