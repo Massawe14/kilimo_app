@@ -122,7 +122,7 @@ class MaizeDetectorScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      'result: ${controller.output[0]['label']}'.tr,
+                                      'Result: ${controller.output[0]['label']}'.tr,
                                       style: const TextStyle(
                                         color: TColors.black, 
                                         fontSize: 20,
@@ -130,7 +130,7 @@ class MaizeDetectorScreen extends StatelessWidget {
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                     Text(
-                                      'accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
+                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
                                       style: const TextStyle(
                                         color: TColors.black, 
                                         fontSize: 20

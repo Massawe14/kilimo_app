@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../../../../../util/constants/api_constants.dart';
 
-class MaizeDetectionController extends GetxController {
+class BeansDetectionController extends GetxController {
   var imageFile = Rx<File?>(null);
   var detectionResult = Rx<Map<String, dynamic>?>(null);
   var isLoading = false.obs;
@@ -32,7 +32,7 @@ class MaizeDetectionController extends GetxController {
   }
 
    Future<void> detectDisease() async {
-    final url = Uri.parse(APIConstants.tMaizeDetectionAPIURL);
+    final url = Uri.parse(APIConstants.tBeansDetectionAPIURL);
 
     // Print request details for debugging
     debugPrint('URL: $url');

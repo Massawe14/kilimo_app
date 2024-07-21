@@ -6,7 +6,10 @@ import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
+import 'beans_camera_view_screen.dart';
+import 'cassava_camera_view_screen.dart';
 import 'maize_camera_view_screen.dart';
+import 'rice_camera_view_screen.dart';
 import 'widgets/custom_card.dart';
 
 class RealTimeDetectionScreen extends StatelessWidget {
@@ -24,7 +27,7 @@ class RealTimeDetectionScreen extends StatelessWidget {
             color: darkMode ? Colors.white : Colors.black,
           ),
         ),
-        title: Text('detector'.tr),
+        title: Text('plant_diseases_detector'.tr),
         actions: [
           IconButton(
             icon: const Icon(
@@ -57,8 +60,10 @@ class RealTimeDetectionScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MaizeCameraView())
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const MaizeCameraView(),
+                          ),
                         );
                       },
                       child: CustomCard(
@@ -67,7 +72,13 @@ class RealTimeDetectionScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const BeansCameraView(),
+                          ),
+                        );
+                      },
                       child: CustomCard(
                         imagePath: TImages.cropImage2, 
                         title: 'beans'.tr,
@@ -80,14 +91,26 @@ class RealTimeDetectionScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const RiceCameraView(),
+                          ),
+                        );
+                      },
                       child: CustomCard(
                         imagePath: TImages.cropImage3, 
                         title: 'rice'.tr,
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CassavaCameraView(),
+                          ),
+                        );
+                      },
                       child: CustomCard(
                         imagePath: TImages.cropImage4, 
                         title: 'cassava'.tr,

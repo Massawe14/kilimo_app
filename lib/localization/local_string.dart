@@ -105,6 +105,7 @@ class LocalString extends Translations {
       "take_a_photo": "Take A Photo",
       "pick_from_gallery": "Pick from Gallery",
       "cassava_disease_detector": "Cassava Disease Detector",
+      "plant_diseases_detector": "Plant Diseases Detector",
       "detector": "Detector",
       "detector_title": "Identify your crop's diseases in a\nfew seconds",
       "detector_sub_title": "Quickly identify the exact problem\nwithin your crop.",
@@ -205,6 +206,10 @@ class LocalString extends Translations {
       "take_action_if_you_spot_something": "Take action if you spot something",
       "take_action_subtitle": "When you find signs of an infestation, make sure to use our crop diagnosis feature to identify the disease and treat it efficiently.",
       "addition_description": "For addition support, reach out to the Kilimo App Community or consult your trusted local advisor.",
+      "beans_disease_detection": "Beans Disease Detection",
+      "cassava_disease_detection": "Cassava Disease Detection",
+      "maize_disease_detection": "Maize Disease Detection",
+      "rice_disease_detection": "Rice Disease Detection",
     },
     
     // SWAHILI LANGUAGE
@@ -309,6 +314,7 @@ class LocalString extends Translations {
       "take_a_photo": "Piga picha",
       "pick_from_gallery": "Chagua kutoka kwa Matunzio",
       "cassava_disease_detector": "Kigunduzi cha Magonjwa ya Muhogo",
+      "plant_diseases_detector": "Kigunduzi cha Magonjwa ya Mimea",
       "detector": "Kigunduzi",
       "detector_title": "Tambua magonjwa ya mimea yako kwa sekunde chache",
       "detector_sub_title": "Tambua haraka tatizo halisi ndani ya mazao yako.",
@@ -409,6 +415,10 @@ class LocalString extends Translations {
       "take_action_if_you_spot_something": "Chukua hatua ikiwa unaona kitu.",
       "take_action_subtitle": "Unapopata dalili za uvamizi, hakikisha kutumia kipengele chetu cha utambuzi wa mazao ili kutambua ugonjwa na kutibu kwa ufanisi.",
       "addition_description": "Kwa msaada zaidi, fikia Jumuiya ya Programu ya Kilimo au wasiliana na mshauri wako wa ndani anayeaminika.",
+      "beans_disease_detection": "Utambuzi wa Magonjwa ya Maharage",
+      "cassava_disease_detection": "Utambuzi wa Magonjwa ya Muhogo",
+      "maize_disease_detection": "Utambuzi wa Magonjwa ya Mahindi",
+      "rice_disease_detection": "Utambuzi wa Magonjwa ya Mpunga",
    }
   };
 }

@@ -9,6 +9,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/cassava/cassava_controller.dart';
+import 'disease_details_screen.dart';
 
 class CassavaDetectorScreen extends StatelessWidget {
   const CassavaDetectorScreen({super.key});
@@ -121,14 +122,43 @@ class CassavaDetectorScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      'result: ${controller.output[0]['label']}'.tr,
-                                      style: const TextStyle(color: Color.fromARGB(255, 157, 73, 73), fontSize: 20),
+                                      'Result: ${controller.output[0]['label']}'.tr,
+                                      style: const TextStyle(
+                                        color: TColors.black, 
+                                        fontSize: 20,
+                                      ),
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                     Text(
-                                      'accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
-                                      style: const TextStyle(color: TColors.black, fontSize: 20),
+                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
+                                      style: const TextStyle(
+                                        color: TColors.black, 
+                                        fontSize: 20
+                                      ),
                                       textAlign: TextAlign.center, // Center the text
+                                    ),
+                                    const SizedBox(height: TSizes.spaceBtwSections),
+                                    Container(
+                                      height: 60,
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.all(25.5),
+                                      decoration: BoxDecoration(
+                                        color: TColors.accent,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Get.to(() => const DiseaseDetailsScreen(), arguments: {
+                                            'diseaseName': controller.output[0]['label'],
+                                          });
+                                        },
+                                        child: Text(
+                                          'recommendations'.tr,
+                                          style: const TextStyle(
+                                            color: TColors.white,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 )

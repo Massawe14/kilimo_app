@@ -3,17 +3,17 @@ import 'package:get/get.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
-import '../../controllers/diseases/maize/maize_detection_controller.dart';
+import '../../controllers/diseases/rice/rice_detection_controller.dart';
 import 'disease_details_screen.dart';
 import 'widgets/bounding_box_painter.dart';
 
-class MaizeCameraView extends StatelessWidget {
-  const MaizeCameraView({super.key});
+class RiceCameraView extends StatelessWidget {
+  const RiceCameraView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
-    final MaizeDetectionController controller = Get.put(MaizeDetectionController());
+    final RiceDetectionController controller = Get.put(RiceDetectionController());
 
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +26,7 @@ class MaizeCameraView extends StatelessWidget {
             color: darkMode ? Colors.white : Colors.black,
           ),
         ),
-        title: Text('maize_disease_detection'.tr),
+        title: Text('rice_disease_detection'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../../../../../util/constants/colors.dart';
 import '../../../../../../util/constants/sizes.dart';
 import '../../../../../../util/helpers/helper_functions.dart';
-import '../../../detector/camera_view_screen.dart';
+import '../../../detector/real_time_detection_screen.dart';
 import 'pests_and_disease_alert_details_appbar.dart';
 
 class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
@@ -253,7 +253,7 @@ class PestsAndDiseaseAlertDetailsScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => Get.to(() => const CameraViewScreen()),
+                      onPressed: () => Get.to(() => const RealTimeDetectionScreen()),
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

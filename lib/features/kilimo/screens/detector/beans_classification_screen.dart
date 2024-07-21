@@ -9,6 +9,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/beans/beans_controller.dart';
+import 'disease_details_screen.dart';
 
 class BeansDetectorScreen extends StatelessWidget {
   const BeansDetectorScreen({super.key});
@@ -121,7 +122,7 @@ class BeansDetectorScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      'result: ${controller.output[0]['label']}'.tr,
+                                      'Result: ${controller.output[0]['label']}'.tr,
                                       style: const TextStyle(
                                         color: TColors.black, 
                                         fontSize: 20,
@@ -129,12 +130,35 @@ class BeansDetectorScreen extends StatelessWidget {
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                     Text(
-                                      'accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
+                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
                                       style: const TextStyle(
                                         color: TColors.black, 
                                         fontSize: 20
                                       ),
                                       textAlign: TextAlign.center, // Center the text
+                                    ),
+                                    const SizedBox(height: TSizes.spaceBtwSections),
+                                    Container(
+                                      height: 60,
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.all(25.5),
+                                      decoration: BoxDecoration(
+                                        color: TColors.accent,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Get.to(() => const DiseaseDetailsScreen(), arguments: {
+                                            'diseaseName': controller.output[0]['label'],
+                                          });
+                                        },
+                                        child: Text(
+                                          'recommendations'.tr,
+                                          style: const TextStyle(
+                                            color: TColors.white,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 )

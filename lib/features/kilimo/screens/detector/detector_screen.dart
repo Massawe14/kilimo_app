@@ -20,7 +20,7 @@ class DetectorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('detector'.tr),
+        title: Text('plant_diseases_detector'.tr),
         actions: [
           IconButton(
             icon: const Icon(

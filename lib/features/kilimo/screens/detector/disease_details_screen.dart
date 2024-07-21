@@ -27,38 +27,42 @@ class DiseaseDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('disease_details'.tr)
       ),
-      body: Obx(
-        () => controller.isLoading.value
-          ? Center(
-              child: CircularProgressIndicator(
-                color: darkMode ? TColors.white : TColors.black,
-              ),
-            )
-          : controller.disease.value.id.isNotEmpty
-            ? Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      controller.disease.value.name,
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Obx(
+            () => controller.isLoading.value
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: darkMode ? TColors.white : TColors.black,
+                  ),
+                )
+              : controller.disease.value.id.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.disease.value.name,
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 16.0),
+                        const Text('Symptoms:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        ...controller.disease.value.symptoms.map((symptom) => Text(symptom)),
+                        const SizedBox(height: 16.0),
+                        const Text('Treatments:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        ...controller.disease.value.treatment.map((treatment) => Text(treatment)),
+                        const SizedBox(height: 16.0),
+                        const Text('Preventive Measures:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        ...controller.disease.value.preventiveMeasures.map((preventive) => Text(preventive)),
+                      ],
                     ),
-                    const SizedBox(height: 16.0),
-                    const Text('Symptoms:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...controller.disease.value.symptoms.map((symptom) => Text(symptom)),
-                    const SizedBox(height: 16.0),
-                    const Text('Causes:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...controller.disease.value.causes.map((cause) => Text(cause)),
-                    const SizedBox(height: 16.0),
-                    const Text('Treatments:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...controller.disease.value.treatment.map((treatment) => Text(treatment)),
-                  ],
-                ),
-              )
-            : const Center(
-                child: Text('No disease data found'),
-              ),
+                  )
+                : const Center(
+                    child: Text('No disease data found'),
+                  ),
+          ),
+        ),
       ),
     );
   }
