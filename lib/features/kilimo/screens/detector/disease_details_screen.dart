@@ -47,13 +47,22 @@ class DiseaseDetailsScreen extends StatelessWidget {
                           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16.0),
-                        const Text('Symptoms:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'symptoms'.tr, 
+                          style: const TextStyle(fontWeight: FontWeight.bold)
+                        ),
                         ...controller.disease.value.symptoms.map((symptom) => Text(symptom)),
                         const SizedBox(height: 16.0),
-                        const Text('Treatments:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'treatments'.tr, 
+                          style: const TextStyle(fontWeight: FontWeight.bold)
+                        ),
                         ...controller.disease.value.treatment.map((treatment) => Text(treatment)),
                         const SizedBox(height: 16.0),
-                        const Text('Preventive Measures:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'preventive_measures'.tr, 
+                          style: const TextStyle(fontWeight: FontWeight.bold)
+                        ),
                         ...controller.disease.value.preventiveMeasures.map((preventive) => Text(preventive)),
                       ],
                     ),

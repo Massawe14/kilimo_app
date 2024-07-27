@@ -114,7 +114,7 @@ class LocalString extends Translations {
       "no_disease_details_available": "No disease details available for ",
       "symptoms": "Symptoms",
       "causes": "Causes",
-      "treatment": "Treatment",
+      "treatments": "Treatments",
       "maize_disease_detector": "Maize Disease Detector",
       "recommendations": "Recommendations",
       "rice_disease_detector": "Rice Disease Detector",
@@ -210,6 +210,7 @@ class LocalString extends Translations {
       "cassava_disease_detection": "Cassava Disease Detection",
       "maize_disease_detection": "Maize Disease Detection",
       "rice_disease_detection": "Rice Disease Detection",
+      "preventive_measures": "Preventive Measures",
     },
     
     // SWAHILI LANGUAGE
@@ -323,7 +324,7 @@ class LocalString extends Translations {
       "no_disease_details_available": "Hakuna maelezo ya ugonjwa yanayopatikana",
       "symptoms": "Dalili",
       "causes": "Sababu",
-      "treatment": "Matibabu",
+      "treatments": "Matibabu",
       "maize_disease_detector": "Kigunduzi cha Magonjwa ya Mahindi",
       "recommendations": "Mapendekezo",
       "rice_disease_detector": "Kigunduzi cha Magonjwa ya Mchele",
@@ -419,6 +420,7 @@ class LocalString extends Translations {
       "cassava_disease_detection": "Utambuzi wa Magonjwa ya Muhogo",
       "maize_disease_detection": "Utambuzi wa Magonjwa ya Mahindi",
       "rice_disease_detection": "Utambuzi wa Magonjwa ya Mpunga",
+      "preventive_measures": "Hatua za kuzuia",
    }
   };
 }
