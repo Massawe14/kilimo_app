@@ -72,7 +72,7 @@ class WeatherScreenState extends State<WeatherScreen> {
 
   void _getCurrentLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position position = await Geolocator.getCurrentPosition();
       setState(() {
         _currentPosition = position;
       });

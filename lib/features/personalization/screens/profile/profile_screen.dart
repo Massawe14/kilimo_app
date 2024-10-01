@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/common/widgets/loaders/shimmer.dart';
 
 import '../../../../common/widgets/image_text_widget/t_circular_image.dart';
+import '../../../../common/widgets/loaders/shimmer.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';

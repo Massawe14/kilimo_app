@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/features/authentication/controllers/signup/signup_controller.dart';
 
 import '../../../../../util/constants/colors.dart';
 import '../../../../../util/constants/sizes.dart';
 import '../../../../../util/constants/text_strings.dart';
 import '../../../../../util/helpers/helper_functions.dart';
+import '../../../controllers/signup/signup_controller.dart';
 
 class TTermsAndConditonCheckbox extends StatelessWidget {
   const TTermsAndConditonCheckbox({

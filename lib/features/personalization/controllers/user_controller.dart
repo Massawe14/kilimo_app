@@ -2,18 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kilimo_app/data/repositories/user/user_repository.dart';
-import 'package:kilimo_app/features/personalization/models/user_modal.dart';
-import 'package:kilimo_app/util/popups/loaders.dart';
 
 import '../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../data/repositories/post/post_repository.dart';
+import '../../../data/repositories/user/user_repository.dart';
 import '../../../util/constants/image_strings.dart';
 import '../../../util/constants/sizes.dart';
 import '../../../util/helpers/network_manager.dart';
 import '../../../util/popups/full_screen_loader.dart';
+import '../../../util/popups/loaders.dart';
 import '../../authentication/screens/login/login.dart';
 import '../../kilimo/models/community/post_modal.dart';
+import '../models/user_modal.dart';
 import '../screens/profile/widgets/re_authenticate_user_login_form.dart';
 
 class UserController extends GetxController {

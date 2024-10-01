@@ -104,9 +104,7 @@ class WeatherForecastController extends GetxController {
 
   Future<Position> _getCurrentLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+      Position position = await Geolocator.getCurrentPosition();
       return position;
     } catch (e) {
       debugPrint("Error getting current location: $e");

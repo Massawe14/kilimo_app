@@ -21,11 +21,14 @@ class TFullScreenLoader {
           color: THelperFunctions.isDarkMode(Get.context!) ? TColors.dark : TColors.white,
           width: double.infinity,
           height: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(height: 250), // Adjust the spacing as needed
-              TAnimationLoaderWidget(text: text, animation: animation),
-            ],
+          child: Center( // Use Center widget to center the content
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Make the column take only the required height
+              children: [
+                // Instead of fixed height, use a flexible spacing
+                TAnimationLoaderWidget(text: text, animation: animation),
+              ],
+            ),
           ),
         ),
       ),

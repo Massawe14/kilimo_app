@@ -5,8 +5,11 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
+import '../../controllers/weather/weather_controller.dart';
 import '../../controllers/weather/weather_forecast_controller.dart';
-import 'widgets/weather_icons.dart';
+import 'widgets/build_weather_icon.dart';
+import 'widgets/get_weather_advice.dart';
+import 'widgets/get_weather_advice_for_nex_four_days.dart';
 
 class WeatherForecastScreen extends StatelessWidget {
   const WeatherForecastScreen({super.key});
@@ -14,13 +17,15 @@ class WeatherForecastScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final WeatherForecastController controller = Get.put(WeatherForecastController());
+    final WeatherController weatherController = Get.put(WeatherController());
     final darkMode = THelperFunctions.isDarkMode(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: Icon(
-            Iconsax.arrow_left, 
+            Iconsax.arrow_left,
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
@@ -73,11 +78,7 @@ class WeatherForecastScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: getWeatherIcon(controller.weatherData.value.weatherIconCode.toString()),
-                          ),
+                          buildWeatherIcon(controller.weatherData.value.weatherIconCode.toString()),
                         ],
                       ),
                       const SizedBox(height: TSizes.spaceBtwItems),
@@ -131,11 +132,7 @@ class WeatherForecastScreen extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           const SizedBox(height: 10),
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: getWeatherIcon(weatherData['weatherIcon'].toString()),
-                          ),
+                          buildWeatherIcon(weatherData['weatherIcon'].toString()),
                           const SizedBox(height: 10),
                           Text(
                             weatherData['temperature'],
@@ -161,27 +158,58 @@ class WeatherForecastScreen extends StatelessWidget {
                   getWeatherAdvice(controller.weatherData.value.weatherDescription),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                const Divider(color: TColors.grey),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Text(
+                  'prediction'.tr,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                // Predictions
+                Obx(() {
+                  if (weatherController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (weatherController.prediction.value.isEmpty) {
+                    return const Text('Fetching predictions...');
+                  } else {
+                    // Display the single prediction in a decorated card
+                    return Container(
+                      width: 350,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        color: darkMode ? TColors.dark : TColors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(TSizes.defaultSpace),
+                          child: Text(
+                            weatherController.prediction.value,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                }),
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  String getWeatherAdvice(String weatherDescription) {
-    if (['light rain', 'rain', 'shower rain', 'heavy rain'].contains(weatherDescription.toLowerCase())) {
-      return 'bad_day'.tr;
-    } else {
-      return 'good_day'.tr;
-    }
-  }
-
-  String getWeatherAdviceFromNextFourDays(String weatherDescription) {
-    if (['light rain', 'rain', 'shower rain', 'heavy rain'].contains(weatherDescription.toLowerCase())) {
-      return 'raining_until_tomorrow'.tr;
-    } else {
-      return 'no_rain_is_forecast_this_week'.tr;
-    }
   }
 }

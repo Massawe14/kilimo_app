@@ -124,7 +124,7 @@ class PostCommunityController extends GetxController {
       return;
     }
 
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition();
     // location.value = '${position.latitude}, ${position.longitude}';
     // locationController.text = location.value;
 

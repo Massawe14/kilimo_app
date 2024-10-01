@@ -28,45 +28,45 @@ class TAnimationLoaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Display Lottie animation
-        Flexible(
-          fit: FlexFit.loose,
-          child: Lottie.asset(
-            animation, 
-            width: MediaQuery.of(context).size.width * 0.8
-          ),
-        ),
-        const SizedBox(height: TSizes.defaultSpace),
-        Flexible(
-          fit: FlexFit.loose,
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const SizedBox(height: TSizes.defaultSpace),
-        showAction
-          ? Flexible(
+    return SingleChildScrollView( // Make it scrollable in case content exceeds screen
+      child: Column(
+        mainAxisSize: MainAxisSize.min, // Take only the required vertical space
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Display Lottie animation
+          Flexible(
             fit: FlexFit.loose,
-            child: SizedBox(
-              width: 250,
-              child: OutlinedButton(
-                onPressed: onActionPressed,
-                style: OutlinedButton.styleFrom(backgroundColor: TColors.dark),
-                child: Text(
-                  actionText!,
-                  style: Theme.of(context).textTheme.bodyMedium!.apply(color: TColors.light),
-                ),
-              ),
+            child: Lottie.asset(
+              animation, 
+              width: MediaQuery.of(context).size.width * 0.8
             ),
-          )
-        : const Expanded(child: SizedBox()),
-      ],
+          ),
+          const SizedBox(height: TSizes.defaultSpace),
+          Flexible(
+            fit: FlexFit.loose,
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: TSizes.defaultSpace),
+          // Show action button if showAction is true
+          showAction
+            ? SizedBox(
+                width: 250,
+                child: OutlinedButton(
+                  onPressed: onActionPressed,
+                  style: OutlinedButton.styleFrom(backgroundColor: TColors.dark),
+                  child: Text(
+                    actionText!,
+                    style: Theme.of(context).textTheme.bodyMedium!.apply(color: TColors.light),
+                  ),
+                ),
+              )
+            : const SizedBox(),
+        ],
+      ),
     );
   }
 }

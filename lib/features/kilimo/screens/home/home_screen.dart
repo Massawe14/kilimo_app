@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/util/constants/colors.dart';
-import 'package:kilimo_app/util/constants/text_strings.dart';
 
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
+import '../../../../util/constants/colors.dart';
+import '../../../../util/constants/text_strings.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../weather/weather_screen.dart';
 import '../weather/weather_forecast_screen.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/bindings/general_bindings.dart';
-import 'package:kilimo_app/util/constants/colors.dart';
 
 import '../util/theme/theme.dart';
+import 'bindings/general_bindings.dart';
 import 'features/personalization/controllers/theme_controller.dart';
 import 'localization/local_string.dart';
+import 'util/constants/colors.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

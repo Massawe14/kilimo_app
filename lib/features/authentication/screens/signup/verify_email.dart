@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:kilimo_app/features/authentication/controllers/signup/verify_email_controller.dart';
 
+import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/text_strings.dart';
 import '../../../../util/helpers/helper_functions.dart';
+import '../../controllers/signup/verify_email_controller.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({

@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/common/widgets/success_screen/success_screen.dart';
-import 'package:kilimo_app/util/constants/image_strings.dart';
-import 'package:kilimo_app/util/constants/text_strings.dart';
-import 'package:kilimo_app/util/popups/loaders.dart';
 
+import '../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../../util/constants/image_strings.dart';
+import '../../../../util/constants/text_strings.dart';
+import '../../../../util/popups/loaders.dart';
 
 class VerifyEmailController extends GetxController {
   static VerifyEmailController get instance => Get.find();

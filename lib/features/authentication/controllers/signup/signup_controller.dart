@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:kilimo_app/data/repositories/user/user_repository.dart';
-import 'package:kilimo_app/features/authentication/screens/signup/verify_email.dart';
-import 'package:kilimo_app/util/constants/image_strings.dart';
 
+import '../../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../../data/repositories/user/user_repository.dart';
+import '../../../../util/constants/image_strings.dart';
 import '../../../../util/helpers/network_manager.dart';
 import '../../../../util/popups/full_screen_loader.dart';
 import '../../../../util/popups/loaders.dart';
 import '../../../personalization/models/user_modal.dart';
+import '../../screens/signup/verify_email.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();

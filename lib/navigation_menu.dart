@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/util/constants/colors.dart';
-import 'package:kilimo_app/util/helpers/helper_functions.dart';
 
 import 'features/kilimo/screens/community/community_screen.dart';
 import 'features/kilimo/screens/detector/detector_screen.dart';
 import 'features/kilimo/screens/home/home_screen.dart';
 import 'features/kilimo/screens/resources/resources_screen.dart';
+import 'util/constants/colors.dart';
+import 'util/helpers/helper_functions.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});

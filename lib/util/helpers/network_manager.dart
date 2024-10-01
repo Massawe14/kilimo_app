@@ -17,7 +17,10 @@ class NetworkManager extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    // Listen to changes in connectivity
+    _connectivitySubscription = _connectivity.onConnectivityChanged
+      .expand((list) => list)
+      .listen(_updateConnectionStatus);
   }
 
   // Update the connection status based on changes in connectivity and show a relevant popup for no internet connection.
@@ -33,7 +36,7 @@ class NetworkManager extends GetxController {
   Future<bool> isConnected() async {
     try {
       final result = await _connectivity.checkConnectivity();
-      if (result == ConnectivityResult.none) {
+      if (result.contains(ConnectivityResult.none)) {
         return false;
       } else {
         return true;

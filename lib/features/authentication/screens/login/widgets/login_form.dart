@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/features/authentication/controllers/login/login_controller.dart';
-import 'package:kilimo_app/features/authentication/screens/password_configuration/forgot_password.dart';
-import 'package:kilimo_app/util/validators/validation.dart';
 
 import '../../../../../util/constants/sizes.dart';
 import '../../../../../util/constants/text_strings.dart';
+import '../../../../../util/validators/validation.dart';
+import '../../../controllers/login/login_controller.dart';
+import '../../password_configuration/forgot_password.dart';
 import '../../signup/signup.dart';
 
 class TLoginForm extends StatelessWidget {
