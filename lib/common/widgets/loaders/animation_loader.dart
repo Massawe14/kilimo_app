@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 import 'package:kilimo_app/util/constants/sizes.dart';
-import 'package:lottie/lottie.dart';
 
+// A widget for displaying on animated loading with optional text and action button
 class TAnimationLoaderWidget extends StatelessWidget {
   // Default constructor for the TAnimationLoaderWidget.
   // Parameters:
@@ -28,30 +28,20 @@ class TAnimationLoaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView( // Make it scrollable in case content exceeds screen
+    return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Take only the required vertical space
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Display Lottie animation
-          Flexible(
-            fit: FlexFit.loose,
-            child: Lottie.asset(
-              animation, 
-              width: MediaQuery.of(context).size.width * 0.8
-            ),
+          // Load GIF animation
+          Image.asset(animation, width: MediaQuery.of(context).size.width * 0.8),
+          const SizedBox(height: TSizes.defaultSpace),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: TSizes.defaultSpace),
-          Flexible(
-            fit: FlexFit.loose,
-            child: Text(
-              text,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: TSizes.defaultSpace),
-          // Show action button if showAction is true
+          // Conditional rendering of the action button
           showAction
             ? SizedBox(
                 width: 250,
@@ -65,7 +55,7 @@ class TAnimationLoaderWidget extends StatelessWidget {
                 ),
               )
             : const SizedBox(),
-        ],
+          ],
       ),
     );
   }
