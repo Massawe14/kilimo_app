@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../data/repositories/post/post_repository.dart';
@@ -55,6 +57,9 @@ class PostCommunityController extends GetxController {
       replyMessage.value = replyController.text.trim();
     });
     user.bindStream(FirebaseAuth.instance.authStateChanges());
+    
+    // Fetch current location on initialization
+    fetchCurrentLocation();
   }
 
   @override
@@ -83,6 +88,59 @@ class PostCommunityController extends GetxController {
       return url;
     } catch (e) {
       throw Exception('Error uploading image: $e');
+    }
+  }
+
+  Future<void> fetchCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Location services are disabled.',
+      );
+      return;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        TLoaders.errorSnackBar(
+          title: 'Error',
+          message: 'Location permissions are denied.',
+        );
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Location permissions are permanently denied.',
+      );
+      return;
+    }
+
+    Position position = await Geolocator.getCurrentPosition();
+    // location.value = '${position.latitude}, ${position.longitude}';
+    // locationController.text = location.value;
+
+    // Perform reverse geocoding to get the location name
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks.first;
+        location.value = '${place.locality}, ${place.country}';
+        locationController.text = location.value;
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Failed to get location name: $e',
+      );
     }
   }
 
@@ -123,6 +181,7 @@ class PostCommunityController extends GetxController {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
 
       String userName = userDoc['UserName'];
+      String profilePicture = userDoc['ProfilePicture'];
 
       // Check if the image is uploaded
       if (imageFile.value == null) {
@@ -145,6 +204,7 @@ class PostCommunityController extends GetxController {
         cropImage: imageUrl,
         userId: userId,
         userName: userName,
+        profilePicture: profilePicture,
         userLocation: location.value,
         date: DateTime.now(),
       );

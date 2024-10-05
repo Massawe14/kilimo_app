@@ -37,6 +37,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -64,11 +69,6 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-
-    aaptOptions {
-        noCompress 'tflite'
-        noCompress 'lite'
-    }
 }
 
 flutter {
@@ -76,12 +76,18 @@ flutter {
 }
 
 dependencies {
-    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
-    // This dependency adds the necessary TF op support.
-    implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:0.0.0-nightly-SNAPSHOT'
+    // Stable versions of TensorFlow Lite and Select Ops
+    implementation 'org.tensorflow:tensorflow-lite:2.16.1'
+    implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:2.16.1'
+    implementation 'org.tensorflow:tensorflow-android:1.13.1'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.16.1'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.4.4'
+
+    // Kotlin Standard Library
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'org.tensorflow:tensorflow-android:+'
-    implementation 'org.tensorflow:tensorflow-lite:0.1.100'
+
+    // Multidex support if needed
+    implementation 'androidx.multidex:multidex:2.0.1'
     
     // // Import the BoM for the Firebase platform
     // implementation(platform("com.google.firebase:firebase-bom:33.0.0"))

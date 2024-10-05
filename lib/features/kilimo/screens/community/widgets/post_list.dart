@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../data/repositories/post/post_repository.dart';
+import '../../../../../util/constants/colors.dart';
+import '../../../../../util/helpers/helper_functions.dart';
 import '../../../models/community/post_modal.dart';
 import '../reply_community_screen.dart';
 import 'question_card.dart';
@@ -33,27 +35,30 @@ class TPostList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return FutureBuilder<List<PostModal>>(
       future: getPosts(),
-      builder: (context, snapshot) {
+      builder: (context, AsyncSnapshot<List<PostModal>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SliverToBoxAdapter(
+          return SliverToBoxAdapter(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: darkMode ? TColors.white : TColors.black,
+              ),
             ),
           );
         } else if (snapshot.hasError) {
           debugPrint('Error: ${snapshot.error}');
           return SliverToBoxAdapter(
             child: Center(
-              child: Text('Error: ${snapshot.error}'),
+              child: Text('error: ${snapshot.error}'.tr),
             ),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           debugPrint('No data: ${snapshot.data}');
-          return const SliverToBoxAdapter(
+          return SliverToBoxAdapter(
             child: Center(
-              child: Text('No community posts available')
+              child: Text('no_data'.tr)
             ),
           );
         } else {
@@ -69,6 +74,8 @@ class TPostList extends StatelessWidget {
                   child: TQuestionCard(
                     image: post.cropImage, // Assuming cropImage is the field name
                     username: post.userName,
+                    profilePicture: post.profilePicture,
+                    userId: post.userId,
                     location: post.userLocation,
                     crop: post.cropType,
                     date: post.date,

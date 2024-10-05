@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kilimo_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:kilimo_app/features/authentication/controllers/signup/verify_email_controller.dart';
 
+import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/text_strings.dart';
 import '../../../../util/helpers/helper_functions.dart';
+import '../../controllers/signup/verify_email_controller.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({
@@ -67,7 +67,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => controller.checkEmailVerificationStatus(), 
-                    child: const Text(TTexts.tContinue),
+                    child: Text(TTexts.tContinue),
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -75,7 +75,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   width: double.infinity,
                   child: TextButton(
                     onPressed: () => controller.sendEmailVerification(), 
-                    child: const Text(TTexts.resendEmail),
+                    child: Text(TTexts.resendEmail),
                   ),
                 ),
               ],

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kilimo_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:kilimo_app/features/personalization/controllers/user_controller.dart';
-import 'package:kilimo_app/util/constants/image_strings.dart';
 
+import '../../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../../util/constants/image_strings.dart';
 import '../../../../util/helpers/network_manager.dart';
 import '../../../../util/popups/full_screen_loader.dart';
 import '../../../../util/popups/loaders.dart';
+import '../../../personalization/controllers/user_controller.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();

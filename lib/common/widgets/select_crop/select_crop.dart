@@ -14,7 +14,10 @@ selectCrop(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Select your crop', style: Theme.of(context).textTheme.titleMedium),
+        title: Text(
+          'crop_title'.tr, 
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         content: SizedBox(
           width: double.maxFinite,
           child: ListView(
@@ -30,26 +33,26 @@ selectCrop(BuildContext context) {
                           children: [
                             TVerticalImageText(
                               image: TImages.beanCategory,
-                              title: 'Beans',
+                              title: 'beans'.tr,
                               onTap: () {
-                                controller.selectedCrop.value = 'Beans';
-                                Navigator.of(context).pop('Beans');
+                                controller.selectedCrop.value = 'beans'.tr;
+                                Navigator.of(context).pop('beans'.tr);
                               },
                             ),
                             TVerticalImageText(
                               image: TImages.maizeCategory,
-                              title: 'Maize',
+                              title: 'maize'.tr,
                               onTap: () {
-                                controller.selectedCrop.value = 'Maize';
-                                Navigator.of(context).pop('Maize');
+                                controller.selectedCrop.value = 'maize'.tr;
+                                Navigator.of(context).pop('maize'.tr);
                               },
                             ),
                             TVerticalImageText(
                               image: TImages.cassavaCategory,
-                              title: 'Cassava',
+                              title: 'cassava'.tr,
                               onTap: () {
-                                controller.selectedCrop.value = 'Cassava';
-                                Navigator.of(context).pop('Cassava');
+                                controller.selectedCrop.value = 'cassava'.tr;
+                                Navigator.of(context).pop('cassava'.tr);
                               },
                             ),
                           ],
@@ -61,10 +64,10 @@ selectCrop(BuildContext context) {
                             
                             TVerticalImageText(
                               image: TImages.riceCategory,
-                              title: 'Rice',
+                              title: 'rice'.tr,
                               onTap: () {
-                                controller.selectedCrop.value = 'Rice';
-                                Navigator.of(context).pop('Rice');
+                                controller.selectedCrop.value = 'rice'.tr;
+                                Navigator.of(context).pop('rice'.tr);
                               },
                             ),
                           ],
@@ -80,9 +83,9 @@ selectCrop(BuildContext context) {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text(
-              'Cancel', 
-              style: TextStyle(
+            child: Text(
+              'cancel'.tr, 
+              style: const TextStyle(
                 color: TColors.info,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

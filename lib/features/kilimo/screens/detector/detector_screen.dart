@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/custom_shapes/detector_container.dart';
@@ -19,7 +20,7 @@ class DetectorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detector'),
+        title: Text('plant_diseases_detector'.tr),
         actions: [
           IconButton(
             icon: const Icon(
@@ -56,7 +57,10 @@ class DetectorScreen extends StatelessWidget {
                           builder: (context) => const MaizeDetectorScreen())
                         );
                       },
-                      child: const CustomCard(imagePath: TImages.cropImage1, title: 'Maize')
+                      child: CustomCard(
+                        imagePath: TImages.cropImage1, 
+                        title: 'maize'.tr,
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -64,7 +68,10 @@ class DetectorScreen extends StatelessWidget {
                           builder: (context) => const BeansDetectorScreen())
                         );
                       },
-                      child: const CustomCard(imagePath: TImages.cropImage2, title: 'Beans')
+                      child: CustomCard(
+                        imagePath: TImages.cropImage2, 
+                        title: 'beans'.tr,
+                      ),
                     ),
                   ],
                 ),
@@ -78,7 +85,10 @@ class DetectorScreen extends StatelessWidget {
                           builder: (context) => const RiceDetectorScreen())
                         );
                       },
-                      child: const CustomCard(imagePath: TImages.cropImage3, title: 'Rice')
+                      child: CustomCard(
+                        imagePath: TImages.cropImage3, 
+                        title: 'rice'.tr,
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -86,7 +96,10 @@ class DetectorScreen extends StatelessWidget {
                           builder: (context) => const CassavaDetectorScreen())
                         );
                       },
-                      child: const CustomCard(imagePath: TImages.cropImage4, title: 'Cassava')
+                      child: CustomCard(
+                        imagePath: TImages.cropImage4, 
+                        title: 'cassava'.tr,
+                      ),
                     ),
                   ],
                 ),

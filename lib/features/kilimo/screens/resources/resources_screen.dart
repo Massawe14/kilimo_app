@@ -18,7 +18,7 @@ class ResourcesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Resources'),
+        title: Text('resources'.tr),
         actions: [
           IconButton(
             icon: const Icon(
@@ -52,18 +52,18 @@ class ResourcesScreen extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () => Get.to(() => FertilizerCalculatorScreen()),
-                        child: const ResourceCard(
+                        child: ResourceCard(
                           icon: Iconsax.calculator, 
-                          title: 'Fertilizer\nCalculator',
+                          title: 'resource_1'.tr,
                         ),
                       ),
                     ),
                     Expanded(
                       child: GestureDetector(
                         onTap: () => Get.to(() => const PestsAndDiseasesScreen()),
-                        child: const ResourceCard(
+                        child: ResourceCard(
                           icon: Iconsax.health, 
-                          title: 'Pests &\nDiseases',
+                          title: 'resource_2'.tr,
                         ),
                       ),
                     ),
@@ -76,18 +76,18 @@ class ResourcesScreen extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () => Get.to(() => const CultivationTipsScreen()),
-                        child: const ResourceCard(
+                        child: ResourceCard(
                           icon: Iconsax.document_normal, 
-                          title: 'Cultivation\nTips',
+                          title: 'resource_3'.tr,
                         ),
                       ),
                     ),
                     Expanded(
                       child: GestureDetector(
                         onTap: () => Get.to(() => const PestsAndDiseaseAlert()),
-                        child: const ResourceCard(
+                        child: ResourceCard(
                           icon: Iconsax.danger, 
-                          title: 'Pests &\nDisease\nAlert',
+                          title: 'resource_4'.tr,
                         ),
                       ),
                     ),

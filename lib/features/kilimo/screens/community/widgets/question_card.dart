@@ -5,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../common/widgets/image_text_widget/t_circular_image.dart';
-import '../../../../../common/widgets/loaders/shimmer.dart';
 import '../../../../../util/constants/colors.dart';
 import '../../../../../util/constants/image_strings.dart';
 import '../../../../../util/constants/sizes.dart';
@@ -16,6 +15,8 @@ class TQuestionCard extends StatelessWidget {
     super.key,
     required this.image,
     required this.username,
+    required this.profilePicture,
+    required this.userId,
     required this.location,
     required this.crop,
     required this.title,
@@ -23,14 +24,15 @@ class TQuestionCard extends StatelessWidget {
     required this.date,
   });
 
-  final String image, username, location, crop;
-  final String title;
+  final String image, username, userId, location, crop;
+  final String title, profilePicture;
   final String description;
   final DateTime date;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UserController());
+    controller.fetchUserRecordById(userId); // Call function here
     return Container(
       width: 350,
       decoration: BoxDecoration(
@@ -67,22 +69,12 @@ class TQuestionCard extends StatelessWidget {
                 // Profile Image
                 Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Obx(() {
-                    final networkImage = controller.user.value.profilePicture;
-                    final image = networkImage.isNotEmpty ? networkImage : TImages.profileImage;
-                    return controller.imageUploading.value
-                      ? const TShimmerEffect(
-                          width: 70, 
-                          height: 70, 
-                          radius: 70,
-                        )
-                      : TCircularImage(
-                          image: image, 
-                          width: 70, 
-                          height: 70, 
-                          isNetworkImage: networkImage.isNotEmpty,
-                        );
-                  }),
+                  child: TCircularImage(
+                    image: profilePicture.isNotEmpty ? profilePicture : TImages.profileImage, 
+                    width: 70, 
+                    height: 70, 
+                    isNetworkImage: profilePicture.isNotEmpty,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 // User Information

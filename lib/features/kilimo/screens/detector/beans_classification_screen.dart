@@ -9,6 +9,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/beans/beans_controller.dart';
+import 'disease_details_screen.dart';
 
 class BeansDetectorScreen extends StatelessWidget {
   const BeansDetectorScreen({super.key});
@@ -54,7 +55,7 @@ class BeansDetectorScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Beans Disease Detector'),
+        title: Text('beans_disease_detector'.tr),
         actions: [
           IconButton(
             icon: const Icon(
@@ -85,25 +86,30 @@ class BeansDetectorScreen extends StatelessWidget {
                 Obx(
                   () => Center(
                     child: controller.isLoading.value 
-                      ? SizedBox(
-                          width: 260,
-                          child: Padding(
-                            padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 150,
-                                  height: 150,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/icons/crop_image.png'),
-                                      fit: BoxFit.cover,
+                      ? (controller.image.value != null
+                        ? CircularProgressIndicator(
+                            color: darkMode ? TColors.white : TColors.black,
+                          )
+                        : SizedBox(
+                            width: 260,
+                            child: Padding(
+                              padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    height: 150,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/icons/crop_image.png'),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                          )
                         )
                       : SizedBox(
                           width: double.infinity, // Make the container take the full width
@@ -116,7 +122,7 @@ class BeansDetectorScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      'Result: ${controller.output[0]['label']}',
+                                      'Result: ${controller.output[0]['label']}'.tr,
                                       style: const TextStyle(
                                         color: TColors.black, 
                                         fontSize: 20,
@@ -124,20 +130,43 @@ class BeansDetectorScreen extends StatelessWidget {
                                       textAlign: TextAlign.center, // Center the text
                                     ),
                                     Text(
-                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%',
+                                      'Accuracy: ${(controller.accuracy.value * 100).toStringAsFixed(2)}%'.tr,
                                       style: const TextStyle(
                                         color: TColors.black, 
                                         fontSize: 20
                                       ),
                                       textAlign: TextAlign.center, // Center the text
                                     ),
+                                    const SizedBox(height: TSizes.spaceBtwSections),
+                                    Container(
+                                      height: 60,
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.all(25.5),
+                                      decoration: BoxDecoration(
+                                        color: TColors.accent,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Get.to(() => const DiseaseDetailsScreen(), arguments: {
+                                            'diseaseName': controller.output[0]['label'],
+                                          });
+                                        },
+                                        child: Text(
+                                          'recommendations'.tr,
+                                          style: const TextStyle(
+                                            color: TColors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 )
                               else if (!controller.isLoading.value) // Show 'can't identify' only after loading is done
-                                const Center(
+                                Center(
                                   child: Text(
-                                    "Can't identify", 
-                                    style: TextStyle(fontSize: 30),
+                                    "can't_identify".tr, 
+                                    style: const TextStyle(fontSize: 30),
                                   )
                                 ),
                             ],
@@ -157,9 +186,9 @@ class BeansDetectorScreen extends StatelessWidget {
                     onPressed: () {
                       captureImage(ImageSource.camera);
                     },
-                    child: const Text(
-                      'Take A Photo',
-                      style: TextStyle(
+                    child: Text(
+                      'take_a_photo'.tr,
+                      style: const TextStyle(
                         color: TColors.white,
                       ),
                     ),
@@ -177,9 +206,9 @@ class BeansDetectorScreen extends StatelessWidget {
                     onPressed: () {
                       captureImage(ImageSource.gallery);
                     },
-                    child: const Text(
-                      'Pick from Gallery',
-                      style: TextStyle(
+                    child: Text(
+                      'pick_from_gallery'.tr,
+                      style: const TextStyle(
                         color: TColors.white,
                       ),
                     ),

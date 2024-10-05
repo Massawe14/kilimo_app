@@ -4,11 +4,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../common/widgets/image_text_widget/t_circular_image.dart';
-import '../../../../common/widgets/loaders/shimmer.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
-import '../../../personalization/controllers/user_controller.dart';
 import '../../controllers/community/post_community_controller.dart';
 import 'widgets/reply_card.dart';
 import 'widgets/reply_community_appbar.dart';
@@ -23,7 +21,6 @@ class ReplyCommunityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userController = Get.put(UserController());
     final PostCommunityController postController = Get.put(PostCommunityController());
 
     // Fetch post details when the screen is loaded
@@ -48,22 +45,12 @@ class ReplyCommunityScreen extends StatelessWidget {
                           // Profile Image
                           Container(
                             padding: const EdgeInsets.only(left: 10),
-                            child: Obx(() {
-                              final networkImage = userController.user.value.profilePicture;
-                              final image = networkImage.isNotEmpty ? networkImage : TImages.profileImage;
-                              return userController.imageUploading.value
-                                ? const TShimmerEffect(
-                                    width: 80, 
-                                    height: 80, 
-                                    radius: 80
-                                  )
-                                : TCircularImage(
-                                    image: image, 
-                                    width: 56, 
-                                    height: 56, 
-                                    isNetworkImage: networkImage.isNotEmpty,
-                                  );
-                            }),
+                            child: TCircularImage(
+                              image: post.profilePicture.isNotEmpty ? post.profilePicture : TImages.profileImage, 
+                              width: 56, 
+                              height: 56, 
+                              isNetworkImage: post.profilePicture.isNotEmpty,
+                            ),
                           ),
                         ],
                       ),
@@ -182,8 +169,8 @@ class ReplyCommunityScreen extends StatelessWidget {
           expands: false,
           controller: postController.replyController,
           decoration: InputDecoration(
-            hintText: 'Reply...',
-            labelText: 'Write your reply',
+            hintText: 'reply_hint'.tr,
+            labelText: 'reply_label'.tr,
             prefixIcon: IconButton(
               icon: const Icon(Iconsax.attach_circle),
               onPressed: () {},

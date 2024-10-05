@@ -8,6 +8,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../../../util/constants/text_strings.dart';
 import '../../../../util/helpers/helper_functions.dart';
+import '../../controllers/language_storage.dart';
 import '../../controllers/theme_controller.dart';
 import 'widgets/settings_menu_tile.dart';
 
@@ -19,58 +20,49 @@ class SettingsScreen extends StatelessWidget {
     {'name': 'Swahili', 'locale': const Locale('sw', 'TZ')},
   ];
 
-  updateLanguage(Locale locale) {
-    Get.back();
-    Get.updateLocale(locale);
-  }
-
   selectLanguage(BuildContext context) {
-    final darkMode = THelperFunctions.isDarkMode(context);
     return showDialog(
       context: context, 
       builder: (BuildContext context) {
-        return Container(
-          color: darkMode ? TColors.white : TColors.dark,
-          child: AlertDialog(
-            title: Text('choose_a_language'.tr, style: Theme.of(context).textTheme.titleMedium),
-            content: SizedBox(
-              width: double.maxFinite,
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        debugPrint(locale[index]['name']);
-                        updateLanguage(locale[index]['locale']);
-                      },
-                      child: Text(locale[index]['name']),
-                    ),
-                  );
-                }, 
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    color: TColors.grey,
-                  );
-                }, 
-                itemCount: locale.length,
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  'Cancel'.tr, 
-                  style: const TextStyle(
-                    color: TColors.info,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+        return AlertDialog(
+          title: Text('choose_a_language'.tr, style: Theme.of(context).textTheme.titleMedium),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      debugPrint(locale[index]['name']);
+                      languageController.updateLanguage(locale[index]['locale']);
+                    },
+                    child: Text(locale[index]['name']),
                   ),
+                );
+              }, 
+              separatorBuilder: (context, index) {
+                return const Divider(
+                  color: TColors.grey,
+                );
+              }, 
+              itemCount: locale.length,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'cancel'.tr, 
+                style: const TextStyle(
+                  color: TColors.info,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       }
     );
@@ -89,7 +81,7 @@ class SettingsScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Settings'),
+        title: Text('settings'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -101,7 +93,7 @@ class SettingsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // General Settings
-                    const TSectionHeading(title: 'General', showActionButton: false),
+                    TSectionHeading(title: 'general'.tr, showActionButton: false),
                     const SizedBox(height: TSizes.spaceBtwItems),
                     Text(
                       'select_your_language'.tr,
@@ -116,23 +108,23 @@ class SettingsScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
-                    const SizedBox(height: TSizes.spaceBtwItems),
-                    Text(
-                      'App country',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    TextButton(
-                      onPressed: () {}, 
-                      child: Text(
-                        'Tanzania', 
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
+                    // const SizedBox(height: TSizes.spaceBtwItems),
+                    // Text(
+                    //   'App country',
+                    //   style: Theme.of(context).textTheme.labelMedium,
+                    // ),
+                    // TextButton(
+                    //   onPressed: () {}, 
+                    //   child: Text(
+                    //     'Tanzania', 
+                    //     style: Theme.of(context).textTheme.bodyMedium,
+                    //   ),
+                    // ),
                     Obx(
                       () => TSettingsMenuTile(
                         icon: themeController.isDarkMode.value ? Iconsax.sun_1 : Iconsax.moon,
-                        title: 'Dark Theme',
-                        subTitle: 'Set dark theme',
+                        title: 'dark_theme'.tr,
+                        subTitle: 'set_dark_theme'.tr,
                         trailing: Switch(
                           value: themeController.isDarkMode.value, 
                           onChanged: (value) => themeController.changeTheme(),
@@ -143,12 +135,12 @@ class SettingsScreen extends StatelessWidget {
                     // Notifications Settings
                     const SizedBox(height: TSizes.spaceBtwItems),
                     const Divider(color: TColors.grey),
-                    const TSectionHeading(title: 'Notifications', showActionButton: false),
+                    TSectionHeading(title: 'notifications'.tr, showActionButton: false),
                     const SizedBox(height: TSizes.spaceBtwItems),
                     TSettingsMenuTile(
                       icon: Iconsax.location,
-                      title: 'Receive Push Notification',
-                      subTitle: 'Information about my crops',
+                      title: 'receive_push_notification'.tr,
+                      subTitle: 'information'.tr,
                       trailing: Switch(
                         value: false, 
                         onChanged: (value) {},
@@ -157,8 +149,8 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     TSettingsMenuTile(
                       icon: Iconsax.security_user,
-                      title: 'Receive Push Notification',
-                      subTitle: 'Popular Posts',
+                      title: 'receive_push_notification'.tr,
+                      subTitle: 'posts'.tr,
                       trailing: Switch(
                         value: false, 
                         onChanged: (value) {},
@@ -167,8 +159,8 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     TSettingsMenuTile(
                       icon: Iconsax.image,
-                      title: 'Receive Push Notification',
-                      subTitle: 'Answer to your post',
+                      title: 'receive_push_notification'.tr,
+                      subTitle: 'answer'.tr,
                       trailing: Switch(
                         value: false, 
                         onChanged: (value) {},
@@ -177,8 +169,8 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     TSettingsMenuTile(
                       icon: Iconsax.moon,
-                      title: 'Receive Push Notification',
-                      subTitle: 'Upvote to your post',
+                      title: 'receive_push_notification'.tr,
+                      subTitle: 'upvote'.tr,
                       trailing: Switch(
                         value: false, 
                         onChanged: (value) {},
@@ -194,7 +186,10 @@ class SettingsScreen extends StatelessWidget {
                         onPressed: () {
                           AuthenticationRepository.instance.logout();
                         }, 
-                        child: const Text(TTexts.tMenu10, style: TextStyle(color: TColors.error))
+                        child: Text(
+                          TTexts.tMenu10.tr, 
+                          style: const TextStyle(color: TColors.error),
+                        ),
                       ),
                     ),
                   ],

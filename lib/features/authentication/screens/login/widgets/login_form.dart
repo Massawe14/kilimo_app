@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/features/authentication/controllers/login/login_controller.dart';
-import 'package:kilimo_app/features/authentication/screens/password_configuration/forgot_password.dart';
-import 'package:kilimo_app/util/validators/validation.dart';
 
 import '../../../../../util/constants/sizes.dart';
 import '../../../../../util/constants/text_strings.dart';
+import '../../../../../util/validators/validation.dart';
+import '../../../controllers/login/login_controller.dart';
+import '../../password_configuration/forgot_password.dart';
 import '../../signup/signup.dart';
 
 class TLoginForm extends StatelessWidget {
@@ -28,8 +28,8 @@ class TLoginForm extends StatelessWidget {
             TextFormField(
               controller: controller.email,
               validator: (value) => TValidator.validateEmail(value),
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Iconsax.direct_right),
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Iconsax.direct_right),
                 labelText: TTexts.email,
               ),
             ),
@@ -65,13 +65,13 @@ class TLoginForm extends StatelessWidget {
                         onChanged: (value) => controller.rememberMe.value = !controller.rememberMe.value,
                       ),
                     ),
-                    const Text(TTexts.rememberMe),
+                    Text(TTexts.rememberMe),
                   ],
                 ),
                 // Forgot Password
                 TextButton(
                   onPressed: () => Get.to(() => const ForgotPassword()),
-                  child: const Text(TTexts.forgetPassword),
+                  child: Text(TTexts.forgetPassword),
                 ),
               ],
             ),
@@ -81,7 +81,7 @@ class TLoginForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () => controller.emailAndPasswordSignIn(),
-                child: const Text(TTexts.signIn),
+                child: Text(TTexts.signIn),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
@@ -90,7 +90,7 @@ class TLoginForm extends StatelessWidget {
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () => Get.to(() => const SignupScreen()),
-                child: const Text(TTexts.createAccount),
+                child: Text(TTexts.createAccount),
               ),
             ),
           ],

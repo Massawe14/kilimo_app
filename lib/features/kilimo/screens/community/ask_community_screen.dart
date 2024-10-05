@@ -26,7 +26,7 @@ class AskCommunity extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Ask Community'),
+        title: Text('ask_community'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,7 +37,7 @@ class AskCommunity extends StatelessWidget {
               children: [
                 // Heading
                 Text(
-                  'Improve the probabilty of receiving the right answer', 
+                  'ask_community_heading'.tr, 
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
@@ -57,7 +57,7 @@ class AskCommunity extends StatelessWidget {
                         child: Obx(
                           () => Text(
                             controller.selectedCrop.value.isEmpty
-                              ? 'Select Crop'
+                              ? 'select_crop'.tr
                               : controller.selectedCrop.value, // Display selected crop
                             style: const TextStyle(
                               fontSize: 14.0,
@@ -70,8 +70,8 @@ class AskCommunity extends StatelessWidget {
                     // Question Title
                     TextField(
                       controller: controller.problemTitleController,
-                      decoration: const InputDecoration(
-                        hintText: 'Add a question...',
+                      decoration: InputDecoration(
+                        hintText: 'add_question'.tr,
                         border: InputBorder.none,
                       ),
                       // Set character limit as specified in the UI
@@ -81,8 +81,8 @@ class AskCommunity extends StatelessWidget {
                     // Problem Description
                     TextField(
                       controller: controller.problemDescriptionController,
-                      decoration: const InputDecoration(
-                        hintText: 'Describe your question...',
+                      decoration: InputDecoration(
+                        hintText: 'describe_question'.tr,
                         border: InputBorder.none,
                       ),
                       maxLines: null, // Allow unlimited lines
@@ -91,11 +91,11 @@ class AskCommunity extends StatelessWidget {
                     // Location
                     TextField(
                       controller: controller.locationController,
-                      decoration: const InputDecoration(
-                        hintText: 'Add your location',
+                      decoration: InputDecoration(
+                        hintText: 'your_location'.tr,
                         border: InputBorder.none,
                       ),
-                      maxLines: null, // Allow unlimited lines
+                      enabled: false, // Disable user input
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Display Selected Image
@@ -117,7 +117,7 @@ class AskCommunity extends StatelessWidget {
                         child: Obx(
                           () => Text(
                             controller.imageFile.value == null 
-                            ? 'upload_image'.tr : 'Change Image',
+                            ? 'upload_image'.tr : 'change_image'.tr,
                             style: const TextStyle(color: TColors.accent),
                           ),
                         ),

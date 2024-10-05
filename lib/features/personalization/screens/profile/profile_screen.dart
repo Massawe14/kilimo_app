@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kilimo_app/common/widgets/loaders/shimmer.dart';
 
 import '../../../../common/widgets/image_text_widget/t_circular_image.dart';
+import '../../../../common/widgets/loaders/shimmer.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
@@ -32,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text('Profile'),
+        title: Text('profile'.tr),
         actions: [
           Obx(
             () => IconButton(
@@ -90,21 +90,27 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text('Change Profile Picture', style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  'change_profile_picture'.tr, 
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 // Details
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
                 const Divider(color: TColors.grey),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 // Heading Profile Info
-                const TSectionHeading(title: 'Profile Information', showActionButton: false),
+                TSectionHeading(
+                  title: 'profile_information'.tr, 
+                  showActionButton: false,
+                ),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 TProfileMenu(
-                  title: 'Name', 
+                  title: 'name'.tr, 
                   value: controller.user.value.fullName, 
                   onPressed: () => Get.to(() => const ChangeName()),
                 ),
                 TProfileMenu(
-                  title: 'Username', 
+                  title: 'username'.tr, 
                   value: controller.user.value.username, 
                   onPressed: () {},
                 ),
@@ -112,21 +118,24 @@ class ProfileScreen extends StatelessWidget {
                 const Divider(color: TColors.grey),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 // Heading Profile Info
-                const TSectionHeading(title: 'Personal Information', showActionButton: false),
+                TSectionHeading(
+                  title: 'personal_information'.tr, 
+                  showActionButton: false,
+                ),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 TProfileMenu(
-                  title: 'User ID', 
+                  title: 'user_id'.tr, 
                   value: controller.user.value.id, 
                   icon: Iconsax.copy, 
                   onPressed: () {},
                 ),
                 TProfileMenu(
-                  title: 'E-mail', 
+                  title: 'email'.tr, 
                   value: controller.user.value.email, 
                   onPressed: () {},
                 ),
                 TProfileMenu(
-                  title: 'Phone Number', 
+                  title: 'Phone_number'.tr, 
                   value: controller.user.value.phoneNumber, 
                   onPressed: () => Get.to(() => const ChangePhoneNumber()),
                 ),
@@ -135,9 +144,9 @@ class ProfileScreen extends StatelessWidget {
                 Center(
                   child: TextButton(
                     onPressed: () => controller.deleteAccountWarningPopup(),
-                    child: const Text(
-                      'Delete Account', 
-                      style: TextStyle(
+                    child: Text(
+                      'delete_account'.tr, 
+                      style: const TextStyle(
                         color: TColors.error,
                       ),
                     ),

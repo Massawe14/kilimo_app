@@ -1,8 +1,8 @@
 // This class contains all the App Images in String formats.
 class TImages {
   // App logos
-  static const String darkAppLogo = "assets/logos/splash-logo-black.png";
-  static const String lightAppLogo = "assets/logos/splash-logo-white.png";
+  static const String darkAppLogo = "assets/logos/logo.png";
+  static const String lightAppLogo = "assets/logos/logo.png";
 
   // Social logos
   static const String google = "assets/icons/google-icon.png";
@@ -21,8 +21,8 @@ class TImages {
   static const String productsIllustration = "assets/images/animations/workout.png";
 
   // Lottie Animations
-  static const String docerAnimation = "assets/images/animations/Docker-Logo-Animation.json";
-  static const String successfullyRegisterAnimation = "assets/images/animations/success-register-animation.json";
+  static const String docerAnimation = "assets/images/animations/Docker-Logo-Animation.gif";
+  static const String successfullyRegisterAnimation = "assets/images/animations/success-register-animation.gif";
 
   // Crops Images
   static const String cropImage1 = "assets/images/crops/maize.jpeg";

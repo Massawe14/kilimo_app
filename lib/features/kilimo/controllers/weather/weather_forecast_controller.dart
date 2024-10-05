@@ -86,6 +86,7 @@ class WeatherForecastController extends GetxController {
 
         double temperature = weather['main']['temp'];
         int weatherIcon = weather['weather'][0]['id'];
+        String description = weather['weather'][0]['description'];
         debugPrint('Weather Icon Code: $weatherIcon');
 
         // Construct a map with string keys
@@ -93,6 +94,7 @@ class WeatherForecastController extends GetxController {
           'date': formattedDate,
           'temperature': '${temperature.round()}°C',
           'weatherIcon': weatherIcon,
+          'description': description, 
         });
       }
     } catch (e) {
@@ -102,9 +104,7 @@ class WeatherForecastController extends GetxController {
 
   Future<Position> _getCurrentLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+      Position position = await Geolocator.getCurrentPosition();
       return position;
     } catch (e) {
       debugPrint("Error getting current location: $e");

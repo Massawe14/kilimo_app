@@ -22,7 +22,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: const Text("Terms And Conditions"),
+        title: Text("terms_and_conditions".tr),
       ),
       body: SafeArea(
         child: FutureBuilder(

@@ -22,7 +22,7 @@ class PlantingSelection extends StatelessWidget {
               color: darkMode ? TColors.white : TColors.black,
             ),
           ),
-          title: const Text('Cultivation Tips'),
+          title: Text('cultivation_tips'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

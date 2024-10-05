@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../../../common/widgets/image_text_widget/t_circular_image.dart';
 import '../../../../../util/constants/image_strings.dart';
 import '../../../../../util/constants/sizes.dart';
 import '../../../controllers/community/post_community_controller.dart';
@@ -28,13 +30,13 @@ class TReplyCard extends StatelessWidget {
           );
         }
         if (snapshot.hasError) {
-          return const Center(
-            child: Text('Something went wrong'),
+          return Center(
+            child: Text('something_went_wrong'.tr),
           );
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(
-            child: Text('No replies found'),
+          return Center(
+            child: Text('no_replies_found'.tr),
           );
         }
     
@@ -53,10 +55,11 @@ class TReplyCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      backgroundImage: reply.profileImage.isNotEmpty 
-                        ? NetworkImage(reply.profileImage) 
-                        : const AssetImage(TImages.profileImage) as ImageProvider,
+                    TCircularImage(
+                      image: reply.profileImage.isNotEmpty ? reply.profileImage : TImages.profileImage, 
+                      width: 56, 
+                      height: 56, 
+                      isNetworkImage: reply.profileImage.isNotEmpty,
                     ),
                     const SizedBox(width: 10),
                     Column(

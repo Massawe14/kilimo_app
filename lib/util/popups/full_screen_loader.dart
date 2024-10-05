@@ -14,17 +14,17 @@ class TFullScreenLoader {
   static void openLoadingDialog(String text, String animation) {
     showDialog(
       context: Get.overlayContext!, // Use Get.overlayContext for overlay dialog
-      barrierDismissible: false,
+      barrierDismissible: false, // The dialog can't be dismissed by tapping outside it
       builder: (_) => PopScope(
-        canPop: false, // disable popping with back button
+        canPop: false, // Disable popping with back button
         child: Container(
           color: THelperFunctions.isDarkMode(Get.context!) ? TColors.dark : TColors.white,
           width: double.infinity,
           height: double.infinity,
           child: Column(
             children: [
-              const SizedBox(height: 250), // Adjust the spacing as needed
-              TAnimationLoaderWidget(text: text, animation: animation),
+              const SizedBox(height: 100), // Adjust the spacing as needed
+              TAnimationLoaderWidget(text: text, animation: animation), // Display loading animation
             ],
           ),
         ),

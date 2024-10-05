@@ -26,7 +26,10 @@ class ChangePhoneNumber extends StatelessWidget {
             color: darkMode ? TColors.white : TColors.black,
           ),
         ),
-        title: Text('Change Phone Number', style: Theme.of(context).textTheme.headlineSmall),
+        title: Text(
+          'change_phone_number'.tr, 
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,7 +40,7 @@ class ChangePhoneNumber extends StatelessWidget {
               children: [
                 // Heading
                 Text(
-                  'Use real phone number for easy verification. This phone number will appear on several pages.',
+                  'change_phone_number_heading'.tr,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
@@ -50,9 +53,9 @@ class ChangePhoneNumber extends StatelessWidget {
                         controller: controller.phoneNumber,
                         validator: (value) => TValidator.validatePhoneNumber( value),
                         expands: false,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: TTexts.phoneNo,
-                          prefixIcon: Icon(Iconsax.call),
+                          prefixIcon: const Icon(Iconsax.call),
                         ),
                       ),
                     ],
@@ -64,7 +67,7 @@ class ChangePhoneNumber extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => controller.updateUserPhoneNumber(),
-                    child: const Text('Save'),
+                    child: Text('save'.tr),
                   ),
                 ),
               ],

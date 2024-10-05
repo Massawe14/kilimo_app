@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
 
@@ -71,7 +72,7 @@ class WeatherScreenState extends State<WeatherScreen> {
 
   void _getCurrentLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position position = await Geolocator.getCurrentPosition();
       setState(() {
         _currentPosition = position;
       });
@@ -82,6 +83,7 @@ class WeatherScreenState extends State<WeatherScreen> {
   
   @override
   Widget build(BuildContext context) {
+    final darkMode = THelperFunctions.isDarkMode(context);
     return Center(
       // ignore: unnecessary_null_comparison
       child: _currentPosition == null
@@ -90,9 +92,11 @@ class WeatherScreenState extends State<WeatherScreen> {
             future: wf.currentWeatherByLocation(_currentPosition.latitude, _currentPosition.longitude), 
             builder: (context, AsyncSnapshot<Weather> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return CircularProgressIndicator(
+                  color: darkMode ? TColors.white : TColors.black,
+                );
               } else if (snapshot.hasError) {
-                return const Text('Network problem');
+                return Text('network_problem'.tr);
               } else {
                 Weather weather = snapshot.data!;
                 return _buildWeatherCard(weather);

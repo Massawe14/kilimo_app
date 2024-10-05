@@ -1,4 +1,23 @@
-Cercospora leaf spot Gray leaf spot
-Common rust
-Northern leaf blight
-healthy
+Maize_Common_Rust
+Maize_Fall_Army_Worms
+Maize_Grey_Leaf_Spot
+Maize_Northen_Leaf_Blight
+Maize_Lethal_Necrosis
+Maize_Phaeosphaeria_Leaf_Spot
+Maize_Streak_Virus
+Beans_Angular_Leaf_Spot
+Beans_Anthracnose
+Beans_Ascochyta_Leaf_Spot
+Bean_Common_Mosaic_Virus
+Bean_Common Bacterial_Spot
+Bean Rust
+Rice_Bacterial_Blight
+Rice_Blast
+Rice_Brown_Spot
+Rice_Shealth_Blight
+Rice_Tungro_Virus
+Cassava_Bacterial_Blight
+Cassava_Brown_Spot
+Cassava_Brown_Streak
+Cassava_Grean_Mite
+Cassava_Mosaic_Virus

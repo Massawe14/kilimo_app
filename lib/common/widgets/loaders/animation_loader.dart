@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kilimo_app/util/constants/colors.dart';
 import 'package:kilimo_app/util/constants/sizes.dart';
-import 'package:lottie/lottie.dart';
 
+// A widget for displaying on animated loading with optional text and action button
 class TAnimationLoaderWidget extends StatelessWidget {
   // Default constructor for the TAnimationLoaderWidget.
   // Parameters:
@@ -28,45 +28,35 @@ class TAnimationLoaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Display Lottie animation
-        Flexible(
-          fit: FlexFit.loose,
-          child: Lottie.asset(
-            animation, 
-            width: MediaQuery.of(context).size.width * 0.8
-          ),
-        ),
-        const SizedBox(height: TSizes.defaultSpace),
-        Flexible(
-          fit: FlexFit.loose,
-          child: Text(
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Load GIF animation
+          Image.asset(animation, width: MediaQuery.of(context).size.width * 0.8),
+          const SizedBox(height: TSizes.defaultSpace),
+          Text(
             text,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
-        ),
-        const SizedBox(height: TSizes.defaultSpace),
-        showAction
-          ? Flexible(
-            fit: FlexFit.loose,
-            child: SizedBox(
-              width: 250,
-              child: OutlinedButton(
-                onPressed: onActionPressed,
-                style: OutlinedButton.styleFrom(backgroundColor: TColors.dark),
-                child: Text(
-                  actionText!,
-                  style: Theme.of(context).textTheme.bodyMedium!.apply(color: TColors.light),
+          const SizedBox(height: TSizes.defaultSpace),
+          // Conditional rendering of the action button
+          showAction
+            ? SizedBox(
+                width: 250,
+                child: OutlinedButton(
+                  onPressed: onActionPressed,
+                  style: OutlinedButton.styleFrom(backgroundColor: TColors.dark),
+                  child: Text(
+                    actionText!,
+                    style: Theme.of(context).textTheme.bodyMedium!.apply(color: TColors.light),
+                  ),
                 ),
-              ),
-            ),
-          )
-        : const Expanded(child: SizedBox()),
-      ],
+              )
+            : const SizedBox(),
+          ],
+      ),
     );
   }
 }

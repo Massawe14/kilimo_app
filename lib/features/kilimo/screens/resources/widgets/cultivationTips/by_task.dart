@@ -23,7 +23,7 @@ class ByTask extends StatelessWidget {
                   children: [
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Plant Selection',
+                      title: 'plant_selection'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: () => Get.to(const PlantingSelection()),
                     ),
@@ -31,7 +31,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Planting',
+                      title: 'planting'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -39,7 +39,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Plant Training',
+                      title: 'plant_training'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -47,7 +47,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Monitoring',
+                      title: 'monitoring'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -55,7 +55,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Site Selection',
+                      title: 'site_selection'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -63,7 +63,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Field Preparation',
+                      title: 'field_preparation'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -71,7 +71,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Weeding',
+                      title: 'weeding'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -79,7 +79,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Integration',
+                      title: 'integration'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -87,7 +87,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Fertilizer Chemical',
+                      title: 'fertilizer_chemical'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -95,7 +95,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Preventive Measure',
+                      title: 'preventive_measure'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -103,7 +103,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Harvesting',
+                      title: 'harvesting'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),
@@ -111,7 +111,7 @@ class ByTask extends StatelessWidget {
                     const Divider(color: TColors.grey),
                     TCultivationTipsMenuTile(
                       leading: Iconsax.security_user,
-                      title: 'Post Harvest',
+                      title: 'post_harvest'.tr,
                       trailing: Iconsax.arrow_right_3,
                       onTap: (){},
                     ),

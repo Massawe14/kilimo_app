@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -9,7 +8,6 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../data/repositories/post/post_repository.dart';
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
-import '../../models/community/post_modal.dart';
 import 'ask_community_screen.dart';
 import 'widgets/crop_categories.dart';
 import 'widgets/post_list.dart';
@@ -25,7 +23,7 @@ class CommunityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Community'),
+        title: Text('community'.tr),
         actions: [
           IconButton(
             icon: const Icon(Iconsax.notification),
@@ -49,35 +47,10 @@ class CommunityScreen extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.all(TSizes.spaceBtwItems),
               sliver: SliverToBoxAdapter(
-                child: TypeAheadField<PostModal>(
-                  builder: (context, controller, focusNode) {
-                    return TextField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(
-                        labelText: 'Search by crop type or location',
-                        prefixIcon: Icon(Icons.search),
-                      ),
-                      onChanged: (value) {
-                        // Trigger filtering whenever the search text changes
-                        _selectedFilter.value = value;
-                      },
-                    );
-                  },
-                  suggestionsCallback: (pattern) async {
-                    if (pattern.isEmpty) return [];
-                    return await postRepository.searchPosts(pattern);
-                  },
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      title: Text(suggestion.problemTitle), // Show post title
-                      subtitle: Text(suggestion.cropType),   // Show crop type
-                    );
-                  },
-                  onSelected: (suggestion) {
-                    _searchController.text = suggestion.problemTitle; // Set the title as search text
-                  },
-                  emptyBuilder: (context) => const ListTile(
-                    title: Text('No results found'),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'search'.tr,
+                    prefixIcon: const Icon(Icons.search),
                   ),
                 ),
               ),
@@ -90,9 +63,9 @@ class CommunityScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Filter by',
-                      style: TextStyle(
+                    Text(
+                      'filter_by'.tr,
+                      style: const TextStyle(
                         color: TColors.dark,
                         fontSize: TSizes.fontSizeMd,
                       ),
@@ -110,9 +83,9 @@ class CommunityScreen extends StatelessWidget {
                           postRepository.fetchFilteredPosts(selectedFilter, searchQuery);
                         }
                       },
-                      child: const Text(
-                        'Apply Filter',
-                        style: TextStyle(
+                      child: Text(
+                        'apply_filter'.tr,
+                        style: const TextStyle(
                           color: TColors.accent,
                           fontSize: TSizes.fontSizeMd,
                           fontWeight: FontWeight.bold,
@@ -124,15 +97,18 @@ class CommunityScreen extends StatelessWidget {
               ),
             ),
             // Crop Categories Section
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    TSectionHeading(title: 'Crop categories', showActionButton: false),
-                    SizedBox(height: TSizes.spaceBtwItems),
-                    CropCategories(),
+                    TSectionHeading(
+                      title: 'crop_categories'.tr, 
+                      showActionButton: false,
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwItems),
+                    const CropCategories(),
                   ],
                 ),
               ),
@@ -154,8 +130,14 @@ class CommunityScreen extends StatelessWidget {
         elevation: 0.0,
         onPressed: () => Get.to(() => const AskCommunity()),
         backgroundColor: TColors.accent,
-        label: const Text('Ask Community', style: TextStyle(color: TColors.white)),
-        icon: const Icon(Iconsax.receipt_edit, color: TColors.white),
+        label: Text(
+          'ask_community'.tr, 
+          style: const TextStyle(color: TColors.white),
+        ),
+        icon: const Icon(
+          Iconsax.receipt_edit, 
+          color: TColors.white,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),

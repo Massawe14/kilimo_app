@@ -1,59 +1,42 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../util/constants/colors.dart';
+class ObjectDetectionPainter extends CustomPainter {
+  final List<dynamic> detectedObjects;
 
-class BoundingBoxPainter extends CustomPainter {
-  final List<dynamic>? results;
-
-  BoundingBoxPainter(this.results);
+  ObjectDetectionPainter(this.detectedObjects);
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (results == null || results!.isEmpty) {
-      return;
-    }
-
-    final paint = Paint()
-      ..color = TColors.error
-      ..strokeWidth = 3.0
-      ..style = PaintingStyle.stroke;
-
-    final textPainter = TextPainter(
-      textAlign: TextAlign.left,
-      textDirection: TextDirection.ltr,
-    );
-
-    for (var result in results!) {
-      if (result is Map<String, dynamic>) {
-        final rect = result['rect'] as Map<String, dynamic>;
-        final detectedClass = result['detectedClass'].toString();
-
-        final left = rect['x'] * size.width;
-        final top = rect['y'] * size.height;
-        final right = left + rect['w'] * size.width;
-        final bottom = top + rect['h'] * size.height;
-
-        final rectToDraw = Rect.fromLTRB(left, top, right, bottom);
-        canvas.drawRect(rectToDraw, paint);
-
-        // Draw label background
-        final backgroundPaint = Paint()
-          ..color = TColors.error
-          ..style = PaintingStyle.fill;
-        final labelRect = Rect.fromLTWH(left, top - 20, rect['w'] * size.width, 20);
-        canvas.drawRect(labelRect, backgroundPaint);
-
-        // Draw text
-        textPainter.text = TextSpan(
-          text: detectedClass,
+    for (var obj in detectedObjects) {
+      var rect = obj['box'];
+      var paint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0
+        ..color = Colors.red;
+      canvas.drawRect(
+        Rect.fromLTWH(
+          rect[0] * size.width,
+          rect[1] * size.height,
+          (rect[2] - rect[0]) * size.width,
+          (rect[3] - rect[1]) * size.height,
+        ),
+        paint,
+      );
+      var textPainter = TextPainter(
+        text: TextSpan(
+          text: '${obj['name']} ${(obj['conf'] * 100).toStringAsFixed(0)}%',
           style: const TextStyle(
-            color: TColors.white, 
-            fontSize: 16,
+            color: Colors.red,
+            fontSize: 14.0,
           ),
-        );
-        textPainter.layout();
-        textPainter.paint(canvas, Offset(left, top - 20));
-      }
+        ),
+        textDirection: TextDirection.ltr,
+      );
+      textPainter.layout();
+      textPainter.paint(
+        canvas,
+        Offset(rect[0] * size.width, rect[1] * size.height - 20),
+      );
     }
   }
 
