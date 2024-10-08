@@ -30,7 +30,8 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     namespace "com.example.kilimo_app"
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    // ndkVersion flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

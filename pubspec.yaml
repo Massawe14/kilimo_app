@@ -31,9 +31,9 @@ dependencies:
   # Tflite
   tflite_flutter: ^0.11.0
   # tflite: ^1.1.2
-  tflite:
-    git:
-      url: https://github.com/Despicable-Us/tflite_flutter.git
+  # tflite:
+  #   git:
+  #     url: https://github.com/Despicable-Us/tflite_flutter.git
   # tflite_flutter_helper: ^0.2.1
 
   
@@ -68,10 +68,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   hive_generator: ^2.0.1
   build_runner: ^2.4.9
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.1
 
 flutter:
   uses-material-design: true
