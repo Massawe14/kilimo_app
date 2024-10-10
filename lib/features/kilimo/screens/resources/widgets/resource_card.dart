@@ -21,33 +21,36 @@ class ResourceCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: darkMode ? TColors.accent : TColors.grey,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(icon),
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: darkMode ? TColors.accent : TColors.grey,
               ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-              Row(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(icon),
+              ),
+            ),
+            const SizedBox(height: TSizes.spaceBtwItems),
+            // Use Expanded or Flexible to prevent overflow
+            Expanded(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleSmall,
+                  Flexible( // Prevent text overflow
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                   ),
                   const Icon(Iconsax.arrow_right_3),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

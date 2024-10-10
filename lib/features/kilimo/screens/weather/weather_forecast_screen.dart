@@ -8,8 +8,6 @@ import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/weather/weather_controller.dart';
 import '../../controllers/weather/weather_forecast_controller.dart';
 import 'widgets/build_weather_icon.dart';
-import 'widgets/get_weather_advice.dart';
-import 'widgets/get_weather_advice_for_nex_four_days.dart';
 
 class WeatherForecastScreen extends StatelessWidget {
   const WeatherForecastScreen({super.key});
@@ -105,11 +103,11 @@ class WeatherForecastScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: TSizes.spaceBtwItems),
-                      Text(
-                        getWeatherAdvice(controller.weatherData.value.weatherDescription),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+                      // const SizedBox(height: TSizes.spaceBtwItems),
+                      // Text(
+                      //   getWeatherAdvice(controller.weatherData.value.weatherDescription),
+                      //   style: Theme.of(context).textTheme.bodyLarge,
+                      // ),
                     ],
                   ),
                 ),
@@ -143,21 +141,21 @@ class WeatherForecastScreen extends StatelessWidget {
                     }).toList(),
                   ),
                 ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text(
-                  getWeatherAdviceFromNextFourDays(controller.weatherData.value.weatherDescription),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text(
-                  'pro-tip'.tr,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Text(
-                  getWeatherAdvice(controller.weatherData.value.weatherDescription),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                // const SizedBox(height: TSizes.spaceBtwSections),
+                // Text(
+                //   getWeatherAdviceFromNextFourDays(controller.weatherData.value.weatherDescription),
+                //   style: Theme.of(context).textTheme.bodyLarge,
+                // ),
+                // const SizedBox(height: TSizes.spaceBtwSections),
+                // Text(
+                //   'pro-tip'.tr,
+                //   style: Theme.of(context).textTheme.bodySmall,
+                // ),
+                // const SizedBox(height: TSizes.spaceBtwItems),
+                // Text(
+                //   getWeatherAdvice(controller.weatherData.value.weatherDescription),
+                //   style: Theme.of(context).textTheme.bodyLarge,
+                // ),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 const Divider(color: TColors.grey),
                 const SizedBox(height: TSizes.spaceBtwItems),
