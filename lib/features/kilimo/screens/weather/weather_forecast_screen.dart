@@ -178,17 +178,22 @@ class WeatherForecastScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
+                            color: TColors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
                             offset: const Offset(0, 3),
                           ),
                         ],
                       ),
                       child: Card(
-                        elevation: 0,
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 0.1,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          side: BorderSide(
+                            width: 0.2,
+                            color: TColors.grey,
+                          ),
                         ),
                         color: darkMode ? TColors.dark : TColors.white,
                         child: Padding(
