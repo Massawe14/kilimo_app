@@ -60,6 +60,9 @@ class TTexts {
   static const String verificationCode = "verificationCode";
   static String resendEmail = "resend_email".tr;
   static const String resendEmailIn = "Resend Email In";
+  static String role = "Role";
+  static String district = "District";
+  static String street = "Street";
 
   // Authentication Heading Text
   static String loginTitle = "welcome_back".tr;

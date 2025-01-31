@@ -43,7 +43,7 @@ class ResourceCard extends StatelessWidget {
                   Flexible( // Prevent text overflow
                     child: Text(
                       title,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ),
                   const Icon(Iconsax.arrow_right_3),

@@ -8,6 +8,7 @@ import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/image_strings.dart';
 import '../../../../util/constants/sizes.dart';
 import '../../controllers/community/post_community_controller.dart';
+import '../../controllers/community/share_post_controller.dart';
 import 'widgets/reply_card.dart';
 import 'widgets/reply_community_appbar.dart';
 
@@ -21,6 +22,7 @@ class ReplyCommunityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shareController = Get.put(SharePostController());
     final PostCommunityController postController = Get.put(PostCommunityController());
 
     // Fetch post details when the screen is loaded
@@ -131,21 +133,55 @@ class ReplyCommunityScreen extends StatelessWidget {
                         ),
                       ),
                       const Divider(color: TColors.grey),
-                      const SizedBox(height: 3),
+                      const SizedBox(height: TSizes.spaceBtwItems),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                            icon: const Icon(Iconsax.like_1),
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: const Icon(Iconsax.dislike),
-                            onPressed: () {},
+                          Obx(
+                            () => Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: postController.isLiked.value 
+                                        ? Icon(Iconsax.like_1, color: Colors.blue) 
+                                        : Icon(Iconsax.like_1, color: TColors.darkGrey),
+                                      onPressed: () => postController.likePost(postId),
+                                    ),
+                                    Text(
+                                      postController.likes.value.toString(),
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: TSizes.spaceBtwItems),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: postController.isDisliked.value 
+                                        ? Icon(Iconsax.dislike, color: TColors.error) 
+                                        : Icon(Iconsax.dislike, color: TColors.darkGrey),
+                                      onPressed: () => postController.dislikePost(postId),
+                                    ),
+                                    Text(
+                                      postController.dislikes.value.toString(),
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                           IconButton(
                             icon: const Icon(Icons.share),
-                            onPressed: () {},
+                            onPressed: () {
+                              // Use ShareController to share product details
+                              shareController.sharePostDetails(
+                                image: post.cropImage,
+                                title: post.problemTitle,
+                                description: post.problemDescription,
+                              );
+                            }, 
                           ),
                         ],
                       ),
@@ -180,7 +216,7 @@ class ReplyCommunityScreen extends StatelessWidget {
               onPressed: () => postController.addReply(postId),
             ),
           ),
-          maxLength: 1200,
+          maxLength: 200,
         ),
       ),
     );

@@ -36,7 +36,7 @@ class TReplyCard extends StatelessWidget {
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return Center(
-            child: Text('no_replies_found'.tr),
+            child: const SizedBox(),
           );
         }
     

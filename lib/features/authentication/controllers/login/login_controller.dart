@@ -16,9 +16,14 @@ class LoginController extends GetxController {
   final localStorage = GetStorage();
   final hidePassword = true.obs; // Observable for binding/showing password
   final rememberMe = false.obs; // Observable for remember me acceptance
+
+  // Text Controllers for input fields
   final email = TextEditingController(); // Controller for email input field
   final password = TextEditingController(); // Controller for password input field
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>(); // Form key for form validation
+  
+  // Form key for form validation
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>(); 
+
   final userController = Get.put(UserController());
 
   @override

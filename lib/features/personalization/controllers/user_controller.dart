@@ -80,18 +80,24 @@ class UserController extends GetxController {
           final username = UserModal.generateUsername(userCredentials.user!.displayName ?? '');
 
           // Map Data
-          final user = UserModal(
+          final newUser = UserModal(
             id: userCredentials.user!.uid,
             firstName: nameParts[0],
             lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
             username: username,
             email: userCredentials.user!.email ?? '',
             phoneNumber: userCredentials.user!.phoneNumber ?? '',
-            profilePicture: userCredentials.user!.photoURL ?? '',
+            profilePicture: userCredentials.user!.photoURL ?? '', 
+            userRole: '', 
+            street: '', 
+            city: '', 
+            state: '', 
+            country: '', 
+            district: '',
           );
 
           // Save user data
-          await userRepository.saveUserRecord(user);
+          await userRepository.saveUserRecord(newUser);
         }
       }
     } catch (e) {

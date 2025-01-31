@@ -12,6 +12,10 @@ class PostModal {
   final String profilePicture;
   final String userLocation;
   final DateTime date;
+  final int likes;
+  final int dislikes;
+  final List<String> usersLiked;  // List of user IDs who liked the post
+  final List<String> usersDisliked;  // List of user IDs who disliked the post
 
   // Constructor for PostModal
   PostModal({
@@ -25,6 +29,10 @@ class PostModal {
     required this.profilePicture,
     required this.userLocation,
     required this.date,
+    this.likes = 0,
+    this.dislikes = 0,
+    this.usersLiked = const [],
+    this.usersDisliked = const [],
   });
 
   // static function to create an empty post modal
@@ -38,6 +46,10 @@ class PostModal {
     userName: '',
     profilePicture: '',
     userLocation: '',
+    likes: 0,
+    dislikes: 0,
+    usersLiked: [],
+    usersDisliked: [],
     date: DateTime.now(),
   );
 
@@ -53,6 +65,10 @@ class PostModal {
       'UserName': userName,
       'ProfilePicture': profilePicture,
       'UserLocation': userLocation,
+      'Likes': likes,
+      'Dislikes': dislikes,
+      'UsersLiked': usersLiked,
+      'UsersDisliked': usersDisliked,
       'Date': date,
     };
   }
@@ -77,6 +93,10 @@ class PostModal {
       userName: data['UserName'] ?? '',
       profilePicture: data['ProfilePicture'] ?? '',
       userLocation: data['UserLocation'] ?? '',
+      likes: (data['Likes'] as int?) ?? 0,
+      dislikes: (data['Dislikes'] as int?) ?? 0,
+      usersLiked: List<String>.from(data['UsersLiked'] ?? []),
+      usersDisliked: List<String>.from(data['UsersDisliked'] ?? []),
       // Parse date from Firestore Timestamp or use current time
       date: (data['Date'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );

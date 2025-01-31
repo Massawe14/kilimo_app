@@ -30,6 +30,12 @@ class PostCommunityController extends GetxController {
   final location = ''.obs;
   final replyMessage = ''.obs;
 
+  // Reactive variables to track whether the post is liked or disliked
+  RxBool isLiked = false.obs;
+  RxBool isDisliked = false.obs;
+  RxInt likes = 0.obs;
+  RxInt dislikes = 0.obs;
+
   final problemTitleController = TextEditingController();
   final problemDescriptionController = TextEditingController();
   final locationController = TextEditingController();
@@ -40,6 +46,10 @@ class PostCommunityController extends GetxController {
   Rx<PostModal> selectedPost = PostModal.empty().obs;
   final isImageUploaded = false.obs;
   final isLoading = false.obs; // For loading indicator
+
+  // New fields for liked and disliked by users
+  RxList<String> likedBy = <String>[].obs;
+  RxList<String> dislikedBy = <String>[].obs;
 
   @override
   void onInit() {
@@ -125,15 +135,13 @@ class PostCommunityController extends GetxController {
     }
 
     Position position = await Geolocator.getCurrentPosition();
-    // location.value = '${position.latitude}, ${position.longitude}';
-    // locationController.text = location.value;
 
     // Perform reverse geocoding to get the location name
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks.first;
-        location.value = '${place.locality}, ${place.country}';
+        location.value = '${place.locality}, ${place.street}';
         locationController.text = location.value;
       }
     } catch (e) {
@@ -206,6 +214,10 @@ class PostCommunityController extends GetxController {
         userName: userName,
         profilePicture: profilePicture,
         userLocation: location.value,
+        likes: likes.value,
+        dislikes: dislikes.value,
+        usersDisliked: likedBy,
+        usersLiked: dislikedBy,
         date: DateTime.now(),
       );
 
@@ -331,5 +343,71 @@ class PostCommunityController extends GetxController {
       .collection('Replies')
       .orderBy('Date', descending: true)
       .snapshots();
+  }
+
+  // Method to like a post and update the likes count
+  Future<void> likePost(String postId) async {
+    try {
+      final postDoc = await FirebaseFirestore.instance.collection('Posts').doc(postId).get();
+      if (postDoc.exists) {
+        final postData = postDoc.data();
+        List<String> likedUsers = List<String>.from(postData?['UsersLiked'] ?? []);
+
+        if (likedUsers.contains(user.value!.uid)) {
+          likedUsers.remove(user.value!.uid); // If already liked, remove like
+          likes.value--; // Decrement like count
+        } else {
+          likedUsers.add(user.value!.uid); // Add like
+          likes.value++; // Increment like count
+        }
+
+        await FirebaseFirestore.instance.collection('Posts').doc(postId).update({
+          'Likes': likes.value,
+          'UsersLiked': likedUsers,
+        });
+
+        // Update the like state
+        isLiked.value = likedUsers.contains(user.value!.uid);
+        isDisliked.value = false; // Reset dislike if liked
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Failed to like post: $e',
+      );
+    }
+  }
+
+  // Method to dislike a post and update the dislikes count
+  Future<void> dislikePost(String postId) async {
+    try {
+      final postDoc = await FirebaseFirestore.instance.collection('Posts').doc(postId).get();
+      if (postDoc.exists) {
+        final postData = postDoc.data();
+        List<String> dislikedUsers = List<String>.from(postData?['UsersDisliked'] ?? []);
+
+        if (dislikedUsers.contains(user.value!.uid)) {
+          dislikedUsers.remove(user.value!.uid); // If already disliked, remove dislike
+          dislikes.value--; // Decrement dislike count
+        } else {
+          dislikedUsers.add(user.value!.uid); // Add dislike
+          dislikes.value++; // Increment dislike count
+        }
+
+        await FirebaseFirestore.instance.collection('Posts').doc(postId).update({
+          'Dislikes': dislikes.value,
+          'UsersDisliked': dislikedUsers,
+        });
+
+        // Update the dislike state
+        isDisliked.value = dislikedUsers.contains(user.value!.uid);
+        isLiked.value = false; // Reset like if disliked
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'Failed to dislike post: $e',
+      );
+    }
   }
 }

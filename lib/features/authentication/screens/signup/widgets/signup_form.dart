@@ -1,3 +1,5 @@
+import 'package:csc_picker_plus/csc_picker_plus.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,13 +11,19 @@ import '../../../controllers/signup/signup_controller.dart';
 import 'terms_and_condtion_checkbox.dart';
 
 class TSignupForm extends StatelessWidget {
-  const TSignupForm({
+  TSignupForm({
     super.key,
   });
+
+  final List<String> roleItems = [
+    'Farmer', 
+    'Extension Officer',
+  ];
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignupController());
+
     return Form(
       key: controller.signupFormKey,
       child: Column(
@@ -79,6 +87,92 @@ class TSignupForm extends StatelessWidget {
               labelText: TTexts.phoneNo,
               prefixIcon: const Icon(Iconsax.call),
             ),
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+          // Role Selection
+          Row(
+            children: [
+              Expanded(
+                child: Obx(
+                  () => DropdownButtonFormField2<String>(
+                    onChanged: (value) {
+                      controller.selectedRole.value = value ?? '';
+                    },
+                    validator: (value) => controller.selectedRole.value.isEmpty ? 'Please select a role' : null,
+                    decoration: InputDecoration(
+                      labelText: TTexts.role,
+                      prefixIcon: const Icon(Iconsax.user_tag),
+                    ),
+                    isExpanded: true,
+                    items: roleItems
+                      .map((item) => DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      )).toList(),
+                    value: controller.selectedRole.value.isEmpty ? null : controller.selectedRole.value,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+          // Address
+          CSCPickerPlus(
+            layout: Layout.vertical,
+            flagState: CountryFlag.ENABLE,
+            onCountryChanged: (country){
+              controller.selectedCountry.value = country;
+            },
+            onStateChanged: (state){
+              controller.selectedState.value = state ?? '';
+            },
+            onCityChanged: (city){
+              controller.selectedCity.value = city ?? '';
+            },
+            // Placeholders for dropdown search field
+            countrySearchPlaceholder: "Country",
+            stateSearchPlaceholder: "State",
+            citySearchPlaceholder: "City",
+
+            // Labels for dropdown
+            countryDropdownLabel: "Select Country",
+            stateDropdownLabel: "Select State",
+            cityDropdownLabel: "Select City",
+            dropdownDialogRadius: 12.0,
+            searchBarRadius: 30.0,
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: controller.district,
+                  validator: (value) => TValidator.validateEmptyText('District', value),
+                  decoration: InputDecoration(
+                    labelText: TTexts.district,
+                    prefixIcon: const Icon(Iconsax.location),
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+              const SizedBox(width: TSizes.spaceBtwInputFields),
+              Expanded(
+                child: TextFormField(
+                  controller: controller.street,
+                  validator: (value) => TValidator.validateEmptyText('Street', value),
+                  decoration: InputDecoration(
+                    labelText: TTexts.street,
+                    prefixIcon: const Icon(Iconsax.location),
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+            ]
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
           // Password

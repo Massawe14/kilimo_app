@@ -9,10 +9,13 @@ import '../../../../../util/constants/colors.dart';
 import '../../../../../util/constants/image_strings.dart';
 import '../../../../../util/constants/sizes.dart';
 import '../../../../personalization/controllers/user_controller.dart';
+import '../../../controllers/community/post_community_controller.dart';
+import '../../../controllers/community/share_post_controller.dart';
 
 class TQuestionCard extends StatelessWidget {
   const TQuestionCard({
     super.key,
+    required this.postId,
     required this.image,
     required this.username,
     required this.profilePicture,
@@ -22,24 +25,32 @@ class TQuestionCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.date,
+    required this.likes,
+    required this.dislikes,
   });
 
-  final String image, username, userId, location, crop;
+  final String image, username, userId, location, crop, postId;
   final String title, profilePicture;
   final String description;
+  final int likes, dislikes;
   final DateTime date;
 
   @override
   Widget build(BuildContext context) {
+    // Access the ShareController
+    final shareController = Get.put(SharePostController());
+    final postController = Get.put(PostCommunityController());
     final controller = Get.put(UserController());
     controller.fetchUserRecordById(userId); // Call function here
+
+    // Display the post card UI
     return Container(
       width: 350,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withAlpha(128),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(0, 3),
@@ -85,12 +96,15 @@ class TQuestionCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            username,
-                            style: const TextStyle(
-                              color: TColors.accent,
-                              fontSize: TSizes.fontSizeMd,
-                              fontWeight: FontWeight.bold
+                          Expanded(
+                            child: Text(
+                              username,
+                              style: const TextStyle(
+                                color: TColors.accent,
+                                fontSize: TSizes.fontSizeMd,
+                                fontWeight: FontWeight.bold
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           // Location & Date
@@ -166,17 +180,51 @@ class TQuestionCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: const Icon(Iconsax.like_1),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Iconsax.dislike),
-                  onPressed: () {},
+                Obx(
+                  () => Row(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: postController.isLiked.value 
+                              ? Icon(Iconsax.like_1, color: Colors.blue) 
+                              : Icon(Iconsax.like_1, color: TColors.darkGrey),
+                            onPressed: () => postController.likePost(postId),
+                          ),
+                          Text(
+                            postController.likes.value.toString(),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: TSizes.spaceBtwItems),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: postController.isDisliked.value 
+                              ? Icon(Iconsax.dislike, color: TColors.error) 
+                              : Icon(Iconsax.dislike, color: TColors.darkGrey),
+                            onPressed: () => postController.dislikePost(postId),
+                          ),
+                          Text(
+                            postController.dislikes.value.toString(),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.share),
-                  onPressed: () {},
+                  onPressed: () {
+                    // Use ShareController to share product details
+                    shareController.sharePostDetails(
+                      image: image,
+                      title: title,
+                      description: description,
+                    );
+                  }, 
                 ),
               ],
             ),

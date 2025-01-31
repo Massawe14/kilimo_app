@@ -115,6 +115,58 @@ class WeatherForecastScreen extends StatelessWidget {
                 const Divider(color: TColors.grey),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Text(
+                  'prediction'.tr,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                // Predictions
+                Obx(() {
+                  if (weatherController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (weatherController.prediction.value.isEmpty) {
+                    return const Text('Fetching predictions...');
+                  } else {
+                    // Display the single prediction in a decorated card
+                    return Container(
+                      width: 350,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: TColors.grey.withAlpha(128),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 0.1,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          side: BorderSide(
+                            width: 0.2,
+                            color: TColors.grey,
+                          ),
+                        ),
+                        color: darkMode ? TColors.dark : TColors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(TSizes.defaultSpace),
+                          child: Text(
+                            weatherController.prediction.value,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                }),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                const Divider(color: TColors.grey),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Text(
                   'next_4_days'.tr,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
@@ -156,58 +208,6 @@ class WeatherForecastScreen extends StatelessWidget {
                 //   getWeatherAdvice(controller.weatherData.value.weatherDescription),
                 //   style: Theme.of(context).textTheme.bodyLarge,
                 // ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                const Divider(color: TColors.grey),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Text(
-                  'prediction'.tr,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                // Predictions
-                Obx(() {
-                  if (weatherController.isLoading.value) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (weatherController.prediction.value.isEmpty) {
-                    return const Text('Fetching predictions...');
-                  } else {
-                    // Display the single prediction in a decorated card
-                    return Container(
-                      width: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: TColors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 0.1,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          side: BorderSide(
-                            width: 0.2,
-                            color: TColors.grey,
-                          ),
-                        ),
-                        color: darkMode ? TColors.dark : TColors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(TSizes.defaultSpace),
-                          child: Text(
-                            weatherController.prediction.value,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                }),
               ],
             ),
           ),
