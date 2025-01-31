@@ -41,21 +41,6 @@ class ResourcesScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: TSizes.spaceBtwItems),
           child: Column(
             children: [
-              // Search bar
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search resources'.tr,
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
               // Grid view for resource cards
               Expanded(
                 child: GridView.builder(

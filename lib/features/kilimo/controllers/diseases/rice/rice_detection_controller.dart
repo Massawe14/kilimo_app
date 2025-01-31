@@ -1,17 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../../../../../util/constants/api_constants.dart';
+import '../../../../../util/popups/loaders.dart';
+import '../../../models/report/report_model.dart';
 
 class RiceDetectionController extends GetxController {
   var imageFile = Rx<File?>(null);
   var detectionResult = Rx<Map<String, dynamic>?>(null);
+  var user = Rx<User?>(null);
   var isLoading = false.obs;
 
   final ImagePicker picker = ImagePicker();
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  @override
+  onInit() {
+    super.onInit();
+    user.bindStream(FirebaseAuth.instance.authStateChanges());
+  }
 
   Future<void> captureImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -68,6 +80,9 @@ class RiceDetectionController extends GetxController {
           const JsonEncoder encoder = JsonEncoder.withIndent('  ');
           debugPrint('Response Body: ${encoder.convert(jsonResponse)}');
           detectionResult.value = jsonResponse;
+
+          // Save report to Firestore
+          await saveReport();
         } else {
           debugPrint('Invalid response structure: $jsonResponse');
           detectionResult.value = null;
@@ -119,6 +134,45 @@ class RiceDetectionController extends GetxController {
 
     boxes.sort((a, b) => b['conf'].compareTo(a['conf']));
     return boxes.first;
+  }
+
+  // Save diagnosis report to Firestore
+  Future<void> saveReport() async {
+    final highestConfidenceBox = getHighestConfidenceBox(getBoxes(1, 1));
+
+    if (highestConfidenceBox == null) return;
+
+    if (user.value == null) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'User not authenticated',
+      );
+      return;
+    }
+
+    String userId = user.value!.uid;
+
+    // Fetch user details from Firestore (assuming user details are stored in a collection 'users')
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+
+    final report = Report(
+      id: '',
+      userId: userId,
+      phoneNumber: userDoc['PhoneNumber'],
+      cropType: "Rice",
+      predictionResult: [highestConfidenceBox['name']],
+      city: userDoc['City'],
+      district: userDoc['District'],
+      ward: userDoc['Street'],
+      date: DateTime.now(),
+    );
+
+    try {
+      await firestore.collection('Reports').add(report.toJson());
+      debugPrint("Diagnosis report saved successfully!");
+    } catch (e) {
+      debugPrint("Error saving report: $e");
+    }
   }
 
   // Clear output when the screen is closed

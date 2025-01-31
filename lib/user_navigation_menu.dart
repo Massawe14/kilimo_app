@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 
 import 'features/kilimo/screens/community/community_screen.dart';
 import 'features/kilimo/screens/detector/real_time_detection_screen.dart';
-import 'features/kilimo/screens/home/home_screen.dart';
+import 'features/kilimo/screens/home/farmer_home_screen.dart';
 import 'features/kilimo/screens/resources/resources_screen.dart';
 import 'util/constants/colors.dart';
 import 'util/helpers/helper_functions.dart'; 
@@ -54,7 +54,7 @@ class UserNavigationMenu extends StatelessWidget {
 class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final screens = [
-    const HomeScreen(),
+    const FarmerHomeScreen(),
     const RealTimeDetectionScreen(),
     CommunityScreen(),
     const ResourcesScreen(),

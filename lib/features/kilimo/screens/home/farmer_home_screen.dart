@@ -15,8 +15,8 @@ import 'maize_summary_screen.dart';
 import 'rice_summary_screen.dart';
 import 'widgets/home_card.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class FarmerHomeScreen extends StatelessWidget {
+  const FarmerHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

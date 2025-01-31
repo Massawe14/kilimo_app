@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 
 import 'features/kilimo/screens/community/community_screen.dart';
 import 'features/kilimo/screens/detector/real_time_detection_screen.dart';
-import 'features/kilimo/screens/home/home_screen.dart';
+import 'features/kilimo/screens/home/officer_home_screen.dart';
 import 'features/kilimo/screens/reports/reports_screen.dart';
 import 'util/constants/colors.dart';
 import 'util/helpers/helper_functions.dart';
@@ -54,9 +54,9 @@ class AdminNavigationMenu extends StatelessWidget {
 class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final screens = [
-    const HomeScreen(),
+    const OfficerHomeScreen(),
     const RealTimeDetectionScreen(),
     CommunityScreen(),
-    const ReportsScreen(),
+    ReportScreen(),
   ];
 }

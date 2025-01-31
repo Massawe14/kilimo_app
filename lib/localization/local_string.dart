@@ -212,6 +212,7 @@ class LocalString extends Translations {
       "rice_disease_detection": "Rice Disease Detection",
       "preventive_measures": "Preventive Measures",
       "prediction": "Crop Disease Forecasting Using Weather Information",
+      "report": "Report",
     },
     
     // SWAHILI LANGUAGE
@@ -423,6 +424,7 @@ class LocalString extends Translations {
       "rice_disease_detection": "Utambuzi wa Magonjwa ya Mpunga",
       "preventive_measures": "Hatua za kuzuia",
       "prediction": "Utabiri wa Magonjwa ya Mazao Kutumia Taarifa ya Hali ya Hewa",
+      "report": "Ripoti",
    }
   };
 }

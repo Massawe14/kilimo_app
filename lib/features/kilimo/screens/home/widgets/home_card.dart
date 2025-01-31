@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../../util/constants/sizes.dart';
+import '../../../../../util/constants/colors.dart';
 
 class THomeCard extends StatelessWidget {
   const THomeCard({
@@ -38,6 +39,7 @@ class THomeCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
+          color: TColors.white,
           child: Column(
             children: [
               ClipRRect(
