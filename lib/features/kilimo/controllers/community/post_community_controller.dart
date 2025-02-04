@@ -238,7 +238,7 @@ class PostCommunityController extends GetxController {
     } catch (e) {
       // Remove Loader
       TFullScreenLoader.stopLoading();
-      TLoaders.warningSnackBar(
+      TLoaders.errorSnackBar(
         title: 'Post not sent',
         message: 'Something went wrong posting your problem: $e',
       );

@@ -54,9 +54,9 @@ class ReportScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Cases", style: Theme.of(context).textTheme.headlineSmall),
+                Text("Crop diseases report", style: Theme.of(context).textTheme.headlineMedium),
                 IconButton(
-                  icon: Icon(Iconsax.document_download5, color: TColors.primary),
+                  icon: Icon(Iconsax.document_download5, size: 30, color: TColors.primary),
                   onPressed: () => _exportToPDF(),
                 ),
               ],

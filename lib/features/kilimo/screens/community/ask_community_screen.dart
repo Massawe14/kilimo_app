@@ -100,7 +100,7 @@ class CommunityChats extends StatelessWidget {
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Display Selected Image
-                    Obx(() =>controller.imageFile.value != null
+                    Obx(() => controller.imageFile.value != null
                       ? Image.file(
                           controller.imageFile.value!,
                           width: double.infinity, 

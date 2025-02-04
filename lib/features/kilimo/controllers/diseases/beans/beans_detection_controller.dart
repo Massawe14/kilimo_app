@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -81,7 +83,7 @@ class BeansDetectionController extends GetxController {
           debugPrint('Response Body: ${encoder.convert(jsonResponse)}');
           detectionResult.value = jsonResponse;
 
-          // Save report to Firestore
+          // Save report and send SMS
           await saveReport();
         } else {
           debugPrint('Invalid response structure: $jsonResponse');
@@ -136,7 +138,7 @@ class BeansDetectionController extends GetxController {
     return boxes.first;
   }
 
-  // Save diagnosis report to Firestore
+  // Save diagnosis report to Firestore and send SMS notification
   Future<void> saveReport() async {
     final highestConfidenceBox = getHighestConfidenceBox(getBoxes(1, 1));
 
@@ -170,8 +172,73 @@ class BeansDetectionController extends GetxController {
     try {
       await firestore.collection('Reports').add(report.toJson());
       debugPrint("Diagnosis report saved successfully!");
+
+      // Send SMS notification
+      await sendDetectionNotification(
+        phoneNumber: userDoc['PhoneNumber'],
+        cropType: "Beans",
+        detectionResult: highestConfidenceBox['name'],
+      );
     } catch (e) {
       debugPrint("Error saving report: $e");
+    }
+  }
+
+  // Send SMS Notification
+  Future<void> sendDetectionNotification({
+    required String phoneNumber,
+    required String cropType,
+    required String detectionResult,
+  }) async {
+    const String api_key = APIConstants.tBEEMSMSAPIKEY;
+    const String secret_key = APIConstants.tBEEMSMSSECRETEKEY;
+    const String senderId = "DIGIFISH";
+    const String url = APIConstants.tBEEMSMSURL;
+
+    // Ensure phone number is in international format (Tanzania +255)
+    if (phoneNumber.startsWith("0")) {
+      phoneNumber = "255${phoneNumber.substring(1)}"; // Convert to 255764073294
+    }
+
+    // Construct message
+    String message = "Kilimo App: Your $cropType detection result is '$detectionResult'.";
+
+    // Encode credentials properly
+    String credentials = "$api_key:$secret_key";
+    String basicAuth = "Basic ${base64Encode(utf8.encode(credentials))}";
+
+    // Set headers
+    var headers = {
+      "Content-Type": "application/json",
+      "Authorization": basicAuth,
+    };
+
+    var request = http.Request('POST', Uri.parse(url));
+
+    request.body = json.encode({
+      "source_addr": senderId,
+      "encoding": 0,
+      "schedule_time": "",
+      "message": message,
+      "recipients": [
+        {
+          "recipient_id": "1",
+          "dest_addr": phoneNumber
+        }
+      ]
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      debugPrint(await response.stream.bytesToString());
+      debugPrint("✅ SMS sent successfully!");
+    }
+    else {
+      debugPrint(response.reasonPhrase);
+      debugPrint("❌ Failed to send SMS. Error: ${response.statusCode}");
     }
   }
 

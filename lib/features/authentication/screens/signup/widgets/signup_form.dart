@@ -37,6 +37,7 @@ class TSignupForm extends StatelessWidget {
                   expands: false,
                   decoration: InputDecoration(
                     labelText: TTexts.firstname,
+                    hintText: 'Enter your first name',
                     prefixIcon: const Icon(Iconsax.user),
                   ),
                 ),
@@ -49,6 +50,7 @@ class TSignupForm extends StatelessWidget {
                   expands: false,
                   decoration: InputDecoration(
                     labelText: TTexts.lastname,
+                    hintText: 'Enter your last name',
                     prefixIcon: const Icon(Iconsax.user),
                   ),
                 ),
@@ -63,6 +65,7 @@ class TSignupForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.username,
+              hintText: 'Enter your username',
               prefixIcon: const Icon(Iconsax.user_edit),
             ),
           ),
@@ -74,6 +77,7 @@ class TSignupForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.email,
+              hintText: 'Enter your email',
               prefixIcon: const Icon(Iconsax.direct),
             ),
           ),
@@ -85,6 +89,7 @@ class TSignupForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.phoneNo,
+              hintText: 'Enter your phone number',
               prefixIcon: const Icon(Iconsax.call),
             ),
           ),
@@ -155,6 +160,7 @@ class TSignupForm extends StatelessWidget {
                   validator: (value) => TValidator.validateEmptyText('District', value),
                   decoration: InputDecoration(
                     labelText: TTexts.district,
+                    hintText: 'Enter district',
                     prefixIcon: const Icon(Iconsax.location),
                   ),
                   textInputAction: TextInputAction.next,
@@ -167,6 +173,7 @@ class TSignupForm extends StatelessWidget {
                   validator: (value) => TValidator.validateEmptyText('Street', value),
                   decoration: InputDecoration(
                     labelText: TTexts.street,
+                    hintText: 'Enter street',
                     prefixIcon: const Icon(Iconsax.location),
                   ),
                   textInputAction: TextInputAction.next,
@@ -184,6 +191,7 @@ class TSignupForm extends StatelessWidget {
               expands: false,
               decoration: InputDecoration(
                 labelText: TTexts.password,
+                hintText: 'Enter your password',
                 prefixIcon: const Icon(Iconsax.password_check),
                 suffixIcon: IconButton(
                   onPressed: () => controller.hidePassword.value = !controller.hidePassword.value, 

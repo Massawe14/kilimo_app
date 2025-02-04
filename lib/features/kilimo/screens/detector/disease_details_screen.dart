@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../common/widgets/appbar/app_bar.dart';
+import '../../../../common/widgets/custom_shapes/rounded_container.dart';
 import '../../../../util/constants/colors.dart';
+import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/diseases/disease_controller.dart';
+import 'agrovet_list_screen.dart';
 
 class DiseaseDetailsScreen extends StatelessWidget {
   const DiseaseDetailsScreen({super.key});
@@ -24,8 +28,9 @@ class DiseaseDetailsScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('disease_details'.tr)
+      appBar: TAppBar(
+        showBackArrow: true,
+        title: Text('disease_details'.tr, style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -39,32 +44,42 @@ class DiseaseDetailsScreen extends StatelessWidget {
               : controller.disease.value.id.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          controller.disease.value.name,
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 16.0),
-                        Text(
-                          'symptoms'.tr, 
-                          style: const TextStyle(fontWeight: FontWeight.bold)
-                        ),
-                        ...controller.disease.value.symptoms.map((symptom) => Text(symptom)),
-                        const SizedBox(height: 16.0),
-                        Text(
-                          'treatments'.tr, 
-                          style: const TextStyle(fontWeight: FontWeight.bold)
-                        ),
-                        ...controller.disease.value.treatment.map((treatment) => Text(treatment)),
-                        const SizedBox(height: 16.0),
-                        Text(
-                          'preventive_measures'.tr, 
-                          style: const TextStyle(fontWeight: FontWeight.bold)
-                        ),
-                        ...controller.disease.value.preventiveMeasures.map((preventive) => Text(preventive)),
-                      ],
+                    child: TRoundedContainer(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.disease.value.name,
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 16.0),
+                          Text(
+                            'symptoms'.tr, 
+                            style: const TextStyle(fontWeight: FontWeight.bold)
+                          ),
+                          ...controller.disease.value.symptoms.map((symptom) => Text(symptom)),
+                          const SizedBox(height: 16.0),
+                          Text(
+                            'treatments'.tr, 
+                            style: const TextStyle(fontWeight: FontWeight.bold)
+                          ),
+                          ...controller.disease.value.treatment.map((treatment) => Text(treatment)),
+                          const SizedBox(height: 16.0),
+                          Text(
+                            'preventive_measures'.tr, 
+                            style: const TextStyle(fontWeight: FontWeight.bold)
+                          ),
+                          ...controller.disease.value.preventiveMeasures.map((preventive) => Text(preventive)),
+                          const SizedBox(height: TSizes.spaceBtwSections),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => Get.to(const AgrovetListScreen()),
+                              child: Text('Contact Agrovets'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : const Center(

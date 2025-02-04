@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../common/widgets/custom_shapes/circular_container.dart';
 import '../../../../../common/widgets/custom_shapes/rounded_container.dart';
 import '../../../../../util/constants/sizes.dart';
 import '../../../controllers/report/report_controller.dart';
@@ -35,8 +36,8 @@ class CasesStatusPieChart extends StatelessWidget {
                   PieChartSectionData(
                     color: _getColorForCrop(crop),
                     value: count.toDouble(),
-                    title: '${percentage.toStringAsFixed(1)}%',
-                    radius: 60,
+                    title: '${percentage.toStringAsFixed(0)}%',
+                    radius: 80,
                     titleStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -104,13 +105,10 @@ class CasesStatusPieChart extends StatelessWidget {
                     DataCell(
                       Row(
                         children: [
-                          Container(
-                            width: 12,
-                            height: 12,
-                            decoration: BoxDecoration(
-                              color: cropColor,
-                              shape: BoxShape.circle,
-                            ),
+                          TCircularContainer(
+                            width: 20,
+                            height: 20,
+                            backgroundColor: cropColor,
                           ),
                           const SizedBox(width: 8),
                           Text(crop, style: Theme.of(context).textTheme.bodyMedium),
@@ -118,7 +116,7 @@ class CasesStatusPieChart extends StatelessWidget {
                       ),
                     ),
                     DataCell(Text(count.toString(), style: Theme.of(context).textTheme.bodyMedium)),
-                    DataCell(Text('${percentage.toStringAsFixed(1)}%', style: Theme.of(context).textTheme.bodyMedium)),
+                    DataCell(Text('${percentage.toStringAsFixed(0)}%', style: Theme.of(context).textTheme.bodyMedium)),
                   ]);
                 }).toList(),
               ),

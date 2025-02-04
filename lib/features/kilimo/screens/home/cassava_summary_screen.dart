@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../util/constants/colors.dart';
 import '../../../../util/constants/sizes.dart';
-import '../detector/real_time_detection_screen.dart';
+import '../detector/disease_detector_screen.dart';
 import 'widgets/crop_summary_app_bar.dart';
 
 class CassavaSummaryScreen extends StatelessWidget {
@@ -175,7 +175,7 @@ class CassavaSummaryScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => Get.to(() => const RealTimeDetectionScreen()),
+                      onPressed: () => Get.to(() => const DiseaseDetectorScreen()),
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

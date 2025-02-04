@@ -15,14 +15,14 @@ class DashboardCasesTable extends StatelessWidget {
       tableHeight: 500,
       dataRowHeight: TSizes.xl * 1.2,
       columns: [
-        DataColumn2(label: Text('Report ID')),
+        DataColumn2(label: Text('Case ID')),
         DataColumn2(label: Text('Crop Type')),
         DataColumn2(label: Text('Phone Number')),
         DataColumn2(label: Text('Date')),
         DataColumn2(label: Text('City')),
         DataColumn2(label: Text('District')),
         DataColumn2(label: Text('Ward')),
-        DataColumn2(label: Text('Prediction Results')),
+        DataColumn2(label: Text('Results')),
       ],
       source: DashboardCasesRows(),
     );

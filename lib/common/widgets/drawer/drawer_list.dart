@@ -7,6 +7,8 @@ import '../../../data/repositories/authentication/authentication_repository.dart
 import '../../../data/repositories/user/user_repository.dart';
 import '../../../features/kilimo/screens/legal/privacy_policy_screen.dart';
 import '../../../features/kilimo/screens/legal/terms_and_conditions_screen.dart';
+import '../../../features/kilimo/screens/officer/agrovet_screen.dart';
+import '../../../features/kilimo/screens/officer/recommendation_screen.dart';
 import '../../../features/personalization/models/user_modal.dart';
 import '../../../features/personalization/screens/feedback/feedback_screen.dart';
 import '../../../features/personalization/screens/profile/profile_screen.dart';
@@ -166,6 +168,26 @@ class MyDrawerList extends StatelessWidget {
           Navigator.pop(context);
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const ProfileScreen(),
+          ));
+        },
+      ),
+      ListTile(
+        leading: const Icon(Iconsax.personalcard),
+        title: Text(TTexts.tMenu11),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const AgrovetScreen(),
+          ));
+        },
+      ),
+      ListTile(
+        leading: const Icon(Iconsax.document_1),
+        title: Text(TTexts.tMenu12),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const RecommendationScreen(),
           ));
         },
       ),
