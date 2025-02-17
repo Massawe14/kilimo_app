@@ -62,18 +62,18 @@ class OfficerHomeScreen extends StatelessWidget {
             Obx(
               () => TDashboardCard(
                 stats: reportController.totalFarmers.value,
-                title: 'Total Farmers',
+                title: 'total_farmer'.tr,
                 subTitle: '${reportController.totalFarmers.value} registered',
-                comparisonText: "Compared to last week",
+                comparisonText: "compared_to_last_week".tr,
               ),
             ),
             SizedBox(height: TSizes.spaceBtwItems),
             Obx(
               () => TDashboardCard(
                 stats: reportController.totalCases.value,
-                title: 'Total Cases',
+                title: 'total_case'.tr,
                 subTitle: '${reportController.totalCases.value} detected',
-                comparisonText: "Compared to last 7 days",
+                comparisonText: "compared_to_last_7_week".tr,
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwSections),
@@ -87,7 +87,7 @@ class OfficerHomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Recent Cases', style: Theme.of(context).textTheme.headlineSmall),
+                  Text('recent_cases'.tr, style: Theme.of(context).textTheme.headlineSmall),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   const DashboardCasesTable(),
                 ],

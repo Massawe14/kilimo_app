@@ -93,8 +93,9 @@ class PostModal {
       userName: data['UserName'] ?? '',
       profilePicture: data['ProfilePicture'] ?? '',
       userLocation: data['UserLocation'] ?? '',
-      likes: (data['Likes'] as int?) ?? 0,
-      dislikes: (data['Dislikes'] as int?) ?? 0,
+      // Safely cast Likes and Dislikes to int
+      likes: (data['Likes'] as num?)?.toInt() ?? 0,
+      dislikes: (data['Dislikes'] as num?)?.toInt() ?? 0,
       usersLiked: List<String>.from(data['UsersLiked'] ?? []),
       usersDisliked: List<String>.from(data['UsersDisliked'] ?? []),
       // Parse date from Firestore Timestamp or use current time

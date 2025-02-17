@@ -39,7 +39,7 @@ dependencies:
   
   # Utility Packages
   http: ^1.2.2
-  geolocator: ^13.0.1
+  geolocator: ^13.0.2
   intl: ^0.19.0
   weather: ^3.1.1
   cached_network_image: ^3.4.1

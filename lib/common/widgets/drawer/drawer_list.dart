@@ -62,8 +62,8 @@ class MyDrawerList extends StatelessWidget {
         return [
           ListTile(
             leading: const Icon(Iconsax.warning_2, color: Colors.orange),
-            title: const Text('Role not set'),
-            subtitle: const Text('Please contact admin'),
+            title: Text('role_not_set'.tr),
+            subtitle: Text('please_contact_admin'.tr),
           )
         ];  
     }
@@ -188,6 +188,17 @@ class MyDrawerList extends StatelessWidget {
           Navigator.pop(context);
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const RecommendationScreen(),
+          ));
+        },
+      ),
+      const Divider(color: TColors.grey),
+      ListTile(
+        leading: const Icon(Iconsax.setting_2),
+        title: Text(TTexts.tMenu6.tr),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => SettingsScreen(),
           ));
         },
       ),

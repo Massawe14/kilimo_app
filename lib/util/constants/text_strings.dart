@@ -13,7 +13,7 @@ class TTexts {
   static const String tJoined = "Joined ";
   static const String tJoinedAt = "31 October 2024";
   static const String tDelete = "Delete";
-  static const String tSave = "Save";
+  static String tSave = "save".tr;
 
   // Menu Texts
   static String tMenu1 = "home";
@@ -63,10 +63,10 @@ class TTexts {
   static const String verificationCode = "verificationCode";
   static String resendEmail = "resend_email".tr;
   static const String resendEmailIn = "Resend Email In";
-  static String role = "Role";
-  static String district = "District";
-  static String street = "Ward";
-  static String fullname = "Full Name";
+  static String role = "role".tr;
+  static String district = "district".tr;
+  static String street = "ward".tr;
+  static String fullname = "full_name".tr;
 
   // Authentication Heading Text
   static String loginTitle = "welcome_back".tr;

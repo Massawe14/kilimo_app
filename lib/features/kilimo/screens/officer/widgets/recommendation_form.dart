@@ -24,7 +24,7 @@ class TRecommendationForm extends StatelessWidget {
             validator: (value) => TValidator.validateEmptyText('Disease Name', value),
             expands: false,
             decoration: InputDecoration(
-              hintText: 'Enter disease name',
+              hintText: 'disease_name'.tr,
             ),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -61,7 +61,7 @@ class TRecommendationForm extends StatelessWidget {
             expands: false,
             maxLines: 5,
             decoration: InputDecoration(
-              hintText: 'Enter disease symptoms',
+              hintText: 'disease_symptoms'.tr,
             ),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -72,7 +72,7 @@ class TRecommendationForm extends StatelessWidget {
             expands: false,
             maxLines: 5,
             decoration: InputDecoration(
-              hintText: 'Enter treatment',
+              hintText: 'enter_treatment'.tr,
             ),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -83,7 +83,7 @@ class TRecommendationForm extends StatelessWidget {
             expands: false,
             maxLines: 5,
             decoration: InputDecoration(
-              hintText: 'Enter preventive measures',
+              hintText: 'enter_preventive_measures'.tr,
             ),
           ),
           const SizedBox(height: TSizes.spaceBtwSections),

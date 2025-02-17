@@ -31,7 +31,7 @@ class TLoginForm extends StatelessWidget {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Iconsax.direct_right),
                 labelText: TTexts.email,
-                hintText: 'Enter your email',
+                hintText: 'enter_your_email'.tr,
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -44,7 +44,7 @@ class TLoginForm extends StatelessWidget {
                 expands: false,
                 decoration: InputDecoration(
                   labelText: TTexts.password,
-                  hintText: 'Enter your password',
+                  hintText: 'enter_your_password'.tr,
                   prefixIcon: const Icon(Iconsax.password_check),
                   suffixIcon: IconButton(
                     onPressed: () => controller.hidePassword.value = !controller.hidePassword.value, 

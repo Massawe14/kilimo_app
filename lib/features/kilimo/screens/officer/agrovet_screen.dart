@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../common/widgets/appbar/app_bar.dart';
 import '../../../../util/constants/sizes.dart';
@@ -12,7 +13,7 @@ class AgrovetScreen extends StatelessWidget {
     return Scaffold(
       appBar: TAppBar(
         showBackArrow: true,
-        title: Text('Agrovet', style: Theme.of(context).textTheme.headlineMedium),
+        title: Text('agrovet'.tr, style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -22,7 +23,7 @@ class AgrovetScreen extends StatelessWidget {
             children: [
               // Heading
               Text(
-                'Empower Farmers by Connecting Trusted Agrovet Suppliers!',
+                'agrovet_title'.tr,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),

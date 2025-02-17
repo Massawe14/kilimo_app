@@ -18,7 +18,7 @@ class CasesStatusPieChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Cases By Crop Type', style: Theme.of(context).textTheme.headlineSmall),
+          Text('cases_by_crop_type'.tr, style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: TSizes.spaceBtwSections),
 
           // Observing data changes
@@ -51,7 +51,7 @@ class CasesStatusPieChart extends StatelessWidget {
                 PieChartSectionData(
                   color: Colors.grey,
                   value: 100,
-                  title: "No Data",
+                  title: "no_data".tr,
                   radius: 60,
                   titleStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
                 ),
@@ -91,9 +91,9 @@ class CasesStatusPieChart extends StatelessWidget {
               child: DataTable(
                 columnSpacing: 20,
                 columns: [
-                  DataColumn(label: Text('Crop Type', style: Theme.of(context).textTheme.bodyMedium)),
-                  DataColumn(label: Text('Cases', style: Theme.of(context).textTheme.bodyMedium)),
-                  DataColumn(label: Text('Percentage', style: Theme.of(context).textTheme.bodyMedium)),
+                  DataColumn(label: Text('crop_type'.tr, style: Theme.of(context).textTheme.bodyMedium)),
+                  DataColumn(label: Text('cases'.tr, style: Theme.of(context).textTheme.bodyMedium)),
+                  DataColumn(label: Text('percentage'.tr, style: Theme.of(context).textTheme.bodyMedium)),
                 ],
                 rows: cropCases.entries.map((entry) {
                   String crop = entry.key;

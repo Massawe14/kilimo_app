@@ -51,7 +51,7 @@ class TPostList extends StatelessWidget {
           debugPrint('Error: ${snapshot.error}');
           return SliverToBoxAdapter(
             child: Center(
-              child: Text('error: ${snapshot.error}'.tr),
+              child: Text('snapshot_error'.tr),
             ),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

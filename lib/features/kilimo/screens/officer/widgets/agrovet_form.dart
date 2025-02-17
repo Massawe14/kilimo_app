@@ -26,7 +26,7 @@ class TAgrovetForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.fullname,
-              hintText: 'Enter agrovet name',
+              hintText: 'agrovet_hint'.tr,
               prefixIcon: const Icon(Iconsax.user),
             ),
           ),
@@ -38,7 +38,7 @@ class TAgrovetForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.phoneNo,
-              hintText: 'Enter phone number',
+              hintText: 'enter_phone_number'.tr,
               prefixIcon: const Icon(Iconsax.call),
             ),
           ),
@@ -57,14 +57,14 @@ class TAgrovetForm extends StatelessWidget {
               controller.selectedCity.value = city ?? '';
             },
             // Placeholders for dropdown search field
-            countrySearchPlaceholder: "Country",
-            stateSearchPlaceholder: "State",
-            citySearchPlaceholder: "City",
+            countrySearchPlaceholder: "country".tr,
+            stateSearchPlaceholder: "state".tr,
+            citySearchPlaceholder: "city".tr,
 
             // Labels for dropdown
-            countryDropdownLabel: "Select Country",
-            stateDropdownLabel: "Select State",
-            cityDropdownLabel: "Select City",
+            countryDropdownLabel: "select_country".tr,
+            stateDropdownLabel: "select_state".tr,
+            cityDropdownLabel: "select_city".tr,
             dropdownDialogRadius: 12.0,
             searchBarRadius: 30.0,
           ),
@@ -77,7 +77,7 @@ class TAgrovetForm extends StatelessWidget {
                   validator: (value) => TValidator.validateEmptyText('District', value),
                   decoration: InputDecoration(
                     labelText: TTexts.district,
-                    hintText: 'Enter district',
+                    hintText: 'enter_district'.tr,
                     prefixIcon: const Icon(Iconsax.location),
                   ),
                   textInputAction: TextInputAction.next,
@@ -90,7 +90,7 @@ class TAgrovetForm extends StatelessWidget {
                   validator: (value) => TValidator.validateEmptyText('Ward', value),
                   decoration: InputDecoration(
                     labelText: TTexts.street,
-                    hintText: 'Enter ward',
+                    hintText: 'enter_ward'.tr,
                     prefixIcon: const Icon(Iconsax.location),
                   ),
                   textInputAction: TextInputAction.next,

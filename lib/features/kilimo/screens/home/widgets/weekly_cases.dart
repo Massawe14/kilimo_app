@@ -18,7 +18,7 @@ class TWeeklyCasesGraph extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Weekly Cases', style: Theme.of(context).textTheme.headlineSmall),
+          Text('weekly_cases'.tr, style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: TSizes.spaceBtwSections),
 
           SizedBox(

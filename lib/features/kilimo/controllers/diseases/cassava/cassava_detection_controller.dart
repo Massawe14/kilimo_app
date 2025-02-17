@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -190,7 +192,7 @@ class CassavaDetectionController extends GetxController {
   }) async {
     const String api_key = APIConstants.tBEEMSMSAPIKEY;
     const String secret_key = APIConstants.tBEEMSMSSECRETEKEY;
-    const String senderId = "DIGIFISH";
+    const String senderId = "CROP HEALTH";
     const String url = APIConstants.tBEEMSMSURL;
 
     // Ensure phone number is in international format (Tanzania +255)

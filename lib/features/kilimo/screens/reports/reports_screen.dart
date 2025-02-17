@@ -24,7 +24,7 @@ class ReportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Reports"),
+        title: Text("reports".tr),
         actions: [
           IconButton(
             icon: const Icon(
@@ -54,7 +54,7 @@ class ReportScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Crop diseases report", style: Theme.of(context).textTheme.headlineMedium),
+                Text("crop_disease_report".tr, style: Theme.of(context).textTheme.headlineMedium, overflow: TextOverflow.ellipsis),
                 IconButton(
                   icon: Icon(Iconsax.document_download5, size: 30, color: TColors.primary),
                   onPressed: () => _exportToPDF(),
@@ -70,14 +70,14 @@ class ReportScreen extends StatelessWidget {
                   dataRowHeight: TSizes.xl * 1.2,
                   columns: [
                     DataColumn2(label: Text('ID')),
-                    DataColumn2(label: Text('Crop Type')),
-                    DataColumn2(label: Text('Phone')),
-                    DataColumn2(label: Text('Date')),
-                    DataColumn2(label: Text('City')),
-                    DataColumn2(label: Text('District')),
-                    DataColumn2(label: Text('Ward')),
-                    DataColumn2(label: Text('Prediction')),
-                    DataColumn2(label: Text('Actions')),
+                    DataColumn2(label: Text('crop_type'.tr)),
+                    DataColumn2(label: Text('phone_number'.tr)),
+                    DataColumn2(label: Text('date'.tr)),
+                    DataColumn2(label: Text('city'.tr)),
+                    DataColumn2(label: Text('district'.tr)),
+                    DataColumn2(label: Text('ward'.tr)),
+                    DataColumn2(label: Text('prediction'.tr)),
+                    // DataColumn2(label: Text('Actions')),
                   ],
                   source: ReportDataTableSource(reportController),
                 ),
@@ -176,34 +176,34 @@ class ReportDataTableSource extends DataTableSource {
         DataCell(Text(report.district)),
         DataCell(Text(report.ward)),
         DataCell(Text(report.predictionResult.join(', '))),
-        DataCell(
-          IconButton(
-            icon: Icon(Icons.delete, color: Colors.red),
-            onPressed: () => _deleteReport(report.id),
-          ),
-        ),
+        // DataCell(
+        //   IconButton(
+        //     icon: Icon(Icons.delete, color: Colors.red),
+        //     onPressed: () => _deleteReport(report.id),
+        //   ),
+        // ),
       ],
     );
   }
 
-  void _deleteReport(String? id) {
-    if (id == null) return;
+  // void _deleteReport(String? id) {
+  //   if (id == null) return;
 
-    Get.defaultDialog(
-      title: "Delete Report",
-      middleText: "Are you sure you want to delete this report?",
-      confirm: ElevatedButton(
-        onPressed: () {
-          reportController.reports.removeWhere((r) => r.id == id);
-          notifyListeners();
-          Get.back();
-        },
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-        child: Text("Delete"),
-      ),
-      cancel: TextButton(onPressed: () => Get.back(), child: Text("Cancel")),
-    );
-  }
+  //   Get.defaultDialog(
+  //     title: "Delete Report",
+  //     middleText: "Are you sure you want to delete this report?",
+  //     confirm: ElevatedButton(
+  //       onPressed: () {
+  //         reportController.reports.removeWhere((r) => r.id == id);
+  //         notifyListeners();
+  //         Get.back();
+  //       },
+  //       style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+  //       child: Text("Delete"),
+  //     ),
+  //     cancel: TextButton(onPressed: () => Get.back(), child: Text("Cancel")),
+  //   );
+  // }
 
   @override
   bool get isRowCountApproximate => false;

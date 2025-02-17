@@ -136,7 +136,7 @@ class MaizeCameraView extends StatelessWidget {
                           ),
                           const SizedBox(height: TSizes.spaceBtwSections),
                           Text(
-                            'Upload an image to detect crop diseases.'.tr,
+                            'upload_image_for_detection'.tr,
                             style: Theme.of(context).textTheme.bodyLarge,
                             textAlign: TextAlign.center,
                           ),
