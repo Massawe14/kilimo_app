@@ -39,4 +39,10 @@ class TImages {
 
   // Profile Image
   static const String profileImage = "assets/images/profile/profile.png";
+
+  // Likes & Dislikes Icons
+  static const String likeIcon = "assets/icons/like_outlined.png";
+  static const String likeBoldIcon = "assets/icons/like.png";
+  static const String dislikeIcon = "assets/icons/dislike_outlined.png";
+  static const String dislikeBoldIcon = "assets/icons/dislike_1.png";
 }

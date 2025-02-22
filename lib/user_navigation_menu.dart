@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'features/kilimo/screens/community/community_screen.dart';
-import 'features/kilimo/screens/detector/detector_screen.dart';
-import 'features/kilimo/screens/home/home_screen.dart';
+import 'features/kilimo/screens/detector/real_time_detection_screen.dart';
+import 'features/kilimo/screens/home/farmer_home_screen.dart';
 import 'features/kilimo/screens/resources/resources_screen.dart';
 import 'util/constants/colors.dart';
-import 'util/helpers/helper_functions.dart';
+import 'util/helpers/helper_functions.dart'; 
 
-class NavigationMenu extends StatelessWidget {
-  const NavigationMenu({super.key});
+class UserNavigationMenu extends StatelessWidget {
+  const UserNavigationMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class NavigationMenu extends StatelessWidget {
           selectedIndex: controller.selectedIndex.value,
           onDestinationSelected: (index) => controller.selectedIndex.value = index,
           backgroundColor: darkMode ? TColors.black : TColors.white,
-          indicatorColor: darkMode ? TColors.white.withOpacity(0.1) : TColors.buttonSecondary,
+          indicatorColor: darkMode ? TColors.white.withAlpha(26) : TColors.buttonSecondary,
           destinations: [
             NavigationDestination(
               icon: const Icon(Iconsax.home),  
@@ -54,8 +54,8 @@ class NavigationMenu extends StatelessWidget {
 class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final screens = [
-    const HomeScreen(),
-    const DetectorScreen(),
+    const FarmerHomeScreen(),
+    const RealTimeDetectionScreen(),
     CommunityScreen(),
     const ResourcesScreen(),
   ];

@@ -51,7 +51,7 @@ class TPostList extends StatelessWidget {
           debugPrint('Error: ${snapshot.error}');
           return SliverToBoxAdapter(
             child: Center(
-              child: Text('error: ${snapshot.error}'.tr),
+              child: Text('snapshot_error'.tr),
             ),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -72,6 +72,7 @@ class TPostList extends StatelessWidget {
                     Get.to(() => ReplyCommunityScreen(postId: post.id));
                   },
                   child: TQuestionCard(
+                    postId: post.id,
                     image: post.cropImage, // Assuming cropImage is the field name
                     username: post.userName,
                     profilePicture: post.profilePicture,
@@ -81,6 +82,8 @@ class TPostList extends StatelessWidget {
                     date: post.date,
                     title: post.problemTitle,
                     description: post.problemDescription,
+                    likes: post.likes,
+                    dislikes: post.dislikes,
                   ),
                 );
               },

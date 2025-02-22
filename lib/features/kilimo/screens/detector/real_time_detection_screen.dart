@@ -17,16 +17,15 @@ class RealTimeDetectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final darkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(
-            Icons.arrow_back,
-            color: darkMode ? Colors.white : Colors.black,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () => Get.back(),
+        //   icon: Icon(
+        //     Icons.arrow_back,
+        //     color: darkMode ? Colors.white : Colors.black,
+        //   ),
+        // ),
         title: Text('plant_diseases_detector'.tr),
         actions: [
           IconButton(

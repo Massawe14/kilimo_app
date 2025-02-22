@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.7.0" type="baseline" client="gradle" dependencies="true" name="AGP (8.7.0)" variant="all" version="8.7.0">
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `FlutterPlugin.FlutterPluginBinding` **not** ending with `?`"
+        errorLine1="  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {"
+        errorLine2="                                  ~~~~~~~~">
+        <location
+            file="src/main/kotlin/org/tensorflow/tflite_flutter/TfliteFlutterPlugin.kt"
+            line="19"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `MethodCall` **not** ending with `?`"
+        errorLine1="  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {"
+        errorLine2="                            ~~~~~~~~">
+        <location
+            file="src/main/kotlin/org/tensorflow/tflite_flutter/TfliteFlutterPlugin.kt"
+            line="24"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `Result` **not** ending with `?`"
+        errorLine1="  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {"
+        errorLine2="                                                       ~~~~~~~~">
+        <location
+            file="src/main/kotlin/org/tensorflow/tflite_flutter/TfliteFlutterPlugin.kt"
+            line="24"
+            column="56"/>
+    </issue>
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `FlutterPlugin.FlutterPluginBinding` **not** ending with `?`"
+        errorLine1="  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {"
+        errorLine2="                                    ~~~~~~~~">
+        <location
+            file="src/main/kotlin/org/tensorflow/tflite_flutter/TfliteFlutterPlugin.kt"
+            line="32"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:forceDarkAllowed` requires API level 29 (current min is 26)"
+        errorLine1="        &lt;item name=&quot;android:forceDarkAllowed&quot;>false&lt;/item>"
+        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-night/styles.xml"
+            line="8"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:forceDarkAllowed` requires API level 29 (current min is 26)"
+        errorLine1="        &lt;item name=&quot;android:forceDarkAllowed&quot;>false&lt;/item>"
+        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="8"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:windowLayoutInDisplayCutoutMode` requires API level 27 (current min is 26)"
+        errorLine1="        &lt;item name=&quot;android:windowLayoutInDisplayCutoutMode&quot;>shortEdges&lt;/item>"
+        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-night/styles.xml"
+            line="11"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:windowLayoutInDisplayCutoutMode` requires API level 27 (current min is 26)"
+        errorLine1="        &lt;item name=&quot;android:windowLayoutInDisplayCutoutMode&quot;>shortEdges&lt;/item>"
+        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="11"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NotificationPermission"
+        message="When targeting Android 13 or higher, posting a permission requires holding the `POST_NOTIFICATIONS` permission (usage from com.baseflow.geolocator.location.BackgroundNotification)">
+        <location
+            file="src/main/AndroidManifest.xml"/>
+    </issue>
+
+    <issue
+        id="NotificationPermission"
+        message="When targeting Android 13 or higher, posting a permission requires holding the `POST_NOTIFICATIONS` permission"
+        errorLine1="            notificationManager.notify(notificationId, builder.build());"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/baseflow/geolocator/location/BackgroundNotification.java"
+            line="100"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+        errorLine1="        targetSdkVersion 34"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="90"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this method; see https://g.co/dev/packagevisibility for details"
+        errorLine1="          packageManager.queryIntentActivities("
+        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/io/flutter/plugins/imagepicker/ImagePickerDelegate.java"
+            line="555"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this method; see https://g.co/dev/packagevisibility for details"
+        errorLine1="    return packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/io/flutter/plugins/imagepicker/ImagePickerDelegate.java"
+            line="572"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this method; see https://g.co/dev/packagevisibility for details"
+        errorLine1="        val resInfoList = getContext().packageManager.queryIntentActivities("
+        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/fluttercommunity/plus/share/Share.kt"
+            line="145"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this method; see https://g.co/dev/packagevisibility for details"
+        errorLine1="          ComponentName componentName = intent.resolveActivity(context.getPackageManager());"
+        errorLine2="                                               ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/io/flutter/plugins/urllauncher/UrlLauncher.java"
+            line="57"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 7.1.2 is available: 8.8.0. (There is also a newer version of 7.1.𝑥 available, if upgrading to 8.8.0 is difficult: 7.1.3)"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:7.1.2&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="11"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 7.3.1 is available: 8.8.0"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:7.3.1&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="11"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 7.4.2 is available: 8.8.0"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:7.4.2&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="11"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 8.1.2 is available: 8.8.0. (There is also a newer version of 8.1.𝑥 available, if upgrading to 8.8.0 is difficult: 8.1.4)"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:8.1.2&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="11"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 8.3.1 is available: 8.8.0. (There is also a newer version of 8.3.𝑥 available, if upgrading to 8.8.0 is difficult: 8.3.2)"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:8.3.1&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="11"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 8.5.0 is available: 8.8.0. (There is also a newer version of 8.5.𝑥 available, if upgrading to 8.8.0 is difficult: 8.5.2)"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:8.5.0&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="11"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 8.3.1 is available: 8.8.0. (There is also a newer version of 8.3.𝑥 available, if upgrading to 8.8.0 is difficult: 8.3.2)"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:8.3.1&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="12"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 7.3.0 is available: 8.8.0. (There is also a newer version of 7.3.𝑥 available, if upgrading to 8.8.0 is difficult: 7.3.1)"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:7.3.0&apos;"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="14"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="DiscouragedApi"
+        message="Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. `R.foo.bar`) than by name (e.g. `getIdentifier(&quot;bar&quot;, &quot;foo&quot;, null)`)."
+        errorLine1="        return context.getResources().getIdentifier(iconName, defType, context.getPackageName());"
+        errorLine2="                                      ~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/baseflow/geolocator/location/BackgroundNotification.java"
+            line="42"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="PermissionImpliesUnsupportedChromeOsHardware"
+        message="Permission exists without corresponding hardware `&lt;uses-feature android:name=&quot;android.hardware.camera&quot; required=&quot;false&quot;>` tag"
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.CAMERA&quot;/>"
+        errorLine2="     ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="2"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 21"
+        errorLine1="  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/fluttercommunity/plus/connectivity/Connectivity.java"
+            line="42"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 21"
+        errorLine1="  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/fluttercommunity/plus/connectivity/Connectivity.java"
+            line="49"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 21"
+        errorLine1="    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/tekartik/sqflite/LocaleUtils.java"
+            line="20"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 24"
+        errorLine1="  @TargetApi(Build.VERSION_CODES.N)"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/baseflow/geolocator/location/NmeaClient.java"
+            line="30"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 24"
+        errorLine1="  @TargetApi(Build.VERSION_CODES.N)"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/baseflow/geolocator/location/NmeaClient.java"
+            line="32"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 22"
+        errorLine1="    @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/fluttercommunity/plus/share/SharePlusPendingIntent.kt"
+            line="25"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 21"
+        errorLine1="    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/tekartik/sqflite/Utils.java"
+            line="64"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 24"
+        errorLine1="        @RequiresApi(Build.VERSION_CODES.N)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/io/flutter/plugins/urllauncher/WebViewActivity.java"
+            line="68"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 21"
+        errorLine1="            @TargetApi(Build.VERSION_CODES.LOLLIPOP)"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/io/flutter/plugins/urllauncher/WebViewActivity.java"
+            line="90"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `drawable-night`.">
+        <location
+            file="src/main/res/drawable-night-v21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `drawable`.">
+        <location
+            file="src/main/res/drawable-v21"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields (static reference to `PermissionManager` which has field `activity` pointing to `Activity`); this is a memory leak"
+        errorLine1="  private static PermissionManager permissionManagerInstance = null;"
+        errorLine2="          ~~~~~~">
+        <location
+            file="src/main/java/com/baseflow/geolocator/permission/PermissionManager.java"
+            line="30"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.mipmap.ic_launcher` appears to be unused">
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicatesConfig"
+        message="The `background.png` icon has identical contents in the following configuration folders: drawable-night-v21, drawable-night">
+        <location
+            file="src/main/res/drawable-night/background.png"/>
+        <location
+            file="src/main/res/drawable-night-v21/background.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicatesConfig"
+        message="The `background.png` icon has identical contents in the following configuration folders: drawable-v21, drawable">
+        <location
+            file="src/main/res/drawable/background.png"/>
+        <location
+            file="src/main/res/drawable-v21/background.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/background.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/background.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: android12splash.png, splash.png, android12splash.png, splash.png">
+        <location
+            file="src/main/res/drawable-night-hdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-night-hdpi/android12splash.png"/>
+        <location
+            file="src/main/res/drawable-hdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-hdpi/android12splash.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: android12splash.png, splash.png, android12splash.png, splash.png">
+        <location
+            file="src/main/res/drawable-night-mdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-night-mdpi/android12splash.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/android12splash.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: android12splash.png, splash.png, android12splash.png, splash.png">
+        <location
+            file="src/main/res/drawable-xhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/android12splash.png"/>
+        <location
+            file="src/main/res/drawable-night-xhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-night-xhdpi/android12splash.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: android12splash.png, splash.png, android12splash.png, splash.png">
+        <location
+            file="src/main/res/drawable-xxhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/android12splash.png"/>
+        <location
+            file="src/main/res/drawable-night-xxhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-night-xxhdpi/android12splash.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: android12splash.png, splash.png, android12splash.png, splash.png">
+        <location
+            file="src/main/res/drawable-xxxhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/android12splash.png"/>
+        <location
+            file="src/main/res/drawable-night-xxxhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-night-xxxhdpi/android12splash.png"/>
+    </issue>
+
+</issues>

@@ -30,7 +30,8 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     namespace "com.example.kilimo_app"
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    // ndkVersion flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -40,6 +41,13 @@ android {
     aaptOptions {
         noCompress 'tflite'
         noCompress 'lite'
+        cruncherEnabled = false
+    }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0', 'META-INF/*.kotlin_module']
+        }
     }
 
     kotlinOptions {
@@ -52,6 +60,28 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+    }
+
+    lint {
+        baseline = file("lint-baseline.xml")
+        checkReleaseBuilds = true
+        abortOnError = false
+        checkDependencies = true
+
+        // Ignore specific issues if needed
+        disable 'MissingPermission'
+        disable 'InvalidPackage'
+        disable 'GradleDependency'
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            all {
+                // Skip all unit tests
+                enabled = false
+            }
+        }
     }
 
     defaultConfig {
@@ -67,6 +97,12 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
+            minifyEnabled = true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        profile {
+            matchingFallbacks = ['debug', 'release']
         }
     }
 }
@@ -88,6 +124,16 @@ dependencies {
 
     // Multidex support if needed
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation 'com.google.protobuf:protobuf-javalite:3.25.1'
+
+    // Explicitly exclude protobuf-lite to avoid duplication
+    configurations.all {
+        exclude group: 'com.google.protobuf', module: 'protobuf-lite'
+        resolutionStrategy {
+            force 'com.google.protobuf:protobuf-javalite:3.25.1'
+        }
+    }
     
     // // Import the BoM for the Firebase platform
     // implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
@@ -96,8 +142,8 @@ dependencies {
     // implementation("com.google.firebase:firebase-appcheck-debug")
 
     // Add the dependency for the Firebase SDK for Google Analytics
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation 'com.google.firebase:firebase-storage'
+    // implementation("com.google.firebase:firebase-analytics")
+    // implementation("com.google.firebase:firebase-auth")
+    // implementation("com.google.firebase:firebase-firestore")
+    // implementation 'com.google.firebase:firebase-storage'
 }

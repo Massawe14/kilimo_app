@@ -108,18 +108,6 @@ class SettingsScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
-                    // const SizedBox(height: TSizes.spaceBtwItems),
-                    // Text(
-                    //   'App country',
-                    //   style: Theme.of(context).textTheme.labelMedium,
-                    // ),
-                    // TextButton(
-                    //   onPressed: () {}, 
-                    //   child: Text(
-                    //     'Tanzania', 
-                    //     style: Theme.of(context).textTheme.bodyMedium,
-                    //   ),
-                    // ),
                     Obx(
                       () => TSettingsMenuTile(
                         icon: themeController.isDarkMode.value ? Iconsax.sun_1 : Iconsax.moon,
@@ -134,49 +122,49 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     // Notifications Settings
                     const SizedBox(height: TSizes.spaceBtwItems),
-                    const Divider(color: TColors.grey),
-                    TSectionHeading(title: 'notifications'.tr, showActionButton: false),
-                    const SizedBox(height: TSizes.spaceBtwItems),
-                    TSettingsMenuTile(
-                      icon: Iconsax.location,
-                      title: 'receive_push_notification'.tr,
-                      subTitle: 'information'.tr,
-                      trailing: Switch(
-                        value: false, 
-                        onChanged: (value) {},
-                        activeColor: TColors.accent,
-                      ),
-                    ),
-                    TSettingsMenuTile(
-                      icon: Iconsax.security_user,
-                      title: 'receive_push_notification'.tr,
-                      subTitle: 'posts'.tr,
-                      trailing: Switch(
-                        value: false, 
-                        onChanged: (value) {},
-                        activeColor: TColors.accent,
-                      ),
-                    ),
-                    TSettingsMenuTile(
-                      icon: Iconsax.image,
-                      title: 'receive_push_notification'.tr,
-                      subTitle: 'answer'.tr,
-                      trailing: Switch(
-                        value: false, 
-                        onChanged: (value) {},
-                        activeColor: TColors.accent,
-                      ),
-                    ),
-                    TSettingsMenuTile(
-                      icon: Iconsax.moon,
-                      title: 'receive_push_notification'.tr,
-                      subTitle: 'upvote'.tr,
-                      trailing: Switch(
-                        value: false, 
-                        onChanged: (value) {},
-                        activeColor: TColors.accent,
-                      ),
-                    ),
+                    // const Divider(color: TColors.grey),
+                    // TSectionHeading(title: 'notifications'.tr, showActionButton: false),
+                    // const SizedBox(height: TSizes.spaceBtwItems),
+                    // TSettingsMenuTile(
+                    //   icon: Iconsax.location,
+                    //   title: 'receive_push_notification'.tr,
+                    //   subTitle: 'information'.tr,
+                    //   trailing: Switch(
+                    //     value: false, 
+                    //     onChanged: (value) {},
+                    //     activeColor: TColors.accent,
+                    //   ),
+                    // ),
+                    // TSettingsMenuTile(
+                    //   icon: Iconsax.security_user,
+                    //   title: 'receive_push_notification'.tr,
+                    //   subTitle: 'posts'.tr,
+                    //   trailing: Switch(
+                    //     value: false, 
+                    //     onChanged: (value) {},
+                    //     activeColor: TColors.accent,
+                    //   ),
+                    // ),
+                    // TSettingsMenuTile(
+                    //   icon: Iconsax.image,
+                    //   title: 'receive_push_notification'.tr,
+                    //   subTitle: 'answer'.tr,
+                    //   trailing: Switch(
+                    //     value: false, 
+                    //     onChanged: (value) {},
+                    //     activeColor: TColors.accent,
+                    //   ),
+                    // ),
+                    // TSettingsMenuTile(
+                    //   icon: Iconsax.moon,
+                    //   title: 'receive_push_notification'.tr,
+                    //   subTitle: 'upvote'.tr,
+                    //   trailing: Switch(
+                    //     value: false, 
+                    //     onChanged: (value) {},
+                    //     activeColor: TColors.accent,
+                    //   ),
+                    // ),
                     // Logout Button
                     const Divider(color: TColors.grey),
                     const SizedBox(height: TSizes.spaceBtwSections),

@@ -11,6 +11,12 @@ class UserModal {
   String lastName;
   final String username;
   final String email;
+  final String street;
+  final String city;
+  final String state;
+  final String country;
+  final String district;
+  final String userRole;
   String phoneNumber;
   String profilePicture;
   
@@ -21,6 +27,12 @@ class UserModal {
     required this.lastName,
     required this.username,
     required this.phoneNumber,
+    required this.userRole,
+    required this.street,
+    required this.city,
+    required this.state,
+    required this.country,
+    required this.district,
     required this.email,
     required this.profilePicture,
   });
@@ -53,6 +65,12 @@ class UserModal {
     username: '',
     email: '',
     phoneNumber: '',
+    street: '',
+    city: '',
+    state: '',
+    country: '',
+    district: '',
+    userRole: '',
     profilePicture: '',
   );
 
@@ -64,6 +82,12 @@ class UserModal {
       'UserName': username,
       'Email': email,
       'PhoneNumber': phoneNumber,
+      'Street': street,
+      'City': city,
+      'State': state,
+      'Country': country,
+      'District': district,
+      'UserRole': userRole,
       'ProfilePicture': profilePicture,
     };
   }
@@ -79,11 +103,23 @@ class UserModal {
         username: data['UserName'] ?? '',
         email: data['Email'] ?? '',
         phoneNumber: data['PhoneNumber'] ?? '',
+        street: data['Street'] ?? '',
+        city: data['City'] ?? '',
+        state: data['State'] ?? '',
+        country: data['Country'] ?? '',
+        district: data['District'] ?? '',
+        userRole: data['UserRole'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
       );
     } else {
       // Handle null case, for example, return an empty UserModal
       return UserModal.empty();
     }
+  }
+
+  // Override toString() for better debugging
+  @override
+  String toString() {
+    return 'UserModal(id: $id, firstName: $firstName, lastName: $lastName, username: $username, email: $email, phoneNumber: $phoneNumber, street: $street, city: $city, state: $state, country: $country, district: $district, userRole: $userRole, profilePicture: $profilePicture)';
   }
 }

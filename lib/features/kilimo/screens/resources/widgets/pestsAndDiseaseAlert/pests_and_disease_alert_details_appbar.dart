@@ -66,7 +66,7 @@ class PestsAndDiseaseAlertDetailsAppBar extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: TColors.darkGrey.withOpacity(0.20),
+                color: TColors.darkGrey.withAlpha(51),
               ),
               child: GestureDetector(
                 onTap: () => Get.back(),

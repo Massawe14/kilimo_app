@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/get_utils.dart';
 
 import '../../../../common/styles/spacing_styles.dart';
-import '../../../../common/widgets/login_signup/form_divider.dart';
-import '../../../../common/widgets/login_signup/social_buttons.dart';
-import '../../../../util/constants/sizes.dart';
-import '../../../../util/constants/text_strings.dart';
 import 'widgets/login_form.dart';
 import 'widgets/login_header.dart';
 
@@ -26,10 +21,10 @@ class LoginScreen extends StatelessWidget {
                 // Form
                 const TLoginForm(),
                 // Divider
-                TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                // Footer
-                const TSocialButtons(),
+                // TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
+                // const SizedBox(height: TSizes.spaceBtwSections),
+                // // Footer
+                // const TSocialButtons(),
               ],
             ),
           ),

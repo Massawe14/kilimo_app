@@ -4,12 +4,9 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/drawer/drawer.dart';
 import '../../../../common/widgets/pop_up_menu/popup_menu.dart';
-import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../data/repositories/post/post_repository.dart';
 import '../../../../util/constants/colors.dart';
-import '../../../../util/constants/sizes.dart';
 import 'ask_community_screen.dart';
-import 'widgets/crop_categories.dart';
 import 'widgets/post_list.dart';
 
 class CommunityScreen extends StatelessWidget {
@@ -44,75 +41,75 @@ class CommunityScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             // Search Section
-            SliverPadding(
-              padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-              sliver: SliverToBoxAdapter(
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'search'.tr,
-                    prefixIcon: const Icon(Icons.search),
-                  ),
-                ),
-              ),
-            ),
+            // SliverPadding(
+            //   padding: const EdgeInsets.all(TSizes.spaceBtwItems),
+            //   sliver: SliverToBoxAdapter(
+            //     child: TextField(
+            //       decoration: InputDecoration(
+            //         labelText: 'search'.tr,
+            //         prefixIcon: const Icon(Icons.search),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             // Filter Section
             // Crop Filter Dropdown
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
-              sliver: SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'filter_by'.tr,
-                      style: const TextStyle(
-                        color: TColors.dark,
-                        fontSize: TSizes.fontSizeMd,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        String selectedFilter = _selectedFilter.value;
-                        String searchQuery = _searchController.text.trim();
+            // SliverPadding(
+            //   padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+            //   sliver: SliverToBoxAdapter(
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Text(
+            //           'filter_by'.tr,
+            //           style: const TextStyle(
+            //             color: TColors.dark,
+            //             fontSize: TSizes.fontSizeMd,
+            //           ),
+            //         ),
+            //         TextButton(
+            //           onPressed: () {
+            //             String selectedFilter = _selectedFilter.value;
+            //             String searchQuery = _searchController.text.trim();
 
-                        if (selectedFilter == 'All' && searchQuery.isEmpty) {
-                          postRepository.fetchAllPosts();
-                        } else if (selectedFilter == 'All') {
-                          postRepository.fetchPostsByLocation(searchQuery);
-                        } else {
-                          postRepository.fetchFilteredPosts(selectedFilter, searchQuery);
-                        }
-                      },
-                      child: Text(
-                        'apply_filter'.tr,
-                        style: const TextStyle(
-                          color: TColors.accent,
-                          fontSize: TSizes.fontSizeMd,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            //             if (selectedFilter == 'All' && searchQuery.isEmpty) {
+            //               postRepository.fetchAllPosts();
+            //             } else if (selectedFilter == 'All') {
+            //               postRepository.fetchPostsByLocation(searchQuery);
+            //             } else {
+            //               postRepository.fetchFilteredPosts(selectedFilter, searchQuery);
+            //             }
+            //           },
+            //           child: Text(
+            //             'apply_filter'.tr,
+            //             style: const TextStyle(
+            //               color: TColors.accent,
+            //               fontSize: TSizes.fontSizeMd,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             // Crop Categories Section
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TSectionHeading(
-                      title: 'crop_categories'.tr, 
-                      showActionButton: false,
-                    ),
-                    const SizedBox(height: TSizes.spaceBtwItems),
-                    const CropCategories(),
-                  ],
-                ),
-              ),
-            ),
+            // SliverPadding(
+            //   padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+            //   sliver: SliverToBoxAdapter(
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       children: [
+            //         TSectionHeading(
+            //           title: 'crop_categories'.tr, 
+            //           showActionButton: false,
+            //         ),
+            //         const SizedBox(height: TSizes.spaceBtwItems),
+            //         const CropCategories(),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             // Post Section
             SliverPadding(
               padding: const EdgeInsets.all(5),
@@ -128,7 +125,7 @@ class CommunityScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0.0,
-        onPressed: () => Get.to(() => const AskCommunity()),
+        onPressed: () => Get.to(() => const CommunityChats()),
         backgroundColor: TColors.accent,
         label: Text(
           'ask_community'.tr, 

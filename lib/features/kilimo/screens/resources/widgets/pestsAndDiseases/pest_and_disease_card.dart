@@ -22,7 +22,7 @@ class TPestsAndDiseasesCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withAlpha(128),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(0, 3),

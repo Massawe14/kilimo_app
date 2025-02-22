@@ -8,8 +8,8 @@ import '../../../../util/constants/sizes.dart';
 import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/community/post_community_controller.dart';
 
-class AskCommunity extends StatelessWidget {
-  const AskCommunity({super.key});
+class CommunityChats extends StatelessWidget {
+  const CommunityChats({super.key});
   
   @override
   Widget build(BuildContext context) {
@@ -72,10 +72,8 @@ class AskCommunity extends StatelessWidget {
                       controller: controller.problemTitleController,
                       decoration: InputDecoration(
                         hintText: 'add_question'.tr,
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                       ),
-                      // Set character limit as specified in the UI
-                      maxLength: 200, 
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Problem Description
@@ -83,9 +81,12 @@ class AskCommunity extends StatelessWidget {
                       controller: controller.problemDescriptionController,
                       decoration: InputDecoration(
                         hintText: 'describe_question'.tr,
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                       ),
-                      maxLines: null, // Allow unlimited lines
+                      minLines: 1,
+                      maxLines: 200, 
+                      // Set character limit as specified in the UI
+                      maxLength: 200, 
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Location
@@ -93,13 +94,13 @@ class AskCommunity extends StatelessWidget {
                       controller: controller.locationController,
                       decoration: InputDecoration(
                         hintText: 'your_location'.tr,
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                       ),
                       enabled: false, // Disable user input
                     ),
                     const SizedBox(height: TSizes.spaceBtwInputFields),
                     // Display Selected Image
-                    Obx(() =>controller.imageFile.value != null
+                    Obx(() => controller.imageFile.value != null
                       ? Image.file(
                           controller.imageFile.value!,
                           width: double.infinity, 

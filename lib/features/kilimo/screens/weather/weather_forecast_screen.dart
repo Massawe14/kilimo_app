@@ -8,8 +8,6 @@ import '../../../../util/helpers/helper_functions.dart';
 import '../../controllers/weather/weather_controller.dart';
 import '../../controllers/weather/weather_forecast_controller.dart';
 import 'widgets/build_weather_icon.dart';
-import 'widgets/get_weather_advice.dart';
-import 'widgets/get_weather_advice_for_nex_four_days.dart';
 
 class WeatherForecastScreen extends StatelessWidget {
   const WeatherForecastScreen({super.key});
@@ -105,14 +103,66 @@ class WeatherForecastScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: TSizes.spaceBtwItems),
-                      Text(
-                        getWeatherAdvice(controller.weatherData.value.weatherDescription),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+                      // const SizedBox(height: TSizes.spaceBtwItems),
+                      // Text(
+                      //   getWeatherAdvice(controller.weatherData.value.weatherDescription),
+                      //   style: Theme.of(context).textTheme.bodyLarge,
+                      // ),
                     ],
                   ),
                 ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                const Divider(color: TColors.grey),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Text(
+                  'prediction'.tr,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                // Predictions
+                Obx(() {
+                  if (weatherController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (weatherController.prediction.value.isEmpty) {
+                    return const Text('Fetching predictions...');
+                  } else {
+                    // Display the single prediction in a decorated card
+                    return Container(
+                      width: 350,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: TColors.grey.withAlpha(128),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 0.1,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          side: BorderSide(
+                            width: 0.2,
+                            color: TColors.grey,
+                          ),
+                        ),
+                        color: darkMode ? TColors.dark : TColors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(TSizes.defaultSpace),
+                          child: Text(
+                            weatherController.prediction.value,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                }),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 const Divider(color: TColors.grey),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -143,68 +193,21 @@ class WeatherForecastScreen extends StatelessWidget {
                     }).toList(),
                   ),
                 ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text(
-                  getWeatherAdviceFromNextFourDays(controller.weatherData.value.weatherDescription),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text(
-                  'pro-tip'.tr,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Text(
-                  getWeatherAdvice(controller.weatherData.value.weatherDescription),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                const Divider(color: TColors.grey),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Text(
-                  'prediction'.tr,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                // Predictions
-                Obx(() {
-                  if (weatherController.isLoading.value) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (weatherController.prediction.value.isEmpty) {
-                    return const Text('Fetching predictions...');
-                  } else {
-                    // Display the single prediction in a decorated card
-                    return Container(
-                      width: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        color: darkMode ? TColors.dark : TColors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(TSizes.defaultSpace),
-                          child: Text(
-                            weatherController.prediction.value,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                }),
+                // const SizedBox(height: TSizes.spaceBtwSections),
+                // Text(
+                //   getWeatherAdviceFromNextFourDays(controller.weatherData.value.weatherDescription),
+                //   style: Theme.of(context).textTheme.bodyLarge,
+                // ),
+                // const SizedBox(height: TSizes.spaceBtwSections),
+                // Text(
+                //   'pro-tip'.tr,
+                //   style: Theme.of(context).textTheme.bodySmall,
+                // ),
+                // const SizedBox(height: TSizes.spaceBtwItems),
+                // Text(
+                //   getWeatherAdvice(controller.weatherData.value.weatherDescription),
+                //   style: Theme.of(context).textTheme.bodyLarge,
+                // ),
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -6,10 +7,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../admin_navigation_menu.dart';
 import '../../../features/authentication/screens/login/login.dart';
 import '../../../features/authentication/screens/onboarding/onboarding.dart';
+import '../../../features/authentication/screens/signup/signup.dart';
 import '../../../features/authentication/screens/signup/verify_email.dart';
-import '../../../navigation_menu.dart';
+import '../../../features/personalization/models/user_modal.dart';
+import '../../../user_navigation_menu.dart';
 import '../../../util/exceptions/firebase_auth_exceptions.dart';
 import '../../../util/exceptions/firebase_exceptions.dart';
 import '../../../util/exceptions/format_exceptions.dart';
@@ -22,6 +26,7 @@ class AuthenticationRepository extends GetxController {
   // Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
+  final _db = FirebaseFirestore.instance;
 
   // Get Authenticated User Data
   User? get authUser => _auth.currentUser;
@@ -31,30 +36,73 @@ class AuthenticationRepository extends GetxController {
   void onReady() {
     // Remove the native splash screen
     FlutterNativeSplash.remove();
-    // Redirect to the appropriate screen
-    screenRedirect();
+    // Listen to authentication state changes
+    listenToAuthState();
+  }
+
+  // Listen to authentication state changes
+  void listenToAuthState() {
+    _auth.authStateChanges().listen((User? user) {
+      if (user == null) {
+        Get.offAll(() => const LoginScreen());
+      } else {
+        screenRedirect();
+      }
+    });
   }
 
   // Function to determine the relevant screen and redirect accordingly
   void screenRedirect() async {
     final user = _auth.currentUser;
-    
     if (user != null) {
-      // If the user is not logged in
-      if (user.emailVerified) {
-        // If the user's email is verified, navigate to the main navigation Menu
-        Get.offAll(() => const NavigationMenu());
-      } else {
-        // If the user's email is not verified, navigate to the VerifyEmailScreen
-        Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
-      }
+      await handleAuthenticatedUser(user);
     } else {
-      // Local Storage
-      deviceStorage.writeIfNull('isFirstTime', true);
-      // Check if it's the first time launching the app
-      deviceStorage.read('isFirstTime') != true 
-        ? Get.offAll(() => const LoginScreen()) // Redirect to Login Screen if not the first time
-        : Get.offAll(const OnBoardingScreen()); // Redirect to OnBoardingScreen if it's the first time
+      handleUnauthenticatedUser();
+    }
+  }
+  
+  // Handle authenticated user
+  Future<void> handleAuthenticatedUser(User user) async {
+    if (user.emailVerified) {
+      await mainMenuNavigation(user);
+    } else {
+      Get.offAll(() => VerifyEmailScreen(email: user.email));
+    }
+  }
+  
+  // Handle unauthenticated user
+  void handleUnauthenticatedUser() {
+    deviceStorage.writeIfNull('isFirstTime', true);
+    if (deviceStorage.read('isFirstTime') != true) {
+      Get.offAll(() => const LoginScreen());
+    } else {
+      Get.offAll(const OnBoardingScreen());
+    }
+  }
+
+  // Helper method to redirect based on role
+  Future<void> mainMenuNavigation(User user) async {
+    final snapshot = await _db.collection('Users').doc(user.uid).get();
+    
+    if (snapshot.exists) {
+      final userModel = UserModal.fromSnapshot(snapshot);
+      _redirectBasedOnRole(userModel.userRole);
+    } else {
+      Get.offAll(() => const SignupScreen());
+    }
+  }
+
+  // Redirect user based on role
+  void _redirectBasedOnRole(String role) {
+    switch (role) {
+      case 'Farmer':
+        Get.offAll(() => const UserNavigationMenu());
+        break;
+      case 'Extension Officer':
+        Get.offAll(() => const AdminNavigationMenu());
+        break;
+      default:
+        Get.offAll(() => const SignupScreen());
     }
   }
 

@@ -1,3 +1,5 @@
+import 'package:csc_picker_plus/csc_picker_plus.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,13 +11,19 @@ import '../../../controllers/signup/signup_controller.dart';
 import 'terms_and_condtion_checkbox.dart';
 
 class TSignupForm extends StatelessWidget {
-  const TSignupForm({
+  TSignupForm({
     super.key,
   });
+
+  final List<String> roleItems = [
+    'farmer'.tr, 
+    'extension_officer'.tr,
+  ];
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignupController());
+
     return Form(
       key: controller.signupFormKey,
       child: Column(
@@ -29,6 +37,7 @@ class TSignupForm extends StatelessWidget {
                   expands: false,
                   decoration: InputDecoration(
                     labelText: TTexts.firstname,
+                    hintText: 'enter_your_first_name'.tr,
                     prefixIcon: const Icon(Iconsax.user),
                   ),
                 ),
@@ -41,6 +50,7 @@ class TSignupForm extends StatelessWidget {
                   expands: false,
                   decoration: InputDecoration(
                     labelText: TTexts.lastname,
+                    hintText: 'enter_your_last_name'.tr,
                     prefixIcon: const Icon(Iconsax.user),
                   ),
                 ),
@@ -55,6 +65,7 @@ class TSignupForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.username,
+              hintText: 'enter_your_username'.tr,
               prefixIcon: const Icon(Iconsax.user_edit),
             ),
           ),
@@ -66,6 +77,7 @@ class TSignupForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.email,
+              hintText: 'enter_your_email'.tr,
               prefixIcon: const Icon(Iconsax.direct),
             ),
           ),
@@ -77,8 +89,97 @@ class TSignupForm extends StatelessWidget {
             expands: false,
             decoration: InputDecoration(
               labelText: TTexts.phoneNo,
+              hintText: 'enter_your_phonenumber'.tr,
               prefixIcon: const Icon(Iconsax.call),
             ),
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+          // Role Selection
+          Row(
+            children: [
+              Expanded(
+                child: Obx(
+                  () => DropdownButtonFormField2<String>(
+                    onChanged: (value) {
+                      controller.selectedRole.value = value ?? '';
+                    },
+                    validator: (value) => controller.selectedRole.value.isEmpty ? 'select_a_role'.tr : null,
+                    decoration: InputDecoration(
+                      labelText: TTexts.role,
+                      prefixIcon: const Icon(Iconsax.user_tag),
+                    ),
+                    isExpanded: true,
+                    items: roleItems
+                      .map((item) => DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      )).toList(),
+                    value: controller.selectedRole.value.isEmpty ? null : controller.selectedRole.value,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+          // Address
+          CSCPickerPlus(
+            layout: Layout.vertical,
+            flagState: CountryFlag.ENABLE,
+            onCountryChanged: (country){
+              controller.selectedCountry.value = country;
+            },
+            onStateChanged: (state){
+              controller.selectedState.value = state ?? '';
+            },
+            onCityChanged: (city){
+              controller.selectedCity.value = city ?? '';
+            },
+            // Placeholders for dropdown search field
+            countrySearchPlaceholder: "country".tr,
+            stateSearchPlaceholder: "state".tr,
+            citySearchPlaceholder: "city".tr,
+
+            // Labels for dropdown
+            countryDropdownLabel: "select_country".tr,
+            stateDropdownLabel: "select_state".tr,
+            cityDropdownLabel: "select_city".tr,
+            dropdownDialogRadius: 12.0,
+            searchBarRadius: 30.0,
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: controller.district,
+                  validator: (value) => TValidator.validateEmptyText('District', value),
+                  decoration: InputDecoration(
+                    labelText: TTexts.district,
+                    hintText: 'enter_district'.tr,
+                    prefixIcon: const Icon(Iconsax.location),
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+              const SizedBox(width: TSizes.spaceBtwInputFields),
+              Expanded(
+                child: TextFormField(
+                  controller: controller.street,
+                  validator: (value) => TValidator.validateEmptyText('Ward', value),
+                  decoration: InputDecoration(
+                    labelText: TTexts.street,
+                    hintText: 'enter_ward'.tr,
+                    prefixIcon: const Icon(Iconsax.location),
+                  ),
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+            ]
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
           // Password
@@ -90,6 +191,7 @@ class TSignupForm extends StatelessWidget {
               expands: false,
               decoration: InputDecoration(
                 labelText: TTexts.password,
+                hintText: 'enter_your_password'.tr,
                 prefixIcon: const Icon(Iconsax.password_check),
                 suffixIcon: IconButton(
                   onPressed: () => controller.hidePassword.value = !controller.hidePassword.value, 

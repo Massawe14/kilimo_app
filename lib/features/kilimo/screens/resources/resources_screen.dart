@@ -21,17 +21,13 @@ class ResourcesScreen extends StatelessWidget {
         title: Text('resources'.tr),
         actions: [
           IconButton(
-            icon: const Icon(
-              Iconsax.notification,
-            ),
+            icon: const Icon(Iconsax.notification),
             onPressed: () {
               // Handle notification icon action
             },
           ),
           IconButton(
-            icon: const Icon(
-              Icons.more_vert_outlined,
-            ),
+            icon: const Icon(Icons.more_vert_outlined),
             onPressed: () {
               // Show the popup menu when the icon is clicked
               showPopupMenu(context);
@@ -41,63 +37,65 @@ class ResourcesScreen extends StatelessWidget {
       ),
       drawer: const NavigationDrawerMenu(),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => Get.to(() => FertilizerCalculatorScreen()),
-                        child: ResourceCard(
-                          icon: Iconsax.calculator, 
-                          title: 'resource_1'.tr,
-                        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: TSizes.spaceBtwItems),
+          child: Column(
+            children: [
+              // Grid view for resource cards
+              Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: TSizes.spaceBtwItems),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 1,
+                  ),
+                  itemCount: resourceData.length,
+                  itemBuilder: (context, index) {
+                    final resource = resourceData[index];
+                    return GestureDetector(
+                      onTap: resource['onTap'],
+                      child: ResourceCard(
+                        icon: resource['icon'],
+                        title: resource['title'],
                       ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => Get.to(() => const PestsAndDiseasesScreen()),
-                        child: ResourceCard(
-                          icon: Iconsax.health, 
-                          title: 'resource_2'.tr,
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => Get.to(() => const CultivationTipsScreen()),
-                        child: ResourceCard(
-                          icon: Iconsax.document_normal, 
-                          title: 'resource_3'.tr,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => Get.to(() => const PestsAndDiseaseAlert()),
-                        child: ResourceCard(
-                          icon: Iconsax.danger, 
-                          title: 'resource_4'.tr,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
+
+  // Centralized resource data
+  List<Map<String, dynamic>> get resourceData => [
+    {
+      'icon': Iconsax.calculator,
+      'title': 'resource_1'.tr,
+      'description': 'Calculate fertilizer needs'.tr,
+      'onTap': () => Get.to(() => FertilizerCalculatorScreen()),
+    },
+    {
+      'icon': Iconsax.health,
+      'title': 'resource_2'.tr,
+      'description': 'Learn about pests & diseases'.tr,
+      'onTap': () => Get.to(() => const PestsAndDiseasesScreen()),
+    },
+    {
+      'icon': Iconsax.document_normal,
+      'title': 'resource_3'.tr,
+      'description': 'Cultivation tips'.tr,
+      'onTap': () => Get.to(() => const CultivationTipsScreen()),
+    },
+    {
+      'icon': Iconsax.danger,
+      'title': 'resource_4'.tr,
+      'description': 'Get pest & disease alerts'.tr,
+      'onTap': () => Get.to(() => const PestsAndDiseaseAlert()),
+    },
+  ];
 }

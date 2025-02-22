@@ -34,6 +34,7 @@ class ForgotPassword extends StatelessWidget {
                   validator: TValidator.validateEmail,
                   decoration: InputDecoration(
                     labelText: TTexts.email,
+                    hintText: 'enter_your_email'.tr,
                     prefixIcon: const Icon(Iconsax.direct_right),
                   ),
                 ),

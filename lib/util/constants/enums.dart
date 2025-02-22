@@ -25,3 +25,5 @@ enum ResultStatus {
   found,
   notFound,
 }
+
+enum ImageType { asset, network, memory, file }

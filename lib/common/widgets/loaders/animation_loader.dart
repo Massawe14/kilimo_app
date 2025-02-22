@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kilimo_app/util/constants/colors.dart';
-import 'package:kilimo_app/util/constants/sizes.dart';
+
+import '../../../util/constants/colors.dart';
+import '../../../util/constants/sizes.dart';
 
 // A widget for displaying on animated loading with optional text and action button
 class TAnimationLoaderWidget extends StatelessWidget {
@@ -18,13 +19,18 @@ class TAnimationLoaderWidget extends StatelessWidget {
     this.showAction = false, 
     this.actionText, 
     this.onActionPressed,
+    this.height,
+    this.width,
+    this.style,
   });
 
   final String text;
+  final TextStyle? style;
   final String animation;
   final bool showAction;
   final String? actionText;
   final VoidCallback? onActionPressed;
+  final double? height, width;
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +39,11 @@ class TAnimationLoaderWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Load GIF animation
-          Image.asset(animation, width: MediaQuery.of(context).size.width * 0.8),
+          Image.asset(animation, height: height ?? MediaQuery.of(context).size.height * 0.5, width: width ?? MediaQuery.of(context).size.width * 0.8),
           const SizedBox(height: TSizes.defaultSpace),
           Text(
             text,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: style ?? Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: TSizes.defaultSpace),

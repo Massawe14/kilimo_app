@@ -36,47 +36,31 @@ class MaizeCameraView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(
-                  () => Center(
-                    child: controller.isLoading.value
-                        ? (controller.imageFile.value != null
-                            ? CircularProgressIndicator(
-                                color: darkMode ? TColors.white : TColors.black,
-                              )
-                            : SizedBox(
-                                width: 260,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(TSizes.spaceBtwItems),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 150,
-                                        height: 150,
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage('assets/icons/crop_image.png'),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ))
-                        : Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (controller.imageFile.value != null && controller.detectionResult.value != null)
-                                LayoutBuilder(
-                                  builder: (context, constraints) {
-                                    final imageSize = Size(
-                                      constraints.maxWidth,
-                                      constraints.maxHeight,
-                                    );
-                                    final boxes = controller.getBoxes(imageSize.width, imageSize.height);
-                                    final highestConfidenceBox = controller.getHighestConfidenceBox(boxes);
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: darkMode ? TColors.white : TColors.black,
+                      ),
+                    );
+                  } else if (controller.imageFile.value != null) {
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (controller.imageFile.value != null && controller.detectionResult.value != null)
+                            LayoutBuilder(
+                              builder: (context, constraints) {
+                                final imageSize = Size(
+                                  constraints.maxWidth,
+                                  constraints.maxHeight,
+                                );
+                                final boxes = controller.getBoxes(imageSize.width, imageSize.height);
+                                final highestConfidenceBox = controller.getHighestConfidenceBox(boxes);
 
-                                    return SizedBox(
+                                return Column(
+                                  children: [
+                                    SizedBox(
                                       width: double.infinity,
                                       height: 300,
                                       child: Stack(
@@ -87,52 +71,81 @@ class MaizeCameraView extends StatelessWidget {
                                             painter: ObjectDetectionPainter(boxes),
                                             size: Size.infinite,
                                           ),
-                                          if (highestConfidenceBox != null)
-                                            Positioned(
-                                              top: 10,
-                                              left: 10,
-                                              child: Text(
-                                                'Highest: ${highestConfidenceBox['name']} (${(highestConfidenceBox['conf'] * 100).toStringAsFixed(2)}%)',
-                                                style: const TextStyle(
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                  backgroundColor: Colors.white,
-                                                ),
-                                              ),
-                                            ),
                                         ],
                                       ),
-                                    );
-                                  },
-                                ),
-                              const SizedBox(height: TSizes.spaceBtwSections),
-                              if (controller.imageFile.value != null && controller.detectionResult.value != null && controller.getHighestConfidenceBox(controller.getBoxes(1, 1)) != null)
-                                Container(
-                                  height: 60,
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.all(25.5),
-                                  decoration: BoxDecoration(
-                                    color: TColors.accent,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Get.to(() => const DiseaseDetailsScreen(), arguments: {
-                                        'diseaseName': controller.getHighestConfidenceBox(controller.getBoxes(1, 1))!['name'],
-                                      });
-                                    },
-                                    child: Text(
-                                      'recommendations'.tr,
-                                      style: const TextStyle(
-                                        color: TColors.white,
+                                    ),
+                                    if (highestConfidenceBox != null)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: TSizes.spaceBtwItems),
+                                        child: Text(
+                                          'Most scored detected: ${highestConfidenceBox['name']} - ${(highestConfidenceBox['conf'] * 100).toStringAsFixed(0)}%',
+                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                            color: TColors.accent,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
+                                  ],
+                                );
+                              },
+                            ),
+                            const SizedBox(height: TSizes.spaceBtwSections),
+                            if (controller.imageFile.value != null && controller.detectionResult.value != null && controller.getHighestConfidenceBox(controller.getBoxes(1, 1)) != null)
+                              Container(
+                                height: 60,
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.all(25.5),
+                                decoration: BoxDecoration(
+                                  color: TColors.accent,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {
+                                    Get.to(() => const DiseaseDetailsScreen(), arguments: {
+                                      'diseaseName': controller.getHighestConfidenceBox(controller.getBoxes(1, 1))!['name'],
+                                    });
+                                  },
+                                  child: Text(
+                                    'recommendations'.tr,
+                                    style: const TextStyle(
+                                      color: TColors.white,
                                     ),
                                   ),
                                 ),
-                            ],
+                              )
+                            else
+                              Center(
+                                child: Text(
+                                  "No disease detected".tr,
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),  
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/icons/crop_image.png',
+                            width: 150,
+                            height: 150,
                           ),
-                  ),
-                ),
+                          const SizedBox(height: TSizes.spaceBtwSections),
+                          Text(
+                            'upload_image_for_detection'.tr,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }),
+                const SizedBox(height: TSizes.spaceBtwItems),
                 Container(
                   height: 60,
                   width: MediaQuery.of(context).size.width,

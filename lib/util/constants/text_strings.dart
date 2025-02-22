@@ -13,6 +13,7 @@ class TTexts {
   static const String tJoined = "Joined ";
   static const String tJoinedAt = "31 October 2024";
   static const String tDelete = "Delete";
+  static String tSave = "save".tr;
 
   // Menu Texts
   static String tMenu1 = "home";
@@ -25,6 +26,8 @@ class TTexts {
   static String tMenu8 = "terms_and_conditions";
   static String tMenu9 = "send_feedback";
   static String tMenu10 = "logout";
+  static String tMenu11 = "Agrovet";
+  static String tMenu12 = "Recommendation";
 
   // Profile Texts
   static const String accountSettings = "Account Settings";
@@ -60,6 +63,10 @@ class TTexts {
   static const String verificationCode = "verificationCode";
   static String resendEmail = "resend_email".tr;
   static const String resendEmailIn = "Resend Email In";
+  static String role = "role".tr;
+  static String district = "district".tr;
+  static String street = "ward".tr;
+  static String fullname = "full_name".tr;
 
   // Authentication Heading Text
   static String loginTitle = "welcome_back".tr;

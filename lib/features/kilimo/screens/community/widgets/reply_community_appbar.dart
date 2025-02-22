@@ -88,7 +88,7 @@ class ReplyCommunityAppBar extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: TColors.white.withOpacity(0.20)
+                color: TColors.white.withAlpha(51),
               ),
               child: GestureDetector(
                 onTap: () => Get.back(),

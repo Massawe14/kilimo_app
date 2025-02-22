@@ -1,17 +1,31 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../../../../../util/constants/api_constants.dart';
+import '../../../../../util/popups/loaders.dart';
+import '../../../models/report/report_model.dart';
 
 class RiceDetectionController extends GetxController {
   var imageFile = Rx<File?>(null);
   var detectionResult = Rx<Map<String, dynamic>?>(null);
+  var user = Rx<User?>(null);
   var isLoading = false.obs;
 
   final ImagePicker picker = ImagePicker();
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  @override
+  onInit() {
+    super.onInit();
+    user.bindStream(FirebaseAuth.instance.authStateChanges());
+  }
 
   Future<void> captureImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -68,6 +82,9 @@ class RiceDetectionController extends GetxController {
           const JsonEncoder encoder = JsonEncoder.withIndent('  ');
           debugPrint('Response Body: ${encoder.convert(jsonResponse)}');
           detectionResult.value = jsonResponse;
+
+          // Save report to Firestore
+          await saveReport();
         } else {
           debugPrint('Invalid response structure: $jsonResponse');
           detectionResult.value = null;
@@ -119,6 +136,110 @@ class RiceDetectionController extends GetxController {
 
     boxes.sort((a, b) => b['conf'].compareTo(a['conf']));
     return boxes.first;
+  }
+
+  // Save diagnosis report to Firestore
+  Future<void> saveReport() async {
+    final highestConfidenceBox = getHighestConfidenceBox(getBoxes(1, 1));
+
+    if (highestConfidenceBox == null) return;
+
+    if (user.value == null) {
+      TLoaders.errorSnackBar(
+        title: 'Error',
+        message: 'User not authenticated',
+      );
+      return;
+    }
+
+    String userId = user.value!.uid;
+
+    // Fetch user details from Firestore (assuming user details are stored in a collection 'users')
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+
+    final report = Report(
+      id: '',
+      userId: userId,
+      phoneNumber: userDoc['PhoneNumber'],
+      cropType: "Rice",
+      predictionResult: [highestConfidenceBox['name']],
+      city: userDoc['City'],
+      district: userDoc['District'],
+      ward: userDoc['Street'],
+      date: DateTime.now(),
+    );
+
+    try {
+      await firestore.collection('Reports').add(report.toJson());
+      debugPrint("Diagnosis report saved successfully!");
+
+      // Send SMS notification
+      await sendDetectionNotification(
+        phoneNumber: userDoc['PhoneNumber'],
+        cropType: "Rice",
+        detectionResult: highestConfidenceBox['name'],
+      );
+    } catch (e) {
+      debugPrint("Error saving report: $e");
+    }
+  }
+
+  // Send SMS Notification
+  Future<void> sendDetectionNotification({
+    required String phoneNumber,
+    required String cropType,
+    required String detectionResult,
+  }) async {
+    const String api_key = APIConstants.tBEEMSMSAPIKEY;
+    const String secret_key = APIConstants.tBEEMSMSSECRETEKEY;
+    const String senderId = "DIGIFISH";
+    const String url = APIConstants.tBEEMSMSURL;
+
+    // Ensure phone number is in international format (Tanzania +255)
+    if (phoneNumber.startsWith("0")) {
+      phoneNumber = "255${phoneNumber.substring(1)}"; // Convert to 255764073294
+    }
+
+    // Construct message
+    String message = "Kilimo App: Your $cropType detection result is '$detectionResult'.";
+
+    // Encode credentials properly
+    String credentials = "$api_key:$secret_key";
+    String basicAuth = "Basic ${base64Encode(utf8.encode(credentials))}";
+
+    // Set headers
+    var headers = {
+      "Content-Type": "application/json",
+      "Authorization": basicAuth,
+    };
+
+    var request = http.Request('POST', Uri.parse(url));
+
+    request.body = json.encode({
+      "source_addr": senderId,
+      "encoding": 0,
+      "schedule_time": "",
+      "message": message,
+      "recipients": [
+        {
+          "recipient_id": "1",
+          "dest_addr": phoneNumber
+        }
+      ]
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      debugPrint(await response.stream.bytesToString());
+      debugPrint("✅ SMS sent successfully!");
+    }
+    else {
+      debugPrint(response.reasonPhrase);
+      debugPrint("❌ Failed to send SMS. Error: ${response.statusCode}");
+    }
   }
 
   // Clear output when the screen is closed

@@ -16,13 +16,27 @@ class SignupController extends GetxController {
   // Variables
   final hidePassword = true.obs; // Observable for binding/showing password
   final privacyPolicy = true.obs; // Observable for privacy policy acceptance
-  final email = TextEditingController(); // Controller for email input field
-  final username = TextEditingController(); // Controller for username input field
-  final lastname = TextEditingController(); // Controller for lastname input field
-  final firstname = TextEditingController(); // Controller for firstname input field
-  final password = TextEditingController(); // Controller for password input field
-  final phoneNumber = TextEditingController(); // Controller for phone number input field
-  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // Form key for form validation
+
+  // Reactive variables for CSC Picker
+  final selectedCountry = ''.obs;
+  final selectedState = ''.obs;
+  final selectedCity = ''.obs;
+  
+  // Text Controllers for input fields
+  final email = TextEditingController(); 
+  final username = TextEditingController(); 
+  final lastname = TextEditingController(); 
+  final firstname = TextEditingController(); 
+  final password = TextEditingController(); 
+  final phoneNumber = TextEditingController(); 
+  final district = TextEditingController();
+  final street = TextEditingController();
+
+  // Reactive variable for user role
+  RxString selectedRole = ''.obs;
+
+  // Form key for form validation
+  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   // SIGNUP
   void signup() async {
@@ -65,6 +79,12 @@ class SignupController extends GetxController {
         username: username.text.trim(),
         email: email.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
+        userRole: selectedRole.value,
+        street: street.text.trim(),
+        district: district.text.trim(),
+        city: selectedCity.value,
+        state: selectedState.value,
+        country: selectedCountry.value,
         profilePicture: '',
       );
 
