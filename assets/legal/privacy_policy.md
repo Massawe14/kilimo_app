@@ -63,7 +63,7 @@ Depending on your location, you may have the following rights regarding your per
 - **Objection:** You can object to processing of your personal data.
 - **Data Portability:** You can request transfer of your personal data to another entity.
 
-To exercise these rights, please contact us at <support@kilimoapp.com>.
+To exercise these rights, please contact us at <ramadhanimassawe14@gmail.com>.
 
 ## 6. Third-Party Links
 
@@ -81,7 +81,7 @@ We may update our Privacy Policy from time to time. We will notify you of any ch
 
 If you have any questions about this Privacy Policy, please contact us at:
 
-**Email:** <support@kilimoapp.com>  
-**Address:** Kilimo App, 123 Agriculture Lane, Farmville, Country
+**Email:** <ramadhanimassawe14@gmail.com>  
+**Address:** Dar es Salaam, Tanzania
 
 By using Kilimo App, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy.
